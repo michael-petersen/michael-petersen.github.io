@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+
+	<title>Simulation Analysis</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<meta name="HandheldFriendly" content="true">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Import CSS -->
+	<link rel="stylesheet" href="css/main.css">
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery.easing.min.js"></script>
+	<script src="js/jquery.scrollto.min.js"></script>
+	<script src="js/slabtext.min.js"></script>
+	<script src="js/jquery.nav.js"></script>
+	<script src="js/myjs.js"></script>
+	<script src="js/main.js"></script>
+	<link rel="shortcut icon" href="shadowbar/iconimg.png"
+type="image/png">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.3.0/styles/default.min.css">
+<script
+src="//cdn.jsdelivr.net/highlight.js/9.3.0/highlight.min.js"></script>
+
+</head>
+<body class="home color-1">
+
+	<div id="header">
+		<div class="container">
+
+			<div class="row">
+
+					<i id="nav-button" class="icon-circle-arrow-down"></i>
+					<h2 id="logo"><a
+					href="index.php"><span>Michael
+					S. Petersen</span><span
+					class="highlight">Simulation Analysis
+					</span></a></h2>
+
+				<div id="top-nav" class="">
+				  <ul id="fixed-nav">
+
+				    <!-- This needs to change
+						depending on what the
+				    paper is    -->
+				                <li><a href="index.html">Home</a></li>
+						<li><a href="#home">Abstract</a></li>
+						<li><a href="#methods">Global View</a></li>
+						<li><a href="#results">Results</a></li>
+						<li><a href="#analysis">Analysis</a></li>
+						<li><a href="#conclusions">Conclusions</a></li>
+						<!--<li><a href="#futurework">Future Work</a></li>-->
+				   </ul>
+				</div>
+			</div>
+		</div>
+	</div><!-- End Header -->
+	<!-- Big Full screen Banner -->
+	<div class="hero2 bg-fixed bg-color" id="home">
+		<div class="slogan">
+		      <div  class="vcenter container">
+				<div class="row">
+				<div class="span12">
+				  <!-- Paper Title  -->
+					  <h1> Simulation Analysis
+						using exptool
+	<!-- Do you want a tag image?
+		  			<div class="row">
+					<div class=" img" align="center"> 
+					  <a
+					  href="shadowbar/backgroundimg.png"
+					  data-lightbox="image-1"
+					  data-title="bar stuff">
+					  <img
+					  src="shadowbar/backgroundimg.png"
+					  width="450">
+					  </a>
+					  <br>
+
+					</div>
+					</div>
+ -->
+
+					 
+						<h4><font
+						size="2">So you want
+						to use exptool to
+						analyze your N-body simulation...
+					</font></h4>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+	<!-- End Full screen banner  -->
+
+
+
+
+	<!-- ########################################################################## -->
+	<!-- PSP_IO Section -->
+	<div class="section" id="methods">
+		<div class="container">
+			<div class="content">
+				<div class="row" >
+						<div class="title">
+						<h2>psp_io.py</h2>
+						<div class="hr hr-small hr-center"><span class="hr-inner"></span></div>
+						<p
+	style="text-align:left"> The all-purpose PSP file format input
+						function
+
+				
+						<br>
+						</div>
+					</p>
+	<p
+	style="text-align:left">
+<pre><code class="python">import psp_io
+import potential
+import helpers
+import trapping
+
+B = trapping.BarDetermine()
+B =
+trapping.BarDetermine.read_bar(B,'/scratch/mpetersen/disk064abar.dat')
+if test:
+ </code></pre>
+</p>
+
+		
+
+				</div>
+				<div class="row">
+					<div class="span img" align="center"> 
+					  <a
+					  href="directdetection/halowake.png"
+					  data-lightbox="image-1"
+					  data-title="bar stuff">
+					  <img
+					  src="directdetection/halowake.png"
+					  width="450">
+					  </a>
+					  <br>
+					  <a
+					  href="directdetection/halowake.png"
+					  target="_blank">Figure 1</a>
+					</div>
+
+
+					<br>
+					The halo wake ((m>0)+(m=0;n>=0), filled color) with the
+bar position and length indicated as the thick black line. The wake lags behind
+the bar (rotating clockwise) at R>0.5R<sub>d</sub>, but is generally aligned
+with the bar within 0.5R<sub>d</sub>, where we observe significant trapping (see
+<a href="http://www.astro.umass.edu/~mpetersen/shadowbar.html">this work</a>).
+				</div>
+
+					
+					</div>
+					</div>
+					</div>
+	<!-- End Set-up Section -->
+
+	<!-- ########################################################################## -->
+	<!-- RESULTS Section -->
+	<div class="section" id="results">
+		<div class="container">
+			<div class="content">
+				<div class="row" >
+									<div class="title">
+						<h2>Results</h2>
+						<div class="hr hr-small hr-center"><span class="hr-inner"></span></div>
+						<p
+	style="text-align:left"> At the solar circle, significant deformation from a spherical distribution is observed, corresponding to a significant increase in detectability simply from the density enhancement. The velocity structure further increases the detectability of dark matter.
+						<br>
+
+						</p>
+
+						</div>
+
+											<div class="row">
+					<div class="span img" align="center"> 
+					  <a
+					  href="shadowbar/061915_1.png"
+					  data-lightbox="image-1"
+					  data-title="bar stuff">
+					  <img
+					  src="shadowbar/061915_1.png"
+					  width="450">
+					  </a>
+					  <br>
+					  <a
+					  href="shadowbar/061915_1.png"
+					  target="_blank">Figure 3</a>
+					</div>
+
+
+					<br>
+					The surface density of the fiducial simulation for the stellar disc (upper panels) and the dark matter halo (lower panels). The left panels show the
+in-plane density (|z|<0.003, ~1 kpc for MW-like scalings), the middle panels show the in-plane density of the trapped component (the stellar bar on the top
+and the shadow bar on the bottom), and the right panels show the in-plane density of the untrapped component, at T=2.0 (~4 Gyr for MW-like scalings).
+					</div>
+
+						<br>										<div class="row">
+
+					<div class="span img" align="center"> 
+					  <a
+					  href="shadowbar/081715_1.png"
+					  data-lightbox="image-1"
+					  data-title="bar stuff">
+					  <img
+					  src="shadowbar/081715_1.png"
+					  width="450">
+					  </a>
+					  <br>
+					  <a
+					  href="shadowbar/081715_1.png"
+					  target="_blank">Figure 4</a>
+					</div><br> Trapped populations by fraction of mass interior to R=0.01 (the initial scale length), as determined by k-means power, for the fiducial simulation.
+Left panel: disc trapping as a function of time. Middle panel: halo trapping as a function of time. The trapped halo fraction (the shadow bar) monotonically
+increases at all times. Right panel: The ratio of the shadow bar to stellar bar (by total mass) as a function of time. The halo is trapping at a faster rate than the
+disc, owing to the consistent increase in the reservoir of untrapped matter as the halo contracts in response to the bar growth.
+					</div>
+<br>
+												<div class="row">
+
+					<div class="span img" align="center"> 
+					  <a
+					  href="shadowbar/fig11.png"
+					  data-lightbox="image-1"
+					  data-title="bar stuff">
+					  <img
+					  src="shadowbar/fig11.png"
+					  width="450">
+					  </a>
+					  <br>
+					  <a
+					  href="shadowbar/fig11.png"
+					  target="_blank">Figure 5</a>
+					</div><br> From left to right: stellar disc trapping, dark matter trapping, and the ratio of dark-matter halo to stellar disc trapping by the bar inside R=0.01.
+Compare these to Fig. 4. From top to bottom the simulations are: the cusped rotating halo (Fr in Table 1), the cored nonrotating (C), and the cored rotating
+(Cr) models. Black lines indicate the total mass trapped scaled by the mass interior to R=0.01 and grey lines indicate the corresponding curve for the fiducial
+model.
+					</div>
+					
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End RESULTS Section -->
+
+	
+
+
+	<!-- ########################################################################## -->
+	<!-- DOCS Section -->
+	<!-- class section-alt is to give a different color please edit css/style.css to change the color -->
+	<div class="section" id="analysis">
+		<div class="container">
+			<div class="content">
+				<div class="row" >
+									<div class="title">
+						<h2>Analysis</h2>
+						<div class="hr hr-small hr-center"><span class="hr-inner"></span></div>
+						<p
+	style="text-align:left"> The standard halo model (SHM) produces qualitatively different results from the self-consistent NFW model. The dependence of the detection rate on v<sub>min</sub> is qualitatively different--which results in significantly different detection rate (and therefore DM particle mass) estimates.
+						<br>
+
+						</p>
+
+						</div>
+
+												<div class="row">
+
+					<div class="span img" align="center"> 
+					  <a
+					  href="directdetection/030816_1.png"
+					  data-lightbox="image-1"
+					  data-title="bar stuff">
+					  <img
+					  src="directdetection/030816_1.png"
+					  width="250">
+					  </a>
+					  <br>
+					  <a
+					  href="directdetection/030816_1.png"
+					  target="_blank">Figure 6</a>
+					</div><br> BLAH BLAH BLAH
+					</div>
+					
+					<br>
+																<div class="row">
+
+					<div class="span img" align="center"> 
+					  <a
+					  href="directdetection/022916_4.png"
+					  data-lightbox="image-1"
+					  data-title="bar stuff">
+					  <img
+					  src="directdetection/022916_4.png"
+					  width="250">
+					  </a>
+					  <br>
+					  <a
+					  href="directdetection/022916_4.png"
+					  target="_blank">Figure 7</a>
+					</div>
+
+<br>Upper panel: Annual modulation fraction, (Rmax􀀀
+Rmin)=(Rmax+Rmin), as a function of vmin. The models are
+shown following the same convention as in Figures 5 and 6. Middle
+panel: relative enhancement factor for the self-consistent model
+and adiabatically contracted model, compared to the standard halo
+model. Bottom panel: relative enhancement factor for the selfconsistent
+model and adiabatically contracted model, compared to
+the initial NFW profile.
+					</div>
+					<br>
+			
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End ANALYSIS Section -->
+
+		<!-- ########################################################################## -->
+	<!-- CONCLUSIONS Section -->
+	<div class="section section-alt" id="conclusions">
+		<div class="container">
+			<div class="content">
+				<div class="row" >
+					<div class="title">
+						<h2>Conclusions</h2>
+						<div class="hr hr-small hr-center"><span class="hr-inner"></span></div>
+						<p
+	style="text-align:left">The major results of the paper are as follows:<br><br>
+1. The density of the DM halo at the solar position
+strongly depends on the Earth’s location relative to the
+stellar bar. Smaller angles relative to the bar as well as
+a smaller ratio of R<sub>sun</sub>=R<sub>bar</sub> can increase the density
+relative to a spherical distribution by a factor of 2.<br><br>
+2. The DM velocity profile is reshaped by the stellar+
+shadow bar. The characteristic quadrupole wake
+in the DM that forms as a response to the stellar bar
+lags the bar in velocity and, therefore, enhances the detectability
+of DM when compared to the SHM by a factor
+of 1.5 at vmin=300 km s<sup>-11</sup> and up to a factor of 40
+at v<sub>min</sub>=650 km s<sup>-1</sup> for a cored NFW halo model. <br><br>
+3. Due to the dependence of the detectability relative to the
+SHM with v<sub>min</sub>, experiments need to move beyond the
+SHM to compare with other experiments that have different
+energy thresholds. Specifically, the results based
+on a number of recent astrophysical models together
+suggest the importance of the MW evolutionary history
+to modeling DM detection rates. <br><br>
+4. Similarly, annual modulation in the DM signal will have
+different detectabilities compared to the SHM as a function
+of vmin. The stellar+shadow bar, when compared
+to the adiabatic contraction model, reduces the annual
+modulation signal for experiments sensitive to high energy
+thresholds and boosts the annual modulation signal
+for experiments sensitive to low energy thresholds. <br><br>
+5. When compared to the SHM, we expect an enhancement
+in detectability and annual modulation. We use
+an adiabatic contraction model that fixes the gravitational
+potential of the disk to calibrate the importance
+of dynamical evolution to the DM detection predictions.
+When we compare our full model to this adiabatically
+contracted model, we expect an enhancement
+in detectability, but a decrease in the annual modulation
+signal. This illustrates the influence of dynamical
+evolution.<br><br>			
+
+		</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Conclusions Section -->
+
+
+
+	<div id="footer">
+	<!--&copy;--> mpete0@astro.umass.edu
+	</div>
+	
+<script>hljs.initHighlightingOnLoad();</script>
+
+</body>
+</html>
+
+
+
