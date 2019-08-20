@@ -102,7 +102,7 @@ img {
 body.color-1::-moz-selection {background: #0b1d3f; color: #fff; }
 body.color-1::selection {background: #0b1d3f; color: #fff; }
 body.color-1 a{
-	color: #0b1d3f;
+	color: #ca2b38;
 	text-decoration: none;
 	/*border-bottom: 1px solid #99251c;*/
 }
@@ -213,7 +213,7 @@ div#top-nav #fixed-nav li.current a {
 }
 h3{
 	/* text-shadow: 2px 2px 2px #333333;*/
-	color: #ffffff;
+	color: #0b1d3f;
 }
 .hero{
     border-bottom: 1px solid #0b1d3f;
@@ -341,6 +341,14 @@ hr.grey {
 	margin: 0px;
 	text-align: left;
 }
+
+.title h3{
+	font-weight: bold;
+	font-size: 1.8em;
+	margin: 0px;
+	text-align: left;
+}
+
 .title p{
 	letter-spacing: 0px;
 	line-height: 1.3em;
