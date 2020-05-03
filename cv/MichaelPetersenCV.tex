@@ -14,18 +14,14 @@
 % .tex file. The res.cls file provides the resume style used for structuring the
 % document.
 %
+% COMPILE WITH xelatex MichaelPetersenCV.tex
+%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%----------------------------------------------------------------------------------------
-%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
-%----------------------------------------------------------------------------------------
 
-\documentclass[margin, 12pt]{res} % Use the res.cls style, the font size can be changed to 11pt or 12pt here
+\documentclass[margin, 11pt]{res} % Use the res.cls style, the font size can be changed to 11pt or 12pt here
 
-\usepackage{times}
-
-%\usepackage{helvet} % Default font is the helvetica postscript font
-%\usepackage{newcent} % To change the default font to the new century schoolbook postscript font uncomment this line and comment the one above
+\usepackage{times} % fallback font
 
 \usepackage{hyperref}
 
@@ -33,118 +29,119 @@
 
 \setlength{\resumewidth}{4.7in} % Text width of the document
 
+\usepackage[dvipsnames]{xcolor}
+% now define a few colors to join webpage themes
+\definecolor{blueshade}{RGB}{15, 29, 60}
+\definecolor{redshade}{RGB}{172,54,56}
+\definecolor{grey}{gray}{0.6}
+
+
+%steps to get the Montserrat font: download the package from Google Fonts
+% move the Regular, Italic, Bold fonts:
+
+\usepackage{fontspec}
+\setmainfont{Roboto}[Extension = .ttf, UprightFont = *-Regular, ItalicFont = *-Italic, BoldFont = *-Bold]
+
 \begin{document}
+
 
 \setlength{\parskip}{4pt}
 
 
-\setlength{\sectionwidth}{1.3in}
-
+\setlength{\sectionwidth}{1.2in}
 
 %----------------------------------------------------------------------------------------
-%	NAME AND ADDRESS SECTION
+%	header
 %----------------------------------------------------------------------------------------
 
-\moveleft.5\hoffset\centerline{\huge\bf Michael S. Petersen} % Your name at the top
+\moveleft.5\hoffset\centerline{\huge\bf \textcolor{blueshade}{Michael S. Petersen} }
  
-\moveleft\hoffset\vbox{\hrule width 6.5in height 1pt}\smallskip % Horizontal line after name; adjust line thickness by changing the '1pt'
+\moveleft\hoffset\vbox{\color{grey}\hrule width 6.5in height 1pt}\smallskip
+
+%{ \color{grey}\rule{\linewidth}{0.5mm} }
  
-\moveleft.5\hoffset\centerline{University of Massachusetts at Amherst Department of Astronomy} % Your address
-\moveleft.5\hoffset\centerline{710 N. Pleasant St. Amherst, MA 01003}
-\moveleft.5\hoffset\centerline{\href{mailto:mpete0@astro.umass.edu}{mpete0@astro.umass.edu}}
 
-
-%----------------------------------------------------------------------------------------
+\moveleft.5\hoffset\centerline{Institute for Astronomy, University of Edinburgh, Royal Observatory}
+\moveleft.5\hoffset\centerline{Blackford Hill, Edinburgh EH9 3HJ, UK}
+\moveleft.5\hoffset\centerline{\textcolor{grey}{\href{mailto:michael.petersen@roe.ac.uk}{michael.petersen@roe.ac.uk}}}
 
 \begin{resume}
 
-%----------------------------------------------------------------------------------------
-%	OBJECTIVE SECTION
-%----------------------------------------------------------------------------------------
- 
-%\section{OBJECTIVE}  
-
-%A position in the field of computers with special interests in business applications programming, information processing, and management systems. 
-
-%----------------------------------------------------------------------------------------
-%	EDUCATION 
-%----------------------------------------------------------------------------------------
-
-\section{\sc Education \& Awards}
-
-{\bf Doctor of Philosophy,} Astronomy \hfill 2018\\
-\hspace*{0.25 in} {\sl The non-linear dynamics of barred galaxy evolution in $\Lambda$CDM}\\
-\hspace*{0.25 in} {\sl Advisors: Martin D. Weinberg, Neal Katz}\\
-{\bf Master of Science,} Astronomy \hfill 2012\\
-\hspace*{0.25 in} {\sl UMass Amherst, Amherst, MA}\\
-\hspace*{0.4 in} Mary Dailey Irvine Travel Grant \hfill 2016, 2017, 2018\\
-\hspace*{0.4 in} Massachusetts Space Grant \hfill 2010, 2011, 2015\\
-{\bf Bachelor of Arts,} Astronomy \& Physics, Music \hfill 2010\\
-\hspace*{0.25 in} {\sl Colgate University, Hamilton, NY}\\
-\hspace*{0.4 in} Astronomy \& Physics Honors
-
- 
-%----------------------------------------------------------------------------------------
-%	RESEARCH
-%----------------------------------------------------------------------------------------
-
-\section{\sc Research} 
+\section{\sc \textcolor{redshade}{Research} }
 
 %{\bf Graduate Research Assistant}\\
 %\hspace*{0.25 in} {\sl Martin D. Weinberg and Neal Katz, University of Massachusetts} \\
-Design, implement, execute, and analyze precision numerical models to understand dynamical evolution in disk galaxies.
- 
-%----------------------------------------------------------------------------------------
-%	PUBLICATIONS
-%----------------------------------------------------------------------------------------
+Design, implement, execute, and analyse precision numerical models to understand dynamical evolution in disk galaxies and their halo environs.
 
-\section{\sc Publications} 
+
+\section{\sc \textcolor{redshade}{Position}}
+
+{\bf Postdoctoral Research Associate,} working with Jorge Pe{\~n}arrubia. \hfill \textcolor{grey}{2019-}
+% add name of consolidated grant case
+
+\section{\sc \textcolor{redshade}{Education}}
+
+{\bf Doctor of Philosophy,} Astronomy \hfill \textcolor{grey}{2019}\\
+\hspace*{0.25 in} {\sl \textcolor{blueshade}{The non-linear dynamics of barred galaxy evolution in $\Lambda$CDM}}\\
+\hspace*{0.25 in} {\sl Advisors: Martin D. Weinberg, Neal Katz}\\
+\hspace*{0.4 in} Mary Dailey Irvine Grant \hfill \textcolor{grey}{2016, 2017, 2018}\\
+%\hspace*{0.4 in} Massachusetts Space Grant \hfill 2010, 2011, 2015\\
+{\bf Bachelor of Arts,} Astronomy \& Physics, Music \hfill \textcolor{grey}{2010}\\
+\hspace*{0.25 in} {\sl Colgate University, Hamilton, NY}\\
+\hspace*{0.4 in} Astronomy \& Physics Honors, Core Distinction
+
+
+\section{\sc \textcolor{redshade}{Publications} }
  \underline{\sl Refereed Publications} \\
-{\bf Petersen, M.S.}, Katz, N. , \& Weinberg, M.D. \href{http://adsabs.harvard.edu/abs/2016PhRvD..94l3013P}{{\it The Dynamical Response of Dark Matter to Galaxy Evolution Affects Direct-Detection Experiments}}, Phys Rev D, 2016\\
-{\bf Petersen, M. S.}, Weinberg, M. D., and Katz, N. \href{http://adsabs.harvard.edu/abs/2016MNRAS.463.1952P}{{\it  Dark matter trapping by stellar bars: the shadow bar}} MNRAS, 463:1952–1967.\\
-Bary, Jeffrey S. \& {\bf Petersen, M. S.} \href{http://adsabs.harvard.edu/abs/2014ApJ...792...64B}{{\it Anomalous Accretion Activity and the Spotted Nature of the DQ Tau Binary System}} MNRAS, 463:1952–1967.
+{\bf \textcolor{blueshade}{Petersen, M. S.}}, Pe{\~n}arrubia, J. \href{https://ui.adsabs.harvard.edu/abs/2020MNRAS.494L..11P/abstract}{\it Reflex motion in the Milky Way stellar halo resulting from the Large Magellanic Cloud infall}, 2020, MNRASL, 494:11\\ % do we want citation counts?
+{\bf \textcolor{blueshade}{Petersen, M. S.}}, Weinberg, M. D., and Katz, N. \href{https://ui.adsabs.harvard.edu/abs/2019MNRAS.490.3616P/abstract}{\it Using torque to understand barred galaxy models}, 2019, MNRAS, 490:3616\\
+%{\bf Petersen, M. S.}, Gutermuth, R.A.,  Nagel, E.,  Wilson, G.W., Lane, J. \href{https://ui.adsabs.harvard.edu/abs/2019MNRAS.488.1462P/abstract}{\it Early science with the Large Millimetre Telescope: new mm-wave detections of circumstellar discs in IC 348 from LMT/AzTEC}, 2019, MNRAS, 488:1462\\
+{\bf \textcolor{blueshade}{Petersen, M. S.}}, Katz, N. , \& Weinberg, M.D. \href{http://adsabs.harvard.edu/abs/2016PhRvD..94l3013P}{{\it The Dynamical Response of Dark Matter to Galaxy Evolution Affects Direct-Detection Experiments}}, Phys Rev D, 2016. Figure 4 was featured as part of the journal's `Kaleidescope'.\\
+{\bf \textcolor{blueshade}{Petersen, M. S.}}, Weinberg, M. D., and Katz, N. \href{http://adsabs.harvard.edu/abs/2016MNRAS.463.1952P}{{\it  Dark matter trapping by stellar bars: the shadow bar}} 2016 MNRAS, 463:1952–1967.\\
+%Bary, Jeffrey S. \& {\bf Petersen, M. S.} \href{http://adsabs.harvard.edu/abs/2014ApJ...792...64B}{{\it Anomalous Accretion Activity and the Spotted Nature of the DQ Tau Binary System}} 2014 MNRAS, 463:1952–1967.
 
-\vspace*{8pt}
+%\vspace*{8pt}
 %\underline{\sl Conference Proceedings} \\
 %{\bf Petersen, M. S.}, Weinberg, M. D., and Katz, N. \href{http://adsabs.harvard.edu/abs/2014ASPC..480..157P}{{\it 
 %Creation of Peanut-Shaped Bulges via the Slow Mode of Bar Growth}} ASPC, 480:157.
 
-\underline{\sl Publications In Preparation} \\
-{\bf Petersen, M. S.}, Weinberg, M. D., and Katz, N. {\it Using commensurabilities and orbit structure to understand barred galaxy evolution}\\
-{\bf Petersen, M. S.}, Weinberg, M. D., and Katz, N. {\it Using angular momentum and torque to understand barred galaxy evolution} \\
-{\bf Petersen, M. S.}, Weinberg, M. D., and Katz, N. {\it Using harmonic decomposition to understand barred galaxy evolution} \\
-{\bf Petersen, M. S.}, Weinberg, M. D., and Katz, N. {\it Understanding trends in bar formation and evolution in varied $n$-body models} \\
-{\bf Petersen, M. S.}, Weinberg, M. D., and Katz, N. {\it Using the bar to drive radial mixing and bulge formation in a Milky Way-like galaxy} \\
+\underline{\sl Publications In Review} \\
+{\bf \textcolor{blueshade}{Petersen, M. S.}}, Weinberg, M. D., and Katz, N. \href{https://ui.adsabs.harvard.edu/abs/2019arXiv190205081P/abstract}{\it Using commensurabilities and orbit structure to understand barred galaxy evolution}, arXiv e-prints\\
+{\bf \textcolor{blueshade}{Petersen, M. S.}}, Weinberg, M. D., and Katz, N. \href{https://ui.adsabs.harvard.edu/abs/2019arXiv190308203P/abstract}{\it Using harmonic decomposition to understand barred galaxy evolution}, arXiv e-prints\\
+
+%\underline{\sl Publications In Preparation} \\
+%{\bf Petersen, M. S.}, Weinberg, M. D., and Katz, N. {\it Understanding trends in bar formation and evolution in varied $n$-body models} \\
+%{\bf Petersen, M. S.}, Weinberg, M. D., and Katz, N. {\it Using the bar to drive radial mixing and bulge formation in a Milky Way-like galaxy} \\
 
 %{\bf Petersen, M. S.}, Gutermuth, R.A., and Wilson, G.W. {\it Circumstellar Disk Masses in IC~348: Newly Detected Disks from LMT/AzTEC} \\
 \pagebreak
 
-\section{\sc Selected Meetings \& Conferences}
-{\bf AAS 231, January 2018}, Washington, D.C.\\
-Dissertation: {\it A Modern Picture of Barred Galaxy Dynamics}
+%\section{\sc Selected Meetings \& Conferences}
+%{\bf AAS 231, January 2018}, Washington, D.C.\\
+%Dissertation: {\it A Modern Picture of Barred Galaxy Dynamics}
 
-{\bf APS April Meeting, January 2017}, Washington, D.C.\\
-Contributed Talk: {\it The Dynamical Response of Dark Matter to Galaxy Evolution Affects Direct-Detection Experiments}
+%{\bf APS April Meeting, January 2017}, Washington, D.C.\\
+%Contributed Talk: {\it The Dynamical Response of Dark Matter to Galaxy Evolution Affects Direct-Detection Experiments}
 
 %{\bf Great Lakes Cosmology Workshop, June 2016}, Hamilton, ON\\
 %Contributed Talk: {\it Dark Matter Trapping by Stellar Bars: The Shadow Bar}
 
-{\bf What Shapes Galaxies?, April 2016}, STScI, Baltimore, MD\\
-Contributed Poster: {\it Dark Matter Trapping by Stellar Bars: The Shadow Bar}
+%{\bf What Shapes Galaxies?, April 2016}, STScI, Baltimore, MD\\
+%Contributed Poster: {\it Dark Matter Trapping by Stellar Bars: The Shadow Bar}
 
 %{\bf Structure and Dynamics of Disk Galaxies, August 2013}, Petit Jean Mountain, AR\\
 %Contributed Talk: {\it Creation of Peanut-Shaped Bulges via the Slow Mode of Bar Growth}
 
-\section{\sc Selected Observational Experience}
+%\section{\sc Selected Observational Experience}
 
-{\bf Large Millimeter Telescope}, PI (Early Science 2,3,4 2014-2016), 60 hours\\
-{\it Circumstellar Disk Masses in IC~348}\\
-Using AzTEC, a 1.1 mm camera.
+%{\bf Large Millimeter Telescope}, PI (Early Science 2,3,4 2014-2016), 60 hours\\
+%{\it Circumstellar Disk Masses in IC~348}\\
+%Using AzTEC, a 1.1 mm camera.
 
-{\bf KPNO 0.9m}, PI (2016-2017), 5 nights; Co-I (2014-2018), 30 nights\\
-{\it Deep Imaging of Nearby Low Surface Brightness Disks}\\
-{\it Ionization States of Green Pea Galaxies}\\
-Using the Half-Degree Imager (HDI).
+%{\bf KPNO 0.9m}, PI (2016-2017), 5 nights; Co-I (2014-2018), 30 nights\\
+%{\it Deep Imaging of Nearby Low Surface Brightness Disks}\\
+%{\it Ionization States of Green Pea Galaxies}\\
+%Using the Half-Degree Imager (HDI).
 % would be nice to put the Kim title in here as well
 
 %{\bf Gemini South}, Co-I (2017A), 18 hours\\
@@ -158,41 +155,62 @@ Using the Half-Degree Imager (HDI).
 % {title?}
 
 
-\section{\sc Teaching, Mentoring, \& Outreach}
+\section{\sc \textcolor{redshade}{Advising}}
 
-{\bf Five College Astronomy Teaching Assistant, 2014-2018}\\
-Assisted Professor James Lowenthal, Dr. Anne Jaskot, and Dr. Kim Ward-Duong in Observational Techniques I/II, a two-semester observing course involving a yearly observational component at Kitt Peak National Observatory.
+% add MPhys once it stars
 
-{\bf Continuing Education Head Instructor, 2013-2018}\\
+% add titles of projects? and progress?
+{\bf Senior Honours Research Advisor} \hfill\textcolor{grey}{2019-}\\
+Designed and advised three research projects for undergraduate students at the University of Edinburgh.\\
+
+{\bf Research Advisor} \hfill\textcolor{grey}{2020}\\
+Designed, sought funding for, and advised two research projects for undergraduate students at the University of Edinburgh.
+
+
+%{\bf Research Mentor, 2016-2017}\\
+%Mentored and advised Amelia Vinciguerra (UMass 2017) in her senior undergraduate research project in collaboration with Martin Weinberg.
+
+\section{\sc \textcolor{redshade}{Service}}
+
+{\bf ROE Seminar Organiser} \hfill\textcolor{grey}{2019-}\\
+Responsible for selection of speakers and organising delivery of talks for the Royal Observatory. Includes remote organisation and hosting during work-from-home period.\\
+
+{\bf Local Universe Reading Group Organiser} \hfill\textcolor{grey}{2019-}\\
+Responsible for programming and hosting a roughly dozen-person reading group coverinng multiple research teams at the ROE.
+
+\section{\sc \textcolor{redshade}{Teaching}}
+
+{\bf Five College Astronomy Teaching Assistant} \hfill \textcolor{grey}{2014-2018}\\
+Assisted Professor James Lowenthal, Dr. Anne Jaskot, and Dr. Kim Ward-Duong in Observational Techniques I/II, a two-semester observing course involving a yearly observational component at Kitt Peak National Observatory. University of Massachusetts Distinguished Teaching Award finalist.\\
+
+{\bf Continuing Education Head Instructor} \hfill \textcolor{grey}{2013-2018}\\
 Developed a two-week intensive continuing education class for the University of Massachusetts, then reshaped the class into a program involving many graduate students.
 
-{\bf Research Mentor, 2016-2017}\\
-Mentored and advised Amelia Vinciguerra (UMass 2017) in her senior undergraduate research project in collaboration with Martin Weinberg.
-
+%
 %{\bf Public Outreach Lecturer, 2013-present}\\
 %Advised the undergraduate Astronomy club. Lead semesterly star walks
 %for dormitories. Offered yearly open night sky observing sessions.
 
-{\bf Python Instructor, 2014-present}\\
-Provided Python instruction and support to the undergraduate Five College summer undergraduate researchers.
+%{\bf Python Instructor, 2014-present}\\
+%Provided Python instruction and support to the undergraduate Five College summer undergraduate researchers.
 
-\section{\sc Professional Links}
-{\bf Research Webpage} \url{https://people.umass.edu/mpete0/}
+\section{\sc \textcolor{redshade}{Professional Links}}
+{\bf Research Webpage} \url{https://michael-petersen.github.io}
 
 {\bf Github Code Repository} \url{https://github.com/michael-petersen}
 
 
-\section{\sc References}
+\section{\sc \textcolor{redshade}{References}}
+
+{\bf Jorge Pe{\~n}arrubia}\\
+Postdoctoral Research Associate advisor.
+
 {\bf Martin D. Weinberg}\\
 Primary dissertation advisor.
 
 {\bf Neal Katz}\\
 Co-dissertation advisor.
 
-%{\bf Mauro Giavalisco}\\
-%Dissertation committee member.
-
-%\section{\sc Professional Affiliations }
 
 \end{resume}
 \end{document}
