@@ -1,0 +1,474 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>The Faintest Dwarf Galaxies (interactive)</title>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+
+<body>
+<style>
+
+body {
+  font: 11px sans-serif;
+}
+
+
+.parafont {
+  font: 16px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+}
+
+.dot1a {
+stroke: #000;
+}
+
+line.xerror {
+  stroke: #000;
+}
+
+line.yerror {
+  stroke: #000;
+}
+
+.brightness {
+stroke: #f0c1cb;
+stroke-width : 2px;
+
+}
+
+.tooltip {
+  position: absolute;
+  width: 200px;
+  height: 28px;
+  pointer-events: none;
+}
+</style>
+
+<h1>Interactive Figures from Simon (2018).</h1>
+<!--<p>Meaningful intro sentence here.</p>-->
+<div class="chart" id="chart">
+  <p class="parafont"> Figure 1. "Distribution of MilkyWay satellites in absolute magnitude (MV) and half-light radius. Confirmed dwarf
+galaxies are displayed as dark blue filled circles, and objects suspected to be dwarf galaxies but for which the
+available data are not conclusive are shown as cyan filled circles. Dwarf galaxy candidates without any
+published classification (usually because of the lack of spectroscopy) are shown as open gray circles. The faint
+candidates with R1/2 > 50 pc are almost certainly dwarf galaxies, but we do not include them in the
+confirmed category here given the currently available observations. The open black diamonds represent the Milky
+Way globular clusters (Harris 1996, the 2010 edition of the online catalog). Lines of constant central
+surface brightness (at 25, 27, 29, and 31 mag arcsec -2 in V band) are plotted in pink. For stellar systems
+brighter than MV = -5 there is no ambiguity in classification:
+  Globular clusters have R1/2 < 20 pc, and
+dwarf galaxies have R1/2 > 100 pc. At fainter magnitudes the size distributions begin to impinge upon each
+other, and classification based purely on photometric parameters may not always be possible. Whether the
+two populations actually occupy nonoverlapping portions of this parameter space remains to be determined
+from spectroscopy of the faintest stellar systems with half-light radii between 10 and 40 pc."</p>
+<div id="one"></div>
+<br><br>
+  <p class="parafont"> Figure 2. "Line-of-sight velocity dispersions of ultra-faint MilkyWay satellites as a function of absolute magnitude.
+Measurements and uncertainties are shown as blue points with error bars, and 90% confidence upper limits
+are displayed as red arrows for systems without resolved velocity dispersions. Although there is a clear trend of decreasing velocity
+dispersion toward fainter dwarfs among the classical dwarf spheroidal galaxies, in the ultra-faint luminosity
+regime there is much more scatter, and any systematic trend is weak."</p>
+<div id="two"></div>
+  <p class="parafont"> Figure 3. Magnitude as a function of
+Galactocentric distance.</p>
+<div id="three"></div>
+</div>
+
+<!--<svg width="200" height="200" id="svg2"></svg>-->
+
+<script>
+
+// define the axes scales
+var chartDiv = document.getElementById("chart");
+
+var margin = {top: 20, right: 40, bottom: 70, left: 60},
+    width = 0.8*chartDiv.clientWidth - margin.left - margin.right,
+    height = 0.8*chartDiv.clientWidth/(16/9) - margin.top - margin.bottom;
+
+// add Figure 1
+var fig1 = d3.select("#one")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top +")");
+
+// setup x 
+var xValue1 = function(d) { return d.r2;},
+    xScale1 = d3.scaleLog().domain([0.8,3000]).range([0, width])
+    xMap1 = function(d) { return xScale1(xValue1(d));},
+    xAxis1 = d3.axisBottom(xScale1).ticks(10, "~s");
+
+// setup y
+var yValue1 = function(d) { return d.MV;},
+    yScale1 = d3.scaleLinear().domain([0,-14]).range([height, 0]),
+    yMap1 = function(d) { return yScale1(yValue1(d));},
+    yAxis1 = d3.axisLeft(yScale1);
+
+
+// setup colors
+var colorscale1 = d3.scaleSequential(d3.interpolateBlues).domain([0,1]),
+    colorscale2 = d3.scaleSequential(d3.interpolateReds).domain([0,1]),
+    cValue1 = function(d) { if ( d.Dwarf=="Crater II" ||
+d.Dwarf=="Sagittarius II" || d.Dwarf=="Antlia 2") {return colorscale2(0.5);}
+                       else if (d.MV>-7.5) {return colorscale1(0.2);}
+                       else { return colorscale1(0.8);}};
+
+// add Figure 2
+var fig2 = d3.select("#two").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// setup x 
+var xValue2 = function(d) { return d.MV;},
+    xScale2 = d3.scaleLinear().domain([0,-14]).range([0, width])
+    xMap2 = function(d) { return xScale2(xValue2(d));},
+    xAxis2 = d3.axisBottom(xScale2);
+
+// setup y
+var yValue2 = function(d) { return d.sigma;},
+    yScale2 = d3.scaleLinear().domain([0,12]).range([height, 0]),
+    yMap2 = function(d) { return yScale2(yValue2(d));},
+yAxis2 = d3.axisLeft(yScale2);
+
+// add Figure 3
+var fig3 = d3.select("#three").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// setup x 
+var xValue3 = function(d) { return d.dist;},
+    xScale3 = d3.scaleLinear().domain([0,500]).range([0, width])
+    xMap3 = function(d) { return xScale3(xValue3(d));},
+    xAxis3 = d3.axisBottom(xScale3);
+
+// setup y
+var yValue3 = function(d) { return d.MV;},
+    yScale3 = d3.scaleLinear().domain([0,-14]).range([height, 0]),
+    yMap3 = function(d) { return yScale3(yValue3(d));},
+    yAxis3 = d3.axisLeft(yScale3);
+
+
+// start the data access for GCs
+d3.csv("harris10.csv").then( function(data){
+  data.forEach(function(d) {
+    // convert data into numbers
+    d.MV = +d.MV
+    d.r2 = +d.rhalf
+  });
+
+  // print example data to console for checking
+console.log(data[0]);
+
+gdata = data.filter(function(d) { return d.MV < 0. })
+
+  // x-axis
+  fig1.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis1)
+  fig1.append("text")
+      .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
+      .style("text-anchor", "middle")
+      .text("Half-Light Radius [pc]");
+
+  // y-axis
+  fig1.append("g")
+      .attr("class", "y axis")
+      .call(yAxis1)
+  fig1.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Absolute V Magnitude");
+
+  // draw dots
+  fig1.selectAll(".dot")
+      .data(gdata)
+      .enter().append("circle")
+      .attr("class", "dot1a")
+      .attr("r", 2.5)
+      .attr("cx", xMap1)
+      .attr("cy", yMap1)
+.style("fill", "none")
+
+// lines of faintness
+  fig1.selectAll('line1.brightness')
+     .data(data)
+     .enter().append('line')
+     .attr('class', 'brightness')
+     .attr('x1', function(d) { return xScale1(1.8); })
+     .attr('x2', function(d) { return xScale1(1800.); })
+     .attr('y1', function(d) { return yScale1(0.); })
+     .attr('y2', function(d) { return yScale1(-14.); });
+
+  fig1.selectAll('line2.brightness')
+     .data(data)
+     .enter().append('line')
+     .attr('class', 'brightness')
+     .attr('x1', function(d) { return xScale1(4.5); })
+     .attr('x2', function(d) { return xScale1(3000.); })
+     .attr('y1', function(d) { return yScale1(0.); })
+     .attr('y2', function(d) { return yScale1(-13.25); });
+
+  fig1.selectAll('line3.brightness')
+     .data(data)
+     .enter().append('line')
+     .attr('class', 'brightness')
+     .attr('x1', function(d) { return xScale1(10.3); })
+     .attr('x2', function(d) { return xScale1(3000.); })
+     .attr('y1', function(d) { return yScale1(0.); })
+     .attr('y2', function(d) { return yScale1(-11.25); });
+
+  fig1.selectAll('line4.brightness')
+     .data(data)
+     .enter().append('line')
+     .attr('class', 'brightness')
+     .attr('x1', function(d) { return xScale1(28); })
+     .attr('x2', function(d) { return xScale1(3000.); })
+     .attr('y1', function(d) { return yScale1(0.); })
+     .attr('y2', function(d) { return yScale1(-9.25); });
+
+
+});
+
+
+// add the mouseover feature to the page
+var tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip").style("opacity", 0);
+
+
+
+
+// start the data access
+d3.csv("simondwarfs.csv").then( function(data){
+  data.forEach(function(d) {
+    // convert data into numbers
+    d.dr2 = +d.dr2
+    d.r2 = +d.r2
+    d.ur2 = +d.ur2
+    d.MV = +d.MV
+    d.uMV = +d.uMV
+    d.dMV = +d.dMV
+    d.Vhel = +d.Vhel
+    d.uVhel = +d.uVhel
+    d.dVhel = +d.dVhel
+    d.sigma = +d.sigma
+    d.usigma = +d.udsig
+    d.dsigma = +d.ddsig
+  });
+
+  // print example data to console for checking
+  console.log(data[0]);
+
+  // if specific datacut is desired...
+  //groupFourData = data.filter(function(d) { return d.year == 1946 })
+
+  // x-axis
+  fig1.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis1)
+  fig1.append("text")
+      .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
+      .style("text-anchor", "middle")
+      .text("Half-Light Radius [pc]");
+
+  // y-axis
+  fig1.append("g")
+      .attr("class", "y axis")
+      .call(yAxis1)
+  fig1.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Absolute V Magnitude");
+
+  // draw dots
+  fig1.selectAll(".dot")
+      .data(data)
+      .enter().append("circle")
+      .attr("class", "dot")
+      .attr("r", 5.5)
+      .attr("cx", xMap1)
+      .attr("cy", yMap1)
+      .style("fill", function(d) { return cValue1(d);}) 
+      .on("mouseover", function(d) {
+          tooltip.transition().duration(200).style("opacity", .9);
+          tooltip.html(d['Dwarf'] + "<br/> (" + xValue1(d) 
+	        + "pc , " + yValue1(d) + "mag)")
+               .style("left", (d3.event.pageX + 5) + "px")
+               .style("top", (d3.event.pageY - 28) + "px");
+          })
+      .on("mouseout", function(d) {
+          tooltip.transition().duration(500).style("opacity", 0);
+          });
+
+  // draw error bars
+  fig1.selectAll('line.xerror')
+     .data(data)
+     .enter().append('line')
+     .attr('class', 'xerror')
+     .attr('x1', function(d) { return xScale1(d.r2+d.dr2); })
+     .attr('x2', function(d) { return xScale1(d.r2+d.ur2); })
+     .attr('y1', function(d) { return yScale1(d.MV); })
+     .attr('y2', function(d) { return yScale1(d.MV); });
+
+  fig1.selectAll('line.yerror')
+     .data(data)
+     .enter().append('line')
+     .attr('class', 'yerror')
+     .attr('x1', function(d) { return xScale1(d.r2); })
+     .attr('x2', function(d) { return xScale1(d.r2); })
+     .attr('y1', function(d) { return yScale1(d.MV+d.dMV); })
+     .attr('y2', function(d) { return yScale1(d.MV+d.uMV); });
+
+
+
+// Figure 2
+  // x-axis
+  fig2.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis2)
+  fig2.append("text")
+      .attr("transform",
+            "translate(" + (width/2) + " ," + 
+                           (height + margin.top + 20) + ")")
+      .style("text-anchor", "middle")
+      .text("Absolute V Magnitude");
+
+  // y-axis
+  fig2.append("g")
+      .attr("class", "y axis")
+      .call(yAxis2)
+fig2.append("text")
+.attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Velocity Dispersion [km/s]");
+
+  // draw dots
+  fig2.selectAll(".dot")
+.data(data)
+    .enter().append("circle")
+      .attr("class", "dot")
+      .attr("r", 5.5)
+      .attr("cx", xMap2)
+      .attr("cy", yMap2)
+      .style("fill", function(d) { return cValue1(d);}) 
+      .on("mouseover", function(d) {
+          tooltip.transition()
+               .duration(200)
+               .style("opacity", .9);
+          tooltip.html(d['Dwarf'] + "<br/> (" + xValue2(d) 
+	        + "mag, " + yValue2(d) + "km/s)")
+               .style("left", (d3.event.pageX + 5) + "px")
+               .style("top", (d3.event.pageY - 28) + "px");
+      })
+      .on("mouseout", function(d) {
+          tooltip.transition()
+               .duration(500)
+               .style("opacity", 0);
+});
+
+  // draw error bars
+  fig2.selectAll('line.xerror')
+     .data(data)
+     .enter().append('line')
+     .attr('class', 'xerror')
+     .attr('x1', function(d) { return xScale2(d.MV+d.dMV); })
+     .attr('x2', function(d) { return xScale2(d.MV+d.uMV); })
+     .attr('y1', function(d) { return yScale2(d.sigma); })
+     .attr('y2', function(d) { return yScale2(d.sigma); });
+
+  fig2.selectAll('line.yerror')
+     .data(data)
+     .enter().append('line')
+     .attr('class', 'yerror')
+     .attr('x1', function(d) { return xScale2(d.MV); })
+     .attr('x2', function(d) { return xScale2(d.MV); })
+     .attr('y1', function(d) { return yScale2(d.sigma+d.dsigma); })
+     .attr('y2', function(d) { return yScale2(d.sigma+d.usigma); });
+
+
+// Figure 2
+  // x-axis
+  fig3.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis3)
+  fig3.append("text")
+      .attr("transform",
+            "translate(" + (width/2) + " ," + 
+                           (height + margin.top + 20) + ")")
+      .style("text-anchor", "middle")
+      .text("Distance [kpc]");
+
+  // y-axis
+  fig3.append("g")
+      .attr("class", "y axis")
+      .call(yAxis3)
+fig3.append("text")
+.attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Absolute V Magnitude");
+
+  // draw dots
+  fig3.selectAll(".dot")
+.data(data)
+    .enter().append("circle")
+      .attr("class", "dot")
+      .attr("r", 5.5)
+      .attr("cx", xMap3)
+      .attr("cy", yMap3)
+      .style("fill", function(d) { return cValue1(d);}) 
+      .on("mouseover", function(d) {
+          tooltip.transition()
+               .duration(200)
+               .style("opacity", .9);
+          tooltip.html(d['Dwarf'] + "<br/> (" + xValue3(d) 
+	        + "kpc, " + yValue3(d) + "mag)")
+               .style("left", (d3.event.pageX + 5) + "px")
+               .style("top", (d3.event.pageY - 28) + "px");
+      })
+      .on("mouseout", function(d) {
+          tooltip.transition()
+               .duration(500)
+               .style("opacity", 0);
+});
+
+
+
+});
+
+
+</script>
+
+
+
+
+<hr>
+<address></address>
+<!-- hhmts start -->Last modified: Sun Jun 14 14:59:05 BST 2020 <!-- hhmts end -->
+</body> </html>
