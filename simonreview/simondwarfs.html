@@ -154,8 +154,8 @@ var xValue3 = function(d) { return d.dist;},
     xAxis3 = d3.axisBottom(xScale3);
 
 // setup y
-var yValue3 = function(d) { return d.MV;},
-    yScale3 = d3.scaleLinear().domain([0,-14]).range([height, 0]),
+var yValue3 = function(d) { return d.appmag;},
+    yScale3 = d3.scaleLinear().domain([3,25]).range([height, 0]),
     yMap3 = function(d) { return yScale3(yValue3(d));},
     yAxis3 = d3.axisLeft(yScale3);
 
@@ -166,6 +166,8 @@ d3.csv("harris10.csv").then( function(data){
     // convert data into numbers
     d.MV = +d.MV
     d.r2 = +d.rhalf
+    d.appmag = +d.vmag
+    d.dist = +d.helio_distance
   });
 
   // print example data to console for checking
@@ -173,37 +175,36 @@ console.log(data[0]);
 
 gdata = data.filter(function(d) { return d.MV < 0. })
 
-  // x-axis
-  fig1.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis1)
-  fig1.append("text")
-      .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
-      .style("text-anchor", "middle")
-      .text("Half-Light Radius [pc]");
 
-  // y-axis
-  fig1.append("g")
-      .attr("class", "y axis")
-      .call(yAxis1)
-  fig1.append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 0 - margin.left)
-      .attr("x",0 - (height / 2))
-      .attr("dy", "1em")
-      .style("text-anchor", "middle")
-      .text("Absolute V Magnitude");
+// https://www.d3-graph-gallery.com/graph/shape.html
+var datal = [{x: 10}, {x: 100}, {x: 300}, {x: 500}]
 
-  // draw dots
-  fig1.selectAll(".dot")
-      .data(gdata)
-      .enter().append("circle")
-      .attr("class", "dot1a")
-      .attr("r", 2.5)
-      .attr("cx", xMap1)
-      .attr("cy", yMap1)
-.style("fill", "none")
+// create svg element:
+var svg = d3.select("#curve").append("svg").attr("width", 800).attr("height", 200)
+
+// prepare a helper function
+var curveFunc1 = d3.line()
+  .curve(d3.curveBasis)              // This is where you define the type of curve. Try curveStep for instance.
+  .x(function(d) { return xScale3(d.x) })
+  .y(function(d) { return yScale3(5*Math.log10(d.x)+2.7) })
+
+var curveFunc2 = d3.line()
+  .curve(d3.curveBasis)              // This is where you define the type of curve. Try curveStep for instance.
+  .x(function(d) { return xScale3(d.x) })
+  .y(function(d) { return yScale3(5*Math.log10(d.x)+4) })
+
+// Add the path using this helper function
+fig3.append('path')
+  .attr('d', curveFunc1(datal))
+  .attr('stroke', '#f0c1cb')
+  .attr('stroke-width', '2pt')
+  .attr('fill', 'none');
+
+//fig3.append('path')
+//  .attr('d', curveFunc2(datal))
+//  .attr('stroke', '#f0c1cb')
+//  .attr('stroke-width', '2pt')
+//  .attr('fill', 'none');
 
 // lines of faintness
   fig1.selectAll('line1.brightness')
@@ -241,6 +242,28 @@ gdata = data.filter(function(d) { return d.MV < 0. })
      .attr('x2', function(d) { return xScale1(3000.); })
      .attr('y1', function(d) { return yScale1(0.); })
      .attr('y2', function(d) { return yScale1(-9.25); });
+
+
+  // draw dots
+  fig1.selectAll(".dot")
+      .data(gdata)
+      .enter().append("circle")
+      .attr("class", "dot1a")
+      .attr("r", 2.5)
+      .attr("cx", xMap1)
+      .attr("cy", yMap1)
+.style("fill", "none")
+
+  // draw dots
+  fig3.selectAll(".dot")
+      .data(gdata)
+      .enter().append("circle")
+      .attr("class", "dot1a")
+      .attr("r", 2.5)
+      .attr("cx", xMap3)
+      .attr("cy", yMap3)
+.style("fill", "none")
+
 
 
 });
@@ -432,7 +455,7 @@ fig3.append("text")
       .attr("x",0 - (height / 2))
       .attr("dy", "1em")
       .style("text-anchor", "middle")
-      .text("Absolute V Magnitude");
+      .text("Apparent V Magnitude");
 
   // draw dots
   fig3.selectAll(".dot")
@@ -448,7 +471,7 @@ fig3.append("text")
                .duration(200)
                .style("opacity", .9);
           tooltip.html(d['Dwarf'] + "<br/> (" + xValue3(d) 
-	        + "kpc, " + yValue3(d) + "mag)")
+	        + "kpc, " + d['MV'] + "mag)")
                .style("left", (d3.event.pageX + 5) + "px")
                .style("top", (d3.event.pageY - 28) + "px");
       })
@@ -457,7 +480,6 @@ fig3.append("text")
                .duration(500)
                .style("opacity", 0);
 });
-
 
 
 });
@@ -470,5 +492,5 @@ fig3.append("text")
 
 <hr>
 <address></address>
-<!-- hhmts start -->Last modified: Sun Jun 14 14:59:05 BST 2020 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Mon Jun 15 10:49:47 BST 2020 <!-- hhmts end -->
 </body> </html>
