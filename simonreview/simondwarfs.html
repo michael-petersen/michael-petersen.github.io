@@ -86,6 +86,15 @@ Galactocentric distance.</p>
 <!--<svg width="200" height="200" id="svg2"></svg>-->
 
 <script>
+// TO READ on d3
+// https://www.d3indepth.com/selections/
+// https://bl.ocks.org/d3indepth/cd21d0522fc6f48e3fb88c7f770eb008
+// cool axis labels: https://observablehq.com/@d3/scatterplot
+// colours: https://github.com/d3/d3-scale-chromatic
+// legends: https://bl.ocks.org/zanarmstrong/0b6276e033142ce95f7f374e20f1c1a7
+// lines: https://www.d3-graph-gallery.com/graph/line_basic.html
+
+
 
 // define the axes scales
 var chartDiv = document.getElementById("chart");
@@ -160,6 +169,13 @@ var yValue3 = function(d) { return d.appmag;},
     yAxis3 = d3.axisLeft(yScale3);
 
 
+
+// add the mouseover feature to the page
+var tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip").style("opacity", 0);
+
+
+
 // start the data access for GCs
 d3.csv("harris10.csv").then( function(data){
   data.forEach(function(d) {
@@ -177,6 +193,7 @@ gdata = data.filter(function(d) { return d.MV < 0. })
 
 
 // https://www.d3-graph-gallery.com/graph/shape.html
+// http://bl.ocks.org/enthal/1726550
 var datal = [{x: 10}, {x: 100}, {x: 300}, {x: 500}]
 
 // create svg element:
@@ -254,6 +271,7 @@ fig3.append('path')
       .attr("cy", yMap1)
 .style("fill", "none")
 
+
   // draw dots
   fig3.selectAll(".dot")
       .data(gdata)
@@ -267,11 +285,6 @@ fig3.append('path')
 
 
 });
-
-
-// add the mouseover feature to the page
-var tooltip = d3.select("body").append("div")
-    .attr("class", "tooltip").style("opacity", 0);
 
 
 
@@ -492,5 +505,5 @@ fig3.append("text")
 
 <hr>
 <address></address>
-<!-- hhmts start -->Last modified: Mon Jun 15 10:49:47 BST 2020 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Wed Jun 17 17:17:00 BST 2020 <!-- hhmts end -->
 </body> </html>
