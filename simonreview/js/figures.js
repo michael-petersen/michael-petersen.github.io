@@ -43,8 +43,15 @@ var colorscale1 = d3.scaleSequential(d3.interpolateBlues).domain([0,1]),
     cValue1 = function(d) { if ( d.Dwarf=="Crater II" ||
 d.Dwarf=="Sagittarius II" || d.Dwarf=="Antlia 2") {return colorscale2(0.5);}
                        else if (d.MV>-7.5) {return colorscale1(0.2);}
-                       else { return colorscale1(0.8);}};
+			    else { return colorscale1(0.8);}};
 
+    cValue2 = function(d) { if (d.udsig==0) {return colorscale2(0.2);} else if ( d.Dwarf=="Crater II" ||
+d.Dwarf=="Sagittarius II" || d.Dwarf=="Antlia 2") {return colorscale2(0.5);}
+                       else if (d.MV>-7.5) {return colorscale1(0.2);}
+			    else { return colorscale1(0.8);}};
+// u.dsig
+
+// ------------------------------------------------------------------------------------
 // add Figure 2
 var fig2 = d3.select("#two").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -55,7 +62,12 @@ var fig2 = d3.select("#two").append("svg")
 var xValue2 = function(d) { return d.MV;},
     xScale2 = d3.scaleLinear().domain([0,-14]).range([0, width])
     xMap2 = function(d) { return xScale2(xValue2(d));},
-    xAxis2 = d3.axisBottom(xScale2);
+xAxis2 = d3.axisBottom(xScale2);
+
+var xValue2 = function(d) { return d.r2;},
+    xScale2 = d3.scaleLog().domain([10,3000]).range([0, width])
+    xMap2 = function(d) { return xScale2(xValue2(d));},
+    xAxis2 = d3.axisBottom(xScale2).ticks(10, "~s");
 
 // setup y
 var yValue2 = function(d) { return d.sigma;},
@@ -63,6 +75,7 @@ var yValue2 = function(d) { return d.sigma;},
     yMap2 = function(d) { return yScale2(yValue2(d));},
 yAxis2 = d3.axisLeft(yScale2);
 
+// ------------------------------------------------------------------------------------
 // add Figure 3
 var fig3 = d3.select("#three").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -81,6 +94,49 @@ var yValue3 = function(d) { return d.appmag;},
     yMap3 = function(d) { return yScale3(yValue3(d));},
     yAxis3 = d3.axisLeft(yScale3);
 
+
+// ------------------------------------------------------------------------------------
+// add Figure 4
+var fig4 = d3.select("#four").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// setup x 
+var xValue4 = function(d) { return d.luminosity;},
+    xScale4 = d3.scaleLog().domain([50,50000000]).range([0, width])
+    xMap4 = function(d) { return xScale4(xValue4(d));},
+    xAxis4 = d3.axisBottom(xScale4).ticks(10, "~s");
+
+// setup y
+var yValue4 = function(d) { return d.mhalf;},
+    yScale4 = d3.scaleLog().domain([10000,1000000000]).range([height, 0]),
+    yMap4 = function(d) { return yScale4(yValue4(d));},
+    yAxis4 = d3.axisLeft(yScale4).ticks(6, "~s");
+
+// ------------------------------------------------------------------------------------
+// add Figure 5
+var fig5 = d3.select("#five").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// setup x 
+var xValue5 = function(d) { return d.luminosity;},
+    xScale5 = d3.scaleLog().domain([50,50000000]).range([0, width])
+    xMap5 = function(d) { return xScale5(xValue5(d));},
+    xAxis5 = d3.axisBottom(xScale4).ticks(10, "~s");
+
+// setup y
+var yValue5 = function(d) { return d.masslum;},
+    yScale5 = d3.scaleLog().domain([1,10000]).range([height, 0]),
+    yMap5 = function(d) { return yScale5(yValue5(d));},
+    yAxis5 = d3.axisLeft(yScale5).ticks(4, "~s");
+
+
+
+
+var gravG = 0.0000043009125; // gravitational constant, (km/s)^2 * kpc / Msun
 
 
 // add the mouseover feature to the page
@@ -218,6 +274,10 @@ d3.csv("simondwarfs.csv").then( function(data){
     d.sigma = +d.sigma
     d.usigma = +d.udsig
     d.dsigma = +d.ddsig
+    d.luminosity = Math.pow(10., (+d.MV - 4.77)/-2.5)
+    d.mhalf = 5.*0.001*d.r2*d.sigma*d.sigma/(2*gravG) // equation 7 of
+      // penarrubia
+      d.masslum = d.mhalf/d.luminosity
   });
 
   // print example data to console for checking
@@ -288,7 +348,7 @@ d3.csv("simondwarfs.csv").then( function(data){
      .attr('y2', function(d) { return yScale1(d.MV+d.uMV); });
 
 
-
+// ------------------------------------------------------------------------------------
 // Figure 2
   // x-axis
   fig2.append("g")
@@ -300,7 +360,7 @@ d3.csv("simondwarfs.csv").then( function(data){
             "translate(" + (width/2) + " ," + 
                            (height + margin.top + 20) + ")")
       .style("text-anchor", "middle")
-      .text("Absolute V Magnitude");
+      .text("Half-Light radius [pc]");
 
   // y-axis
   fig2.append("g")
@@ -322,7 +382,7 @@ fig2.append("text")
       .attr("r", 5.5)
       .attr("cx", xMap2)
       .attr("cy", yMap2)
-      .style("fill", function(d) { return cValue1(d);}) 
+      .style("fill", function(d) { return cValue2(d);}) 
       .on("mouseover", function(d) {
           tooltip.transition()
                .duration(200)
@@ -357,8 +417,8 @@ fig2.append("text")
      .attr('y1', function(d) { return yScale2(d.sigma+d.dsigma); })
      .attr('y2', function(d) { return yScale2(d.sigma+d.usigma); });
 
-
-// Figure 2
+// ------------------------------------------------------------------------------------
+// Figure 3
   // x-axis
   fig3.append("g")
       .attr("class", "x axis")
@@ -398,6 +458,109 @@ fig3.append("text")
                .style("opacity", .9);
           tooltip.html(d['Dwarf'] + "<br/> (" + xValue3(d) 
 	        + "kpc, " + d['MV'] + "mag)")
+               .style("left", (d3.event.pageX + 5) + "px")
+               .style("top", (d3.event.pageY - 28) + "px");
+      })
+      .on("mouseout", function(d) {
+          tooltip.transition()
+               .duration(500)
+               .style("opacity", 0);
+});
+
+
+// ------------------------------------------------------------------------------------
+// Figure 4
+  // x-axis
+  fig4.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis4)
+  fig4.append("text")
+      .attr("transform",
+            "translate(" + (width/2) + " ," + 
+                           (height + margin.top + 20) + ")")
+      .style("text-anchor", "middle")
+      .text("Luminosity (Lsun)");
+
+  // y-axis
+  fig4.append("g")
+      .attr("class", "y axis")
+      .call(yAxis4)
+fig4.append("text")
+.attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Mass (Msun)");
+
+  // draw dots
+  fig4.selectAll(".dot")
+.data(data)
+    .enter().append("circle")
+      .attr("class", "dot")
+      .attr("r", 5.5)
+      .attr("cx", xMap4)
+      .attr("cy", yMap4)
+      .style("fill", function(d) { return cValue2(d);}) 
+      .on("mouseover", function(d) {
+          tooltip.transition()
+               .duration(200)
+               .style("opacity", .9);
+          tooltip.html(d['Dwarf'] + "<br/> (" + xValue4(d) 
+	               + "Lsun, " + yValue4(d) + "Msun)")
+               .style("left", (d3.event.pageX + 5) + "px")
+               .style("top", (d3.event.pageY - 28) + "px");
+      })
+      .on("mouseout", function(d) {
+          tooltip.transition()
+               .duration(500)
+               .style("opacity", 0);
+});
+
+
+    
+// ------------------------------------------------------------------------------------
+// Figure 5
+  // x-axis
+  fig5.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis5)
+  fig4.append("text")
+      .attr("transform",
+            "translate(" + (width/2) + " ," + 
+                           (height + margin.top + 20) + ")")
+      .style("text-anchor", "middle")
+      .text("Luminosity (Lsun)");
+
+  // y-axis
+  fig5.append("g")
+      .attr("class", "y axis")
+      .call(yAxis5)
+fig5.append("text")
+.attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Mass-to-Light (Msun/Lsun)");
+
+  // draw dots
+  fig5.selectAll(".dot")
+.data(data)
+    .enter().append("circle")
+      .attr("class", "dot")
+      .attr("r", 5.5)
+      .attr("cx", xMap5)
+      .attr("cy", yMap5)
+      .style("fill", function(d) { return cValue2(d);}) 
+      .on("mouseover", function(d) {
+          tooltip.transition()
+               .duration(200)
+               .style("opacity", .9);
+          tooltip.html(d['Dwarf'] + "<br/> (" + xValue5(d) 
+	               + "Lsun, " + yValue5(d) + "Msun)")
                .style("left", (d3.event.pageX + 5) + "px")
                .style("top", (d3.event.pageY - 28) + "px");
       })
