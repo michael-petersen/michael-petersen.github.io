@@ -23,6 +23,12 @@ body {
 stroke: #000;
 }
 
+.dot2a {
+    stroke: #C0C0C0;
+    stroke-width: 4 px;
+}
+
+
 line.xerror {
   stroke: #000;
 }

@@ -40,13 +40,16 @@ var yValue1 = function(d) { return d.MV;},
 // setup colors
 var colorscale1 = d3.scaleSequential(d3.interpolateBlues).domain([0,1]),
     colorscale2 = d3.scaleSequential(d3.interpolateReds).domain([0,1]),
-    cValue1 = function(d) { if ( d.Dwarf=="Crater II" ||
-d.Dwarf=="Sagittarius II" || d.Dwarf=="Antlia 2") {return colorscale2(0.5);}
+    cValue1 = function(d) { if ( d.Dwarf=="Segue 1" ||
+				 //d.Dwarf=="Sagittarius II" ||
+				 d.Dwarf=="Antlia 2") {return colorscale2(0.5);}
                        else if (d.MV>-7.5) {return colorscale1(0.2);}
 			    else { return colorscale1(0.8);}};
 
-    cValue2 = function(d) { if (d.udsig==0) {return colorscale2(0.2);} else if ( d.Dwarf=="Crater II" ||
-d.Dwarf=="Sagittarius II" || d.Dwarf=="Antlia 2") {return colorscale2(0.5);}
+    cValue2 = function(d) { if (d.udsig==0) {return colorscale2(0.2);}
+			    else if ( d.Dwarf=="Segue 1" ||
+				      //d.Dwarf=="Sagittarius II" ||
+				      d.Dwarf=="Antlia 2") {return colorscale2(0.5);}
                        else if (d.MV>-7.5) {return colorscale1(0.2);}
 			    else { return colorscale1(0.8);}};
 // u.dsig
@@ -125,7 +128,7 @@ var fig5 = d3.select("#five").append("svg")
 var xValue5 = function(d) { return d.luminosity;},
     xScale5 = d3.scaleLog().domain([50,50000000]).range([0, width])
     xMap5 = function(d) { return xScale5(xValue5(d));},
-    xAxis5 = d3.axisBottom(xScale4).ticks(10, "~s");
+    xAxis5 = d3.axisBottom(xScale5).ticks(10, "~s");
 
 // setup y
 var yValue5 = function(d) { return d.masslum;},
@@ -133,33 +136,233 @@ var yValue5 = function(d) { return d.masslum;},
     yMap5 = function(d) { return yScale5(yValue5(d));},
     yAxis5 = d3.axisLeft(yScale5).ticks(4, "~s");
 
+// ------------------------------------------------------------------------------------
+// add Figure 6
+var fig6 = d3.select("#six").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// setup x 
+var xValue6 = function(d) { return d.dmw;},
+    xScale6 = d3.scaleLinear().domain([0,600]).range([0, width])
+    xMap6 = function(d) { return xScale6(xValue6(d));},
+    xAxis6 = d3.axisBottom(xScale6).ticks(10);
+
+// setup y
+var yValue6 = function(d) { return d.vmw;},
+    yScale6 = d3.scaleLinear().domain([0,500]).range([height, 0]),
+    yMap6 = function(d) { return yScale6(yValue6(d));},
+    yAxis6 = d3.axisLeft(yScale6).ticks(4);
 
 
 
 var gravG = 0.0000043009125; // gravitational constant, (km/s)^2 * kpc / Msun
 
 
+
+
 // add the mouseover feature to the page
 var tooltip = d3.select("body").append("div")
     .attr("class", "tooltip").style("opacity", 0);
 
+var tooltip6 = d3.select("#six").append("div")
+    .attr("class", "tooltip").style("opacity", 0);
+
+var tooltip1 = d3.select("#one").append("div")
+    .attr("class", "tooltip").style("opacity", 0);
+
+
+// start the data access for LG satellites
+d3.csv("weisz19.csv").then( function(data){
+  data.forEach(function(d) {
+    // convert data into numbers
+    d.dm31 = +d.dm31
+      d.MV = +d.MV
+      d.r2 = +d.hlight
+  });
+
+  // print example data to console for checking
+    //console.log(data[0]);
+
+  // draw dots
+  fig1.selectAll(".dot")
+      .data(data)
+      .enter().append("circle")
+      .attr("class", "dot1a")
+      .attr("r", 4.5)
+      .attr("cx", xMap1)
+      .attr("cy", yMap1)
+.style("fill", "silver")
+    .on("mouseover", function(d) {
+          tooltip1.transition().duration(200).style("opacity", .9);
+          tooltip1.html(d['name'])
+               .style("left", (d3.event.pageX + 5) + "px")
+               .style("top", (d3.event.pageY - 28) + "px");
+          })
+      .on("mouseout", function(d) {
+          tooltip1.transition().duration(500).style("opacity", 0);
+          });
+});
+
+
+
+
+// start the data access for LG satellites
+d3.csv("mconnachie12_2.csv",d3.autoType).then( function(data){
+  data.forEach(function(d) {
+    // convert data into numbers
+    d.dmw = +d.dmw
+      d.vmw = Math.sqrt(3 * d.vmw*d.vmw)
+  });
+
+  // print example data to console for checking
+    console.log(data);
+
+
+  // x-axis
+  fig6.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis6)
+  fig6.append("text")
+      .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
+      .style("text-anchor", "middle")
+      .text("MW Distance [kpc]");
+
+  // y-axis
+  fig6.append("g")
+      .attr("class", "y axis")
+      .call(yAxis6)
+  fig6.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("MW Velocity [km/s]");
+
+
+var datal = [{x: 10}, {x: 100}, {x: 300}, {x: 500}]
+
+// create svg element:
+var svg = d3.select("#curve").append("svg").attr("width", 800).attr("height", 200)
+
+// prepare a helper function
+var curveFunc1 = d3.line()
+  .curve(d3.curveBasis)              // This is where you define the type of curve. Try curveStep for instance.
+  .x(function(d) { return xScale3(d.x) })
+    .y(function(d) {  return yScale6(Math.sqrt((2*gravG*1.e12)/d.x)) })
+
+
+// Add the path using this helper function
+fig6.append('path')
+  .attr('d', curveFunc1(datal))
+  .attr('stroke', '#f0c1cb')
+  .attr('stroke-width', '2pt')
+  .attr('fill', 'none');
+
+
+  // draw dots
+  fig6.selectAll(".dot")
+      .data(data)
+      .enter().append("circle")
+      .attr("class", "dot1a")
+      .attr("r", 4.5)
+      .attr("cx", xMap6)
+      .attr("cy", yMap6)
+.style("fill", "white")
+      .on("mouseover", function(d) {
+          tooltip6.transition().duration(200).style("opacity", .9);
+          tooltip6.html(d['name'])
+               .style("left", (d3.event.pageX + 5) + "px")
+               .style("top", (d3.event.pageY - 28) + "px");
+          })
+      .on("mouseout", function(d) {
+          tooltip6.transition().duration(500).style("opacity", 0);
+          });
+
+
+});
+
+
+
+// start the data access for LG satellites
+d3.csv("updatedsatellites.csv",d3.autoType).then( function(data){
+  data.forEach(function(d) {
+    // convert data into numbers
+      d.dmw = Math.sqrt(d.x*d.x + d.y*d.y + d.z*d.z)
+      d.vmw = Math.sqrt(d.vx*d.vx + d.vy*d.vy + d.vz*d.vz) 
+  });
+
+  // print example data to console for checking
+    //console.log(data[0]);
+
+
+  // x-axis
+  fig6.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis6)
+  fig6.append("text")
+      .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
+      .style("text-anchor", "middle")
+      .text("MW Distance [kpc]");
+
+  // y-axis
+  fig6.append("g")
+      .attr("class", "y axis")
+      .call(yAxis6)
+  fig6.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("MW Velocity [km/s]");
+
+    
+  // draw dots
+  fig6.selectAll(".dot")
+      .data(data)
+      .enter().append("circle")
+      .attr("class", "dot1a")
+      .attr("r", 4.5)
+      .attr("cx", xMap6)
+      .attr("cy", yMap6)
+.style("fill", "silver")
+      .on("mouseover", function(d) {
+          tooltip6.transition().duration(200).style("opacity", .9);
+          tooltip6.html(d['name'])
+               .style("left", (d3.event.pageX + 5) + "px")
+               .style("top", (d3.event.pageY - 28) + "px");
+          })
+      .on("mouseout", function(d) {
+          tooltip6.transition().duration(500).style("opacity", 0);
+          });
+
+
+});
+
+
 
 
 // start the data access for GCs
-d3.csv("harris10.csv").then( function(data){
+d3.csv("harris10.csv",d3.autoType).then( function(data){
   data.forEach(function(d) {
     // convert data into numbers
     d.MV = +d.MV
     d.r2 = +d.rhalf
     d.appmag = +d.vmag
-    d.dist = +d.helio_distance
+      d.dist = +d.helio_distance
   });
 
   // print example data to console for checking
-console.log(data[0]);
+//console.log(data[0]);
 
 gdata = data.filter(function(d) { return d.MV < 0. })
 
+//console.log(data[0]['name']);
 
 // https://www.d3-graph-gallery.com/graph/shape.html
 // http://bl.ocks.org/enthal/1726550
@@ -238,8 +441,16 @@ fig3.append('path')
       .attr("r", 2.5)
       .attr("cx", xMap1)
       .attr("cy", yMap1)
-.style("fill", "none")
-
+	.style("fill", "white")
+	.on("mouseover", function(d) {
+          tooltip.transition().duration(200).style("opacity", .9);
+          tooltip.html(d['name'])
+               .style("left", (d3.event.pageX + 5) + "px")
+               .style("top", (d3.event.pageY - 28) + "px");
+          })
+      .on("mouseout", function(d) {
+          tooltip.transition().duration(500).style("opacity", 0);
+          });
 
   // draw dots
   fig3.selectAll(".dot")
@@ -249,8 +460,16 @@ fig3.append('path')
       .attr("r", 2.5)
       .attr("cx", xMap3)
       .attr("cy", yMap3)
-.style("fill", "none")
-
+.style("fill", "white")
+.on("mouseover", function(d) {
+          tooltip.transition().duration(200).style("opacity", .9);
+          tooltip.html(d['name'])
+               .style("left", (d3.event.pageX + 5) + "px")
+               .style("top", (d3.event.pageY - 28) + "px");
+          })
+      .on("mouseout", function(d) {
+          tooltip.transition().duration(500).style("opacity", 0);
+          });
 
 
 });
@@ -259,7 +478,7 @@ fig3.append('path')
 
 
 // start the data access
-d3.csv("simondwarfs.csv").then( function(data){
+d3.csv("simondwarfs.csv",d3.autoType).then( function(data){
   data.forEach(function(d) {
     // convert data into numbers
     d.dr2 = +d.dr2
@@ -270,18 +489,25 @@ d3.csv("simondwarfs.csv").then( function(data){
     d.dMV = +d.dMV
     d.Vhel = +d.Vhel
     d.uVhel = +d.uVhel
-    d.dVhel = +d.dVhel
-    d.sigma = +d.sigma
-    d.usigma = +d.udsig
-    d.dsigma = +d.ddsig
-    d.luminosity = Math.pow(10., (+d.MV - 4.77)/-2.5)
-    d.mhalf = 5.*0.001*d.r2*d.sigma*d.sigma/(2*gravG) // equation 7 of
-      // penarrubia
-      d.masslum = d.mhalf/d.luminosity
+      d.dVhel = +d.dVhel
+      d.sigma = Math.min(d.sigma,1000)
+      d.usigma = Math.max(d.udsig,.01)
+      d.dsigma = Math.min(d.ddsig,-.01)
+    d.luminosity = Math.pow(10., (+d.MV - 4.77)/-2.5) + 1.
+    d.dluminosity = Math.pow(10., (+d.MV+d.dMV - 4.77)/-2.5)
+    d.uluminosity = Math.pow(10., (+d.MV+d.uMV - 4.77)/-2.5)
+      d.mhalf = (5.*0.001*+d.r2*+d.sigma*+d.sigma)/(2*gravG) // equation 7 of penarrubia 2016
+    d.umhalf = 5.*0.001*(+d.r2+d.dr2)*(+d.sigma+d.usigma)*(+d.sigma+d.usigma)/(2*gravG)
+    d.dmhalf = 5.*0.001*(+d.r2+d.ur2)*(+d.sigma+d.dsigma)*(+d.sigma+d.dsigma)/(2*gravG)
+      //console.log(d.mhalf,d.umhalf,d.r2+d.dr2,d.sigma+d.dsigma)
+    d.masslum = d.mhalf/d.luminosity
+    d.umasslum = (+d.mhalf+d.umhalf)/d.luminosity
+    d.dmasslum = (+d.mhalf+d.dmhalf)/d.luminosity
   });
 
   // print example data to console for checking
-  console.log(data[0]);
+  console.log(data[0].mhalf+data[0].umhalf);
+  console.log(data[0].MV+data[0].dMV);
 
   // if specific datacut is desired...
   //groupFourData = data.filter(function(d) { return d.year == 1946 })
@@ -468,6 +694,7 @@ fig3.append("text")
 });
 
 
+
 // ------------------------------------------------------------------------------------
 // Figure 4
   // x-axis
@@ -507,8 +734,8 @@ fig4.append("text")
           tooltip.transition()
                .duration(200)
                .style("opacity", .9);
-          tooltip.html(d['Dwarf'] + "<br/> (" + xValue4(d) 
-	               + "Lsun, " + yValue4(d) + "Msun)")
+          tooltip.html(d['Dwarf'] + "<br/> (" + d.mhalf.toPrecision(3)
+	               + "Msun, " + d.umhalf.toPrecision(3) + "Msun)")
                .style("left", (d3.event.pageX + 5) + "px")
                .style("top", (d3.event.pageY - 28) + "px");
       })
@@ -517,6 +744,25 @@ fig4.append("text")
                .duration(500)
                .style("opacity", 0);
 });
+
+  // draw error bars
+  fig4.selectAll('line.xerror')
+     .data(data)
+     .enter().append('line')
+     .attr('class', 'xerror')
+     .attr('x1', function(d) { return xScale4(d.dluminosity); })
+     .attr('x2', function(d) { return xScale4(d.uluminosity); })
+     .attr('y1', function(d) { return yScale4(d.mhalf); })
+     .attr('y2', function(d) { return yScale4(d.mhalf); });
+
+  fig4.selectAll('line.yerror')
+     .data(data)
+     .enter().append('line')
+     .attr('class', 'yerror')
+     .attr('x1', function(d) { return xScale4(d.luminosity); })
+     .attr('x2', function(d) { return xScale4(d.luminosity); })
+     .attr('y1', function(d) { return yScale4(d.dmhalf); })
+     .attr('y2', function(d) { return yScale4(d.umhalf); });
 
 
     
@@ -559,8 +805,8 @@ fig5.append("text")
           tooltip.transition()
                .duration(200)
                .style("opacity", .9);
-          tooltip.html(d['Dwarf'] + "<br/> (" + xValue5(d) 
-	               + "Lsun, " + yValue5(d) + "Msun)")
+          tooltip.html(d['Dwarf'] + "<br/> (" + xValue5(d).toPrecision(3) 
+	               + "Lsun, " + yValue5(d).toPrecision(3) + "Msun)")
                .style("left", (d3.event.pageX + 5) + "px")
                .style("top", (d3.event.pageY - 28) + "px");
       })
