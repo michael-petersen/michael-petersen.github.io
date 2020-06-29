@@ -1,4 +1,4 @@
-﻿name,alt_name   ,ra         ,dec        ,vmag,bv_color,helio_distance,metallicity,radial_velocity,radial_velocity_error,central_sigma_v,central_sigma_v_error,half_light_radius,,rhalf,MV
+﻿name,alt_name   ,ra         ,dec        ,vmag,bv_color,helio_distance,metallicity,radial_velocity,radial_velocity_error,sigma,central_sigma_v_error,half_light_radius,,rhalf,MV
 IC 4499  ,           ,15 00 18.45,-82 12 49.3,9.76,0.91,18.8,-1.53,31.5,0.2,2.5,0.5,1.71,0.000248709,9.351466041,-6.610789246
 E 3      ,           ,09 20 57.07,-77 16 54.8,11.35,        ,8.1,-0.83,               ,                     ,               ,                     ,2.1,0.000305432,4.948004096,-3.192425094
 NGC 4372 ,           ,12 25 45.40,-72 39 32.4,7.24,1.1,5.8,-2.17,72.3,1.2,               ,                     ,3.91,0.000568686,6.596756513,-6.577139968

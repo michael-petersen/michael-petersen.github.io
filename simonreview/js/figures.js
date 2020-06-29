@@ -62,13 +62,8 @@ var fig2 = d3.select("#two").append("svg")
     .append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // setup x 
-var xValue2 = function(d) { return d.MV;},
-    xScale2 = d3.scaleLinear().domain([0,-14]).range([0, width])
-    xMap2 = function(d) { return xScale2(xValue2(d));},
-xAxis2 = d3.axisBottom(xScale2);
-
 var xValue2 = function(d) { return d.r2;},
-    xScale2 = d3.scaleLog().domain([10,3000]).range([0, width])
+    xScale2 = d3.scaleLog().domain([0.8,3000]).range([0, width])
     xMap2 = function(d) { return xScale2(xValue2(d));},
     xAxis2 = d3.axisBottom(xScale2).ticks(10, "~s");
 
@@ -217,7 +212,7 @@ d3.csv("mconnachie12_2.csv",d3.autoType).then( function(data){
   });
 
   // print example data to console for checking
-    console.log(data);
+    //console.log(data);
 
 
   // x-axis
@@ -355,10 +350,11 @@ d3.csv("harris10.csv",d3.autoType).then( function(data){
     d.r2 = +d.rhalf
     d.appmag = +d.vmag
       d.dist = +d.helio_distance
+      d.sigma = +d.sigma
   });
 
   // print example data to console for checking
-//console.log(data[0]);
+console.log(data[0]);
 
 gdata = data.filter(function(d) { return d.MV < 0. })
 
@@ -471,6 +467,26 @@ fig3.append('path')
           tooltip.transition().duration(500).style("opacity", 0);
           });
 
+  // draw dots
+  fig2.selectAll(".dot")
+      .data(gdata)
+      .enter().append("circle")
+      .attr("class", "dot1a")
+      .attr("r", 2.5)
+      .attr("cx", xMap2)
+      .attr("cy", yMap2)
+.style("fill", "white")
+.on("mouseover", function(d) {
+          tooltip.transition().duration(200).style("opacity", .9);
+          tooltip.html(d['name'])
+               .style("left", (d3.event.pageX + 5) + "px")
+               .style("top", (d3.event.pageY - 28) + "px");
+          })
+      .on("mouseout", function(d) {
+          tooltip.transition().duration(500).style("opacity", 0);
+          });
+
+
 
 });
 
@@ -506,8 +522,8 @@ d3.csv("simondwarfs.csv",d3.autoType).then( function(data){
   });
 
   // print example data to console for checking
-  console.log(data[0].mhalf+data[0].umhalf);
-  console.log(data[0].MV+data[0].dMV);
+  //console.log(data[0].mhalf+data[0].umhalf);
+  //console.log(data[0].MV+data[0].dMV);
 
   // if specific datacut is desired...
   //groupFourData = data.filter(function(d) { return d.year == 1946 })
@@ -773,7 +789,7 @@ fig4.append("text")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis5)
-  fig4.append("text")
+  fig5.append("text")
       .attr("transform",
             "translate(" + (width/2) + " ," + 
                            (height + margin.top + 20) + ")")
