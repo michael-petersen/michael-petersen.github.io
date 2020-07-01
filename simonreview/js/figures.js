@@ -71,7 +71,30 @@ var xValue2 = function(d) { return d.r2;},
 var yValue2 = function(d) { return d.sigma;},
     yScale2 = d3.scaleLinear().domain([0,12]).range([height, 0]),
     yMap2 = function(d) { return yScale2(yValue2(d));},
-yAxis2 = d3.axisLeft(yScale2);
+    yAxis2 = d3.axisLeft(yScale2);
+
+var datal = [{x: 10}, {x: 20}, {x: 30}, {x: 50}, {x: 80}, {x: 100}, {x: 130}, {x: 160}, {x: 200}, {x: 300}, {x: 500}, {x: 1000}]
+
+// create svg element:
+var svg = d3.select("#curve").append("svg").attr("width", 800).attr("height", 200)
+
+// prepare a helper function
+var curveFunc1 = d3.line()
+  .curve(d3.curveBasis)              // This is where you define the type of curve. Try curveStep for instance.
+  .x(function(d) { return xScale2(d.x) })
+//   .y(function(d) {  return yScale2(0.93*Math.pow(d.x/1.,0.5)) })
+// this one fits better
+    .y(function(d) {  return yScale2(Math.pow(10.,1.1 + 0.5*Math.log10(0.001*d.x))) })
+
+
+// Add the path using this helper function
+fig2.append('path')
+  .attr('d', curveFunc1(datal))
+  .attr('stroke', '#f0c1cb')
+  .attr('stroke-width', '2pt')
+  .attr('fill', 'none');
+
+
 
 // ------------------------------------------------------------------------------------
 // add Figure 3
@@ -238,7 +261,7 @@ d3.csv("mconnachie12_2.csv",d3.autoType).then( function(data){
       .text("MW Velocity [km/s]");
 
 
-var datal = [{x: 10}, {x: 100}, {x: 300}, {x: 500}]
+var datal = [{x: 10}, {x: 20}, {x: 30}, {x: 50}, {x: 80}, {x: 100}, {x: 130}, {x: 160}, {x: 200}, {x: 300}, {x: 500}]
 
 // create svg element:
 var svg = d3.select("#curve").append("svg").attr("width", 800).attr("height", 200)
