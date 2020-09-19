@@ -18,6 +18,19 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% some layout choices. 
+
+% should we include citation numbers?
+\newif\ifcitationnumbers
+\citationnumbersfalse
+
+% should this be a CV with a separate publication list, or without?
+\newif\ifpublicationlist
+\publicationlisttrue
+
+% should we include all or select dynamics-relevant publications?
+\newif\ifselectedpublications
+\selectedpublicationsfalse
 
 \documentclass[margin, a4paper,11pt]{res} % Use the res.cls style, the font size can be changed to 11pt or 12pt here
 
@@ -55,12 +68,7 @@
 %----------------------------------------------------------------------------------------
 
 \moveleft.5\hoffset\centerline{\huge\bf \textcolor{blueshade}{Michael S. Petersen} }
- 
 \moveleft\hoffset\vbox{\color{grey}\hrule width 6.5in height 1pt}\smallskip
-
-%{ \color{grey}\rule{\linewidth}{0.5mm} }
- 
-
 \moveleft.5\hoffset\centerline{Institute for Astronomy, University of Edinburgh, Royal Observatory}
 \moveleft.5\hoffset\centerline{Blackford Hill, Edinburgh EH9 3HJ, UK}
 \moveleft.5\hoffset\centerline{\textcolor{grey}{\href{mailto:michael.petersen@roe.ac.uk}{michael.petersen@roe.ac.uk}}}
@@ -69,22 +77,20 @@
 
 \section{\sc \textcolor{redshade}{Research} }
 
-%{\bf Graduate Research Assistant}\\
-%\hspace*{0.25 in} {\sl Martin D. Weinberg and Neal Katz, University of Massachusetts} \\
 Design, implement, execute, and analyse precision numerical models to understand dynamical evolution in disk galaxies and their halo environs.
 
 
 \section{\sc \textcolor{redshade}{Position}}
 
 {\bf Postdoctoral Research Associate,} working with Jorge Pe{\~n}arrubia. \hfill \textcolor{grey}{2019-}
-% add name of consolidated grant case
+% add name of consolidated grant case?
 
 \section{\sc \textcolor{redshade}{Education}}
 
 {\bf Doctor of Philosophy,} Astronomy \hfill \textcolor{grey}{2019}\\
 \hspace*{0.25 in} {\sl \textcolor{blueshade}{The non-linear dynamics of barred galaxy evolution in $\Lambda$CDM}}\\
 \hspace*{0.25 in} {\sl Advisors: Martin D. Weinberg, Neal Katz}\\
-\hspace*{0.4 in} Mary Dailey Irvine Grant \hfill \textcolor{grey}{2016, 2017, 2018}\\
+%\hspace*{0.4 in} Mary Dailey Irvine Grant \hfill \textcolor{grey}{2016, 2017, 2018}\\
 %\hspace*{0.4 in} Massachusetts Space Grant \hfill 2010, 2011, 2015\\
 {\bf Bachelor of Arts,} Astronomy \& Physics, Music \hfill \textcolor{grey}{2010}\\
 \hspace*{0.25 in} {\sl Colgate University, Hamilton, NY}\\
@@ -111,7 +117,8 @@ Designed, sought funding for, and advised two summer research projects for advan
 
 % add titles of projects? and progress?
 {\bf University of Edinburgh Senior Honours Research Advisor} \hfill\textcolor{grey}{2019-}\\
-Designed and advised three research projects for undergraduate students at the University of Edinburgh.
+Designed and advised five research projects for undergraduate students
+at the University of Edinburgh over three semesters.
 
 {\bf Five College Astronomy Teaching Assistant} \hfill \textcolor{grey}{2014-2018}\\
 Assisted Professor James Lowenthal, Dr. Anne Jaskot, and Dr. Kim Ward-Duong in Observational Techniques I/II, a two-semester observing course involving a yearly observational component at Kitt Peak National Observatory. University of Massachusetts Distinguished Teaching Award finalist.
@@ -220,45 +227,10 @@ Co-dissertation advisor.
 {\bf Neal Katz}\\
 Co-dissertation advisor.
 
-
+\ifpublicationlist
 \pagebreak
-
-
-
-\section{\sc \textcolor{redshade}{Publications} }
- \underline{\sl Refereed Publications} \\
-7. {\bf \textcolor{blueshade}{Petersen, M. S.}} \& Pe{\~n}arrubia, J. \href{https://ui.adsabs.harvard.edu/abs/2020MNRAS.494L..11P/abstract}{\it Reflex motion in the Milky Way stellar halo resulting from the Large Magellanic Cloud infall}, 2020, MNRASL, 494:11. \\
-6. {\bf \textcolor{blueshade}{Petersen, M. S.}}, Weinberg, M. D., and Katz, N. \href{https://ui.adsabs.harvard.edu/abs/2019MNRAS.490.3616P/abstract}{\it Using torque to understand barred galaxy models}, 2019, MNRAS, 490:3616. \\
-5. {\bf \textcolor{blueshade}{Petersen, M. S.}}, Gutermuth, R.A.,  Nagel, E.,  Wilson, G.W., Lane, J. \href{https://ui.adsabs.harvard.edu/abs/2019MNRAS.488.1462P/abstract}{\it Early science with the Large Millimetre Telescope: new mm-wave detections of circumstellar discs in IC 348 from LMT/AzTEC}, 2019, MNRAS, 488:1462.\\
-4. {\bf \textcolor{blueshade}{Petersen, M. S.}}, Katz, N. , \& Weinberg, M.D. \href{http://adsabs.harvard.edu/abs/2016PhRvD..94l3013P}{{\it The Dynamical Response of Dark Matter to Galaxy Evolution Affects Direct-Detection Experiments}}, Phys Rev D, 2016. Figure 4 was featured as part of the journal's \href{https://journals.aps.org/prd/kaleidoscope/prd/94/12/123013}{`Kaleidoscope'}.\\
-3. {\bf \textcolor{blueshade}{Petersen, M. S.}}, Weinberg, M. D., and Katz, N. \href{http://adsabs.harvard.edu/abs/2016MNRAS.463.1952P}{\it
-  Dark matter trapping by stellar bars: the shadow bar} 2016 MNRAS,
-463:1952–1967. \\
-2. Bary, Jeffrey S. \& {\bf \textcolor{blueshade}{Petersen, M. S.}}
-\href{http://adsabs.harvard.edu/abs/2014ApJ...792...64B}{\it Anomalous
-  Accretion Activity and the Spotted Nature of the DQ Tau Binary
-  System} 2014 ApJ, 792:64. \\
-1. Elmegreen, Debra M., and others including {\bf \textcolor{blueshade}{Petersen, M. S.}} \href{https://ui.adsabs.harvard.edu/abs/2009ApJ...701..306E/abstract}{\it Clumpy Galaxies in Goods and Gems: Massive Analogs of Local Dwarf Irregulars} 2009 ApJ, 701:306-329.\\
-
-%\vspace*{8pt}
-%\underline{\sl Conference Proceedings} \\
-%{\bf Petersen, M. S.}, Weinberg, M. D., and Katz, N. \href{http://adsabs.harvard.edu/abs/2014ASPC..480..157P}{{\it 
-%Creation of Peanut-Shaped Bulges via the Slow Mode of Bar Growth}} ASPC, 480:157.
-
-\underline{\sl Publications In Review} \\
-3. {\bf \textcolor{blueshade}{Petersen, M. S.}} \& Pe{\~n}arrubia, J.  \href{https://michael-petersen.github.io}{\it Detection of the Milky Way reflex motion induced by the Large Magellanic Cloud infall}\\
-2. {\bf \textcolor{blueshade}{Petersen, M. S.}}, Weinberg, M. D., and Katz, N. \href{https://ui.adsabs.harvard.edu/abs/2019arXiv190205081P/abstract}{\it Using commensurabilities and orbit structure to understand barred galaxy evolution}, arXiv e-prints\\
-1. {\bf \textcolor{blueshade}{Petersen, M. S.}}, Weinberg, M. D., and Katz, N. \href{https://ui.adsabs.harvard.edu/abs/2019arXiv190308203P/abstract}{\it Using harmonic decomposition to understand barred galaxy evolution}, arXiv e-prints\\
-
-\underline{\sl Publications To Be Submitted Before November 2020} \\
-1. Weinberg, M. D. \& {\bf \textcolor{blueshade}{Petersen, M. S.}} {\it Using Multichannel Singular Spectrum Analysis to Study
-  Galaxy Dynamics} \\
-
-%{\bf Petersen, M. S.}, Weinberg, M. D., and Katz, N. {\it Understanding trends in bar formation and evolution in varied $n$-body models} \\
-%{\bf Petersen, M. S.}, Weinberg, M. D., and Katz, N. {\it Using the bar to drive radial mixing and bulge formation in a Milky Way-like galaxy} \\
-
-
-
+\input{Publications}
+\fi
 
 \end{resume}
 \end{document}
