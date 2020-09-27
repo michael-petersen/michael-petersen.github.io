@@ -1,0 +1,49 @@
+The background image can be (re)generated from particle distributions using exptool
+(For when I forget how to do this)
+
+# see github for exptool
+from exptool.observables import transform
+from exptool.analysis    import pattern
+from exptool.io          import psp_io
+
+tip = 45. # into the page, if desired
+tip = 0.
+tilt = 0.
+
+npower=5.
+gridsize=256
+
+PSPDump = psp_io.Input('OUT.run001.02000','star')
+PSPDumpt = pattern.BarTransform(PSPDump)
+
+plt.figure(figsize=(12,7))
+
+PSPDump = transform.rotate_points(PSPDumpt,60.,30,0.)
+plt.fill_between([-0.08,0.08],[-0.08,-0.08],[0.05,0.05],color='black',zorder=-12)
+plt.scatter(PSPDump.xpos[::50],PSPDump.ypos[::50],color='white',s=.5,alpha=0.7)
+
+# try drawing circles
+
+for irad,rad in enumerate(np.arange(0.05,0.003,-0.008)):
+    print(rad)
+    phi = np.linspace(0.,2.*np.pi,400)
+    C = psp_io.particle_holder()
+    C.xpos = rad*np.cos(phi)
+    C.ypos = rad*np.sin(phi)
+    C.zpos = np.zeros(phi.size)+2.*(0.05-rad)**1.2
+    C.xvel = np.zeros(phi.size);C.yvel = np.zeros(phi.size);C.zvel = np.zeros(phi.size)
+    CR = transform.rotate_points(C,60.,30,0.)
+    plt.plot(CR.xpos,CR.ypos,color='red',zorder=-9,lw=2.)
+
+
+rads = np.arange(0.05,-0.0,-0.008)
+for phi in np.linspace(0.,2.*np.pi,8):
+    C = psp_io.particle_holder()
+    C.xpos = rads*np.cos(phi)
+    C.ypos = rads*np.sin(phi)
+    C.zpos = np.zeros(rads.size)+2.*(0.05-rads)**1.2
+    C.xvel = np.zeros(rads.size);C.yvel = np.zeros(rads.size);C.zvel = np.zeros(rads.size)
+    CR = transform.rotate_points(C,60.,30,0.)
+    plt.plot(CR.xpos,CR.ypos,color='red',zorder=-9,lw=2.)
+    
+plt.savefig('/Users/mpetersen/Downloads/talkpromo_MSP.png',dpi=300)
