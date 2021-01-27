@@ -37,6 +37,26 @@ var yValue1 = function(d) { return d.MBH;},
     yMap1 = function(d) { return yScale1(yValue1(d));},
     yAxis1 = d3.axisLeft(yScale1);
 
+// add Figure 2
+var fig2 = d3.select("#two")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top +")");
+
+// setup x 
+var xValue2 = function(d) { return d.M;},
+    xScale2 = d3.scaleLinear().domain([8,12]).range([0,width]),
+    xMap2 = function(d) { return xScale2(xValue2(d));},
+    xAxis2 = d3.axisBottom(xScale2).ticks(10, "~s");
+
+// setup y
+var yValue2 = function(d) { return d.MBH;},
+    yScale2 = d3.scaleLog().domain([5000,100000000000]).range([height, 0]),
+    yMap2 = function(d) { return yScale2(yValue2(d));},
+    yAxis2 = d3.axisLeft(yScale2);
+
 
 // setup colors
 var colorscale1 = d3.scaleSequential(d3.interpolateBlues).domain([0,1]),
@@ -66,7 +86,8 @@ d3.csv("greene.csv",d3.autoType).then( function(data){
   data.forEach(function(d) {
     // convert data into numbers
     d.Sigma = +d.Sigma
-    d.MBH = +d.MBH
+      d.MBH = +d.MBH
+      d.M = +d.M
       console.log(d.Sigma,d.MBH,d.HT)
   });
 
@@ -132,6 +153,47 @@ d3.csv("greene.csv",d3.autoType).then( function(data){
      .attr('y1', function(d) { return yScale1(d.MV+d.dMV); })
      .attr('y2', function(d) { return yScale1(d.MV+d.uMV); });
 
+  // x-axis
+  fig2.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis2)
+  fig2.append("text")
+      .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
+      .style("text-anchor", "middle")
+      .text("log galaxy mass (Msun)");
+
+  // y-axis
+  fig2.append("g")
+      .attr("class", "y axis")
+      .call(yAxis2)
+  fig2.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("MBH (Msun)");
+
+  // draw dots
+  fig2.selectAll(".dot")
+      .data(data)
+      .enter().append("circle")
+      .attr("class", "dot")
+      .attr("r", 5.5)
+      .attr("cx", xMap2)
+      .attr("cy", yMap2)
+      .style("fill", function(d) { return cValue1(d);}) 
+      .on("mouseover", function(d) {
+          tooltip.transition().duration(200).style("opacity", .9);
+          tooltip.html(d['Galaxy'] + "<br/> (" + d['Distance'] 
+	        + "Mpc)")
+               .style("left", (d3.event.pageX + 5) + "px")
+               .style("top", (d3.event.pageY - 28) + "px");
+          })
+      .on("mouseout", function(d) {
+          tooltip.transition().duration(500).style("opacity", 0);
+          });
 
 
 });
