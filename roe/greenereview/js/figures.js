@@ -13,7 +13,7 @@
 var chartDiv = document.getElementById("chart");
 
 var margin = {top: 20, right: 40, bottom: 70, left: 60},
-    width = 0.5*chartDiv.clientWidth - margin.left - margin.right,
+    width = 0.8*chartDiv.clientWidth - margin.left - margin.right,
     height = 0.8*chartDiv.clientWidth/(2/1) - margin.top - margin.bottom;
 
 // add Figure 1
@@ -26,30 +26,25 @@ var fig1 = d3.select("#one")
 
 // setup x 
 var xValue1 = function(d) { return d.Sigma;},
-    xScale1 = d3.scaleLog().domain([10,500]).range([0, width])
+    xScale1 = d3.scaleLog().domain([16,400]).range([0, width])
     xMap1 = function(d) { return xScale1(xValue1(d));},
     xAxis1 = d3.axisBottom(xScale1).ticks(10, "~s");
 
 // setup y
 var yValue1 = function(d) { return d.MBH;},
     //yScale1 = d3.scaleLinear().domain([0,-14]).range([height, 0]),
-    yScale1 = d3.scaleLog().domain([100,100000000000]).range([height, 0]),
+    yScale1 = d3.scaleLog().domain([5000,100000000000]).range([height, 0]),
     yMap1 = function(d) { return yScale1(yValue1(d));},
     yAxis1 = d3.axisLeft(yScale1);
 
 
 // setup colors
 var colorscale1 = d3.scaleSequential(d3.interpolateBlues).domain([0,1]),
-    colorscale2 = d3.scaleSequential(d3.interpolateReds).domain([0,1]),
-    cValue1 = function(d) { if (d.HT==" E ") {return colorscale2(0.5);}
-			    else { return colorscale1(0.8);}};
+    cValue1 = function(d) { if      (d.HT=="E")  {return colorscale1(0.9);}
+			    else if (d.HT=="S0") {return colorscale1(0.45);}
+			    else if (d.HT=="S")  {return colorscale1(0.2);}
+			    else                 {return colorscale1(1.0);}};
 
-    cValue2 = function(d) { if (d.udsig==0) {return colorscale2(0.2);}
-			    else if ( d.Dwarf=="Segue 1" ||
-				      //d.Dwarf=="Sagittarius II" ||
-				      d.Dwarf=="Antlia 2") {return colorscale2(0.5);}
-                       else if (d.MV>-7.5) {return colorscale1(0.2);}
-			    else { return colorscale1(0.8);}};
 // u.dsig
 
 
@@ -108,8 +103,8 @@ d3.csv("greene.csv",d3.autoType).then( function(data){
       .style("fill", function(d) { return cValue1(d);}) 
       .on("mouseover", function(d) {
           tooltip.transition().duration(200).style("opacity", .9);
-          tooltip.html(d['Galaxy'] + "<br/> (" + xValue1(d) 
-	        + "pc , " + yValue1(d) + "mag)")
+          tooltip.html(d['Galaxy'] + "<br/> (" + d['Distance'] 
+	        + "Mpc)")
                .style("left", (d3.event.pageX + 5) + "px")
                .style("top", (d3.event.pageY - 28) + "px");
           })
