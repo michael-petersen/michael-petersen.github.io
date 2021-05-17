@@ -1,0 +1,20 @@
+Discussion questions:
+
+1. Why are most dwarfs observed at pericentre?
+
+2. Are the mass computations reasonable?
+
+1. What are the differences from globular clusters (classic, dense GCs/extended GCs)?
+What can we say about the GCs from our current perspective?
+How do the UFDs relate to the extended globular clusters?
+
+2. How can we use next-generation telescopes to learn about the dwarfs?
+How can we make progress on the technical challenge of simulating gas and stars together?
+
+3. Dark-matter physics!
+
+Missing out on the necessary observations to look at the IMF in dwarfs -- cannot firmly say anything about differences from GCs yet.
+
+
+
+
