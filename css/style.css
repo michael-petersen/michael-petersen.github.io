@@ -309,7 +309,7 @@ hr.grey {
 	margin: 10px 0;
 }
 
-/* Contact us block ------------------------------------------ */
+/* Contact me block ------------------------------------------ */
 #contact .social a{
 	margin-right: 10px;
 	font-size: 30px;
@@ -354,6 +354,8 @@ hr.grey {
 	font-size: 20px;
 	margin: 0px;
 	text-align: left;
+	margin-left : 10px;
+
 }
 .text-center{
 	text-align: center;
@@ -372,7 +374,25 @@ hr.grey {
 	color: #fff;
 	text-decoration: underline;
 }
-/*Media Queries*/
+
+pre code {
+  background-color: #eee;
+  border: 1px solid #999;
+  display: block;
+  padding: 0px;
+  text-align: left;
+  width: 85%;
+  margin-left : 5%;
+
+  /* margin: 10 auto; */
+}
+
+
+
+/*Media Queries: e.g. smartphone strategy
+
+https://www.w3schools.com/cssref/css3_pr_mediaquery.asp
+*/
 @media (max-width: 767px) {
 	#drop-nav{
 		display: inline;
