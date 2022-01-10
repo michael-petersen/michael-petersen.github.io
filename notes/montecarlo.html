@@ -11,13 +11,17 @@
     <div class="container">
       <div class="content">
         <div class="row">
-	  <div class="title">
+	        <div class="title">
             <h3><a href="list.html">(back to notes list)</a></h3>
             <h2>Monte Carlo Example</h2>
-	    <p>I've discussed Monte Carlo enough times that it seemed prudent to put together a short pedagogical tool. The full example can be found as a GitHub gist <a href="https://gist.github.com/michael-petersen/d38a2a3b9f8d0f516a370c2a817c1c26l">here</a>, but I'll try to explain a bit better in this note.</p>
-	    <br>
-	    <p>
-	    <pre>
+	        <p>I've discussed Monte Carlo enough times that it seemed prudent to put together a short pedagogical tool. The full example can be found as a GitHub gist <a href="https://gist.github.com/michael-petersen/d38a2a3b9f8d0f516a370c2a817c1c26l">here</a>, but I'll try to explain a bit better in this note.</p>
+          <br>
+          <p>Our goal in this exercise is to create a distribution by randomly selecting values that come from some parent distribution. We'll stick to Gaussians in this study, but we could extend to other distributions as well.</p>
+          <br>
+          <p>Let's try a very simple example: drawing points from a normal distribution and comparing to a Gaussian, to get a feel for convergence with particle draws.</p>
+	        <br>
+	        <p>
+	          <pre>
               <code>
 import numpy as np
 import matplotlib.pyplot as plt
