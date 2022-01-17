@@ -12,61 +12,64 @@
       <div class="content">
         <div class="row">
 	        <div class="title">
-            <h3><a href="list.html">(back to notes list)</a></h3>
+            <h4><a href="list.html">(back to notes list)</a></h4>
+          </div>
+          <div class="title">
             <h2>Monte Carlo Example</h2>
-	        <p>I've discussed Monte Carlo enough times that it seemed prudent to put together a short pedagogical tool. The full example can be found as a GitHub gist <a href="https://gist.github.com/michael-petersen/d38a2a3b9f8d0f516a370c2a817c1c26l">here</a>, but I'll try to explain a bit better in this note.</p>
-          <br>
-          <p>Our goal in this exercise is to create a distribution by randomly selecting values that come from some parent distribution. We'll stick to Gaussians in this study, but we could extend to other distributions as well.</p>
-          <br>
-          <p>Let's try a very simple example: drawing points from a normal distribution and comparing to a Gaussian, to get a feel for convergence with particle draws.</p>
-	        <br>
-	        <p>
-	          <pre>
-              <code>
-import numpy as np
-import matplotlib.pyplot as plt
+  	        <p>I've discussed Monte Carlo enough times that it seemed prudent to put together a short pedagogical tool. The full example can be found as a GitHub gist <a href="https://gist.github.com/michael-petersen/d38a2a3b9f8d0f516a370c2a817c1c26l">here</a>, but I'll try to explain a bit better in this note.</p>
+            <br>
+            <p>Our goal in this exercise is to create a distribution by randomly selecting values that come from some parent distribution. We'll stick to Gaussians in this study, but we could extend to other distributions as well.</p>
+            <br>
+            <p>Let's try a very simple example: drawing points from a normal distribution and comparing to a Gaussian, to get a feel for convergence with particle draws.</p>
+  	        <br>
+  	        <p>
+  	          <pre>
+                <code>
+  import numpy as np
+  import matplotlib.pyplot as plt
 
-# first, set up the gaussian we want to approximate
-gaussmean = 0.0
-gaussdisp = 0.3
+  # first, set up the gaussian we want to approximate
+  gaussmean = 0.0
+  gaussdisp = 0.3
 
-# select sample points
-nbins = 20
-xgauss = np.linspace(-1.,1.,nbins)
+  # select sample points
+  nbins = 20
+  xgauss = np.linspace(-1.,1.,nbins)
 
-# use the formula for a gaussian
-ygauss = (1./(gaussdisp*np.sqrt(2*np.pi)))*np.exp(-(xgauss-gaussmean)**2./(2*gaussdisp**2.))
+  # use the formula for a gaussian
+  ygauss = (1./(gaussdisp*np.sqrt(2*np.pi)))*np.exp(-(xgauss-gaussmean)**2./(2*gaussdisp**2.))
 
-# plot
-plt.plot(xgauss,ygauss,color='black')
+  # plot
+  plt.plot(xgauss,ygauss,color='black')
 
 
-# next, get ready for Monte Carlo
+  # next, get ready for Monte Carlo
 
-# pick the number of samples: the more samples, the more accurate,
-# BUT, the more time. try a few?
-nsamples = 100
+  # pick the number of samples: the more samples, the more accurate,
+  # BUT, the more time. try a few?
+  nsamples = 100
 
-# select the list of random variates
-sample_values = np.random.normal(gaussmean,gaussdisp,nsamples)
+  # select the list of random variates
+  sample_values = np.random.normal(gaussmean,gaussdisp,nsamples)
 
-# create the histogram...the is just boilerplate stuff, don't worry too much about it
+  # create the histogram...the is just boilerplate stuff, don't worry too much about it
 
-# put the points in bins
-sbins = np.round(((sample_values - np.nanmin(xgauss))/(xgauss[1]-xgauss[0]))).astype('int')
+  # put the points in bins
+  sbins = np.round(((sample_values - np.nanmin(xgauss))/(xgauss[1]-xgauss[0]))).astype('int')
 
-# count how many in each bin, and normalise
-sample_dist = np.zeros(len(xgauss))
-for b in range(0,len(xgauss)):
-    w = np.where(sbins==b)[0]
-    sample_dist[b] += len(w)/(nsamples*(xgauss[1]-xgauss[0]))
+  # count how many in each bin, and normalise
+  sample_dist = np.zeros(len(xgauss))
+  for b in range(0,len(xgauss)):
+      w = np.where(sbins==b)[0]
+      sample_dist[b] += len(w)/(nsamples*(xgauss[1]-xgauss[0]))
 
-# plot for comparison to the analytic case
-plt.plot(xgauss,sample_dist,color='red',linestyle='dashed')
-              </code>
-	    </pre>
-	    </p>
-	</div>
+  # plot for comparison to the analytic case
+  plt.plot(xgauss,sample_dist,color='red',linestyle='dashed')
+                </code>
+  	          </pre>
+  	        </p>
+        </div>
+    	</div>
      </div>
    </div>
  </div>

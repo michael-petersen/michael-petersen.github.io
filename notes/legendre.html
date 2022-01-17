@@ -11,21 +11,25 @@
     <div class="container">
       <div class="content">
         <div class="row">
-	  <div class="title">
-            <h3><a href="list.html">(back to notes list)</a></h3>
+	        <div class="title">
+            <h4><a href="list.html">(back to notes list)</a></h4>
+          </div>
+          <div class="title">
             <h2>Legendre Recursion</h2>
-	    <p>I've been interested in stable recursions for a bit now, and finally had the incentive to go through and write an improved Legendre recursion (that doesn't try to multiply a really big number by a really little number just to get close to unity) The full example can be found as a GitHub gist <a href="https://gist.github.com/michael-petersen/5943ec2d7697ea61c1c982a78ff661f4">here</a>, but I'll try to explain a bit better in this note.</p>
-      <br>
-      <p>This is a C++ code, but the ideas are generic. My general goal going forward is to write better recursions to minimise numerical errors -- this is a start!</p>
-	    <br>
-	    <p>
-	    <pre>
-              <code>
+            <br>
+        	  <p>I've been interested in stable recursions for a bit now, and finally had the incentive to go through and write an improved Legendre recursion (that doesn't try to multiply a really big number by a really little number just to get close to unity) The full example can be found as a GitHub gist <a href="https://gist.github.com/michael-petersen/5943ec2d7697ea61c1c982a78ff661f4">here</a>, but I'll try to explain a bit better in this note.</p>
+            <br>
+            <p>This is a C++ code, but the ideas are generic. My general goal going forward is to write better recursions to minimise numerical errors -- this is a start!</p>
+        	  <br>
+        	  <p>
+              <pre>
+                <code>
 clang++ -I/opt/local/include/eigen3 -o legendre legendre_test.cpp
-              </code>
-	    </pre>
-	    </p>
-	</div>
+                </code>
+	            </pre>
+	          </p>
+          </div>
+	      </div>
      </div>
    </div>
  </div>
