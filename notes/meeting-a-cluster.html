@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Meeting a cluster</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body class="home color-1">
+  <div class="section" id="research">
+    <div class="container">
+      <div class="content">
+        <div class="row">
+	        <div class="title">
+            <h4><a href="list.html">(back to notes list)</a></h4>
+          </div>
+          <div class="title">
+            <h2>Meeting a new supercomputer</h2>
+            <br>
+	          <p>I'm lucky enough to have had time on a number of different high-performance computing (HPC) setups across various institutes (eagle and unity at UMass, cuillin at the IfA in Edinburgh, infinity at the IAP in Paris). These are all great machines, but like all HPC setups, a bit idiosyncratic. I am generally quite good about only using proper time allocations and resources, but sometimes the pain of learning a new system has been to great, and I've overstayed my welcome on older resources. Don't be like me! On supercomputers, I'll generally assume that we don't have any ability to install new software, so we will focus on existing within the environment as much as possible, and only asking for cluster manager help when absolutely needed. Like my note about <a href="c++survey.html">learning C++</a>, this is all self-taught material, so take it with a grain of salt. Who knew that I'd need all this stuff when starting graduate school!</p>
+            <br>
+            <p>To mitigate the chances that I'll get lost again in the future on a prospective new machine, I'm writing down some helpful things that I've learned. For the most part, I'm trying to save myself troubleshooting pain going forward, and also save cluster managers time whenever possible. Note that I'm skipping all the UNIX-y stuff for background because these are mostly notes for me -- if you're reading this and need a UNIX refresher, feel free to reach out for a chat!</p>
+            <br>
+          </div>
+          <div class="title">
+            <h3>What's under the hood (software)?</h3>
+            <br>
+            <p>In my opinion, understanding the software framework of a supercomputer is the most important factor in getting to know a machine. The first order of business is figuring out what kind of a system we are on, because that will set a lot of the information we need later. Try:<p>
+            <pre><code>cat /etc/os-release</code></pre>
+            <p>(you can get all the same information with 'uname -a;sw_vers' on a Mac.) This will give you a bunch of report on the operating system. Ubuntu seems to be the most common, but you might also see CentOS.</p>
+            <br>
+            <p>It's also often useful to know which version of an executable is being run. This brings up the useful command</p>
+            <pre><code>which</code></pre>
+            <p>where you can put in your executable after, for example</p>
+            <pre><code>which gcc</code></pre>
+            <p>When searching for software, 'locate' is your friend (if available). Oftentimes, you can track down a missing library and add an extra path simply by using locate.</p>
+            <br>
+            <p>Another useful tool is to check out the module environment (assuming that's what is being used -- more likely than not these days!). There are a few useful commands here:</p>
+            <pre><code>
+module avail
+module list
+module load [modulename1] [modulename2]
+            </code></pre>
+            <br>
+            <p>We also need to figure out whether we are on a <a href="https://slurm.schedmd.com/overview.html">slurm</a> system or a <a href="https://en.wikipedia.org/wiki/Portable_Batch_System">PBS</a> system. Try either 'sinfo' (slurm) or 'qstat' (PBS) to figure out which one works! Examples to be added here...</p>
+          </div>
+          <div class="title">
+            <h3>What's under the hood (hardware)?</h3>
+            <br>
+            <p>Hardware is also important. To that end, it's worth looking at seeing what kind of documentation is available. At the same time, I have always found the documentation to be lacking in some way, so I am more inclined to investigate myself and try to get a feel for what's available. For example, to get a sense of what's happening on cuillin, you can try <a href="https://gist.github.com/michael-petersen/38012e1e1d83eb6740e08212c7e456d3">this gist</a>.</p>
+            <br>
+            <p>You could also put something similar in your queue scripts and build up machine knowledge along with your jobs. Hopefully this can help with planning jobs across nodes with similar architecture. Note of course that you have to have SSH privileges into the nodes, which is not a guarantee on your machine (not having SSH is a pain, and you'll likely be working closely with the cluster manager at that point!)</p>
+            <br>
+          </div>
+          <div class="title">
+            <h3>EXP-specific advice</h3>
+            <br>
+            <p>You may have come here hoping to install EXP. Great! If so, you'll need a few specific locations on your machine, such as eigen3 and fftw3. First things first, you should always be using the latest version of EXP -- things are changing all the time (always for the better, I promise!).</p>
+            <br>
+            <p>EXP now uses cmake to set up compilation, so the first order of business is sorting out what's up with cmake on your particular machine. Try out 'which cmake' to see what you will be using. One advantage of the new structure for compiling is that we are now making full use of git submodules. This is it's own <a href="https://github.blog/2016-02-01-working-with-submodules/">thing</a>, but again, helps to streamline the process.</p>
+            <br>
+            <p>Which program is having a problem compiling? Or, which library is not being found?</p>
+            <br>
+            <p>Three working cmake configuration calls. You may be able to draw inspiration from these!</p>
+            <pre><code>
+# unity
+cmake -DFFTW_ROOT=/modules/apps/fftw/3.3.8 -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=YES -DENABLE_USER=YES -DEigen3_DIR=$EIGEN_BASE/share/eigen3/cmake -DCMAKE_INSTALL_PREFIX=/home/mpete0_umass_edu -Wno-dev ..
+# cuillin
+cmake -DCMAKE_CXX_COMPILER=/usr/local/gcc/10.2/bin/g++ -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=NO -DENABLE_USER=YES -DEigen3_DIR=$EIGEN_BASE/share/eigen3/cmake -DCMAKE_INSTALL_PREFIX=/home/mpetersen -Wno-dev ..
+# infinity
+cmake -DCMAKE_C_COMPILER=/softs/gcc/11.2.0-CentOS8/bin/gcc -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=YES -DENABLE_USER=YES -DEigen3_DIR=/home/petersen/eigen-3.2.10/cmake -DPNG_PNG_INCLUDE_DIR=/home/petersen/code -D C_INCLUDE_PATH=/home/petersen/include/eigen3 -DCMAKE_INSTALL_PREFIX=/home/petersen -Wno-dev ..
+            </code></pre>
+            <br>
+            <p>You can learn a lot about the configuration of the various clusters from some of the strings in the cmake calls! For instance, I had to install eigen3 and png++ on my own for infinity. This is not inherently a problem, as both are header-only libraries.</p>
+            <br>
+            <p>One thing I've learned: if you are on a non-Ubuntu machine, you are more likely to have to tinker with CMakeLists.txt. This isn't a big deal, by itself! Don't be afraid to force include paths, e.g. by adding include_directories(/home/petersen/include/eigen3/) to CMakeLists.txt.</p>
+          </div>
+	     </div>
+     </div>
+   </div>
+ </div>
+
+
+</body>
+</html>
