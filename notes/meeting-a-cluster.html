@@ -47,8 +47,10 @@ module load [modulename1] [modulename2]
             <pre><code>
 # unity (Ubuntu)
 module load cuda/11.3.1 mpfr/4.1.0 gcc/10.2.0 boost/1.73.0 openmpi/4.1.0 eigen/3.3.7 gmp/6.2.0  mpc/1.1.0    vtk/8.2.0  cmake/3.15.0 python/3.9.1 fftw/3.3.8
+
 # cuillin (Ubuntu)
-module load cuda/11.2.0 gcc/10.2
+module load cuda/11.5 gcc/10.2
+
 # infinity (CentOS)
 module purge
 module load cmake openmpi/4.1.2-gnu gcc/11.2.0 gsl/2.7.1 inteloneapi/2021.4 cuda/11.4
@@ -75,22 +77,28 @@ module load cmake openmpi/4.1.2-gnu gcc/11.2.0 gsl/2.7.1 inteloneapi/2021.4 cuda
             <pre><code>
 git clone git@bitbucket.org:mdweinberg/exp.git
 cd exp
+git branch devel
+git checkout devel
+git branch --set-upstream-to=origin/devel devel
+git pull
 git submodule update --init --recursive
             </code></pre>
-            <p>The third line here sets up some external modules that EXP needs for installation: yaml-cpp and png++. These are submodules. This is it's own <a href="https://github.blog/2016-02-01-working-with-submodules/">thing</a>, but again, helps to streamline the process. If the first line fails, your best diagnostic is to send me the output of 'git config --list'.</p>
+            <p>The last line here sets up some external modules that EXP needs for installation: yaml-cpp and png++. These are submodules. This is it's own <a href="https://github.blog/2016-02-01-working-with-submodules/">thing</a>, but again, helps to streamline the process. If the first line fails, your best diagnostic is to send me the output of 'git config --list'. The middle lines navigate, and then switch to the most up-to-date branch of the code (there are lots of branches, but we can ignore those for now). You will see some warnings when switching branches about deprecated files, you can feel free to ignore those.</p>
             <br>
-            <p>Next step: EXP now uses cmake to set up compilation, so the next order of business is sorting out what's up with cmake on your particular machine. Try out 'which cmake' to see what you will be using. This is also where we can anticipate meeting our first problems.
+            <p>Next step: EXP now uses cmake to set up compilation, so the next order of business is sorting out what's up with cmake on your particular machine. Try out 'which cmake' to see what you will be using. This is also where we can anticipate meeting our first problems. Now is also a good time to mention that EXP does come with some compile instructions, <a href="https://bitbucket.org/mdweinberg/exp/raw/f4090892c7b638112c1163bf57c0157cc67d6e72/README.build">called README.build</a>.
             </p>
             <br>
             <p>Which program is having a problem compiling? Or, which library is not being found?</p>
             <br>
             <p>Three working cmake configuration calls. You may be able to draw inspiration from these!</p>
             <pre><code>
-# unity
+# unity (Ubuntu)
 cmake -DFFTW_ROOT=/modules/apps/fftw/3.3.8 -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=YES -DENABLE_USER=YES -DEigen3_DIR=$EIGEN_BASE/share/eigen3/cmake -DCMAKE_INSTALL_PREFIX=/home/mpete0_umass_edu -Wno-dev ..
-# cuillin
+
+# cuillin (Ubuntu)
 cmake -DCMAKE_CXX_COMPILER=/usr/local/gcc/10.2/bin/g++ -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=NO -DENABLE_USER=YES -DEigen3_DIR=$EIGEN_BASE/share/eigen3/cmake -DCMAKE_INSTALL_PREFIX=/home/mpetersen -Wno-dev ..
-# infinity
+
+# infinity (CentOS)
 cmake -DCMAKE_C_COMPILER=/softs/gcc/11.2.0-CentOS8/bin/gcc -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=YES -DENABLE_USER=YES -DEigen3_DIR=/home/petersen/eigen-3.2.10/cmake -DPNG_PNG_INCLUDE_DIR=/home/petersen/code -D C_INCLUDE_PATH=/home/petersen/include/eigen3 -DCMAKE_INSTALL_PREFIX=/home/petersen -Wno-dev ..
             </code></pre>
             <br>
