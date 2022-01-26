@@ -11,13 +11,15 @@
     <div class="container">
       <div class="content">
         <div class="row">
-	        <div class="title">
+	        <!--<div class="title">
             <h4><a href="list.html">(back to notes list)</a></h4>
-          </div>
+          </div>-->
           <div class="title">
             <h2>Meeting a new supercomputer</h2>
             <br>
-	          <p>I'm lucky enough to have had time on a number of different high-performance computing (HPC) setups across various institutes (eagle and unity at UMass, cuillin at the IfA in Edinburgh, infinity at the IAP in Paris). These are all great machines, but like all HPC setups, a bit idiosyncratic. I am generally quite good about only using proper time allocations and resources, but sometimes the pain of learning a new system has been to great, and I've overstayed my welcome on older resources. Don't be like me! On supercomputers, I'll generally assume that we don't have any ability to install new software, so we will focus on existing within the environment as much as possible, and only asking for cluster manager help when absolutely needed. Like my note about <a href="c++survey.html">learning C++</a>, this is all self-taught material, so take it with a grain of salt. Who knew that I'd need all this stuff when starting graduate school!</p>
+	          <p>I'm lucky enough to have had time on a number of different high-performance computing (HPC) setups across various institutes (eagle and unity at UMass, cuillin at the IfA in Edinburgh, infinity at the IAP in Paris). These are all great machines, but like all HPC setups, a bit idiosyncratic. I am generally quite good about only using proper time allocations and resources, but sometimes the pain of learning a new system has been to great, and I've overstayed my welcome on older resources. Don't be like me! On supercomputers, I'll generally assume that we don't have any ability to install new software, so we will focus on existing within the environment as much as possible, and only asking for cluster manager help when absolutely needed.
+            <!--Like my note about <a href="c++survey.html">learning C++</a>,-->
+            This is all self-taught material, so take it with a grain of salt. Who knew that I'd need all this stuff when starting graduate school!</p>
             <br>
             <p>To mitigate the chances that I'll get lost again in the future on a prospective new machine, I'm writing down some helpful things that I've learned. For the most part, I'm trying to save myself troubleshooting pain going forward, and also save cluster managers time whenever possible. Note that I'm skipping all the UNIX-y stuff for background because these are mostly notes for me -- if you're reading this and need a UNIX refresher, feel free to reach out for a chat!</p>
             <br>
@@ -41,6 +43,17 @@ module avail
 module list
 module load [modulename1] [modulename2]
             </code></pre>
+            <p>For completeness, here are the module sets I'm using on three machines, for inspiration:</p>
+            <pre><code>
+# unity (Ubuntu)
+module load cuda/11.3.1 mpfr/4.1.0 gcc/10.2.0 boost/1.73.0 openmpi/4.1.0 eigen/3.3.7 gmp/6.2.0  mpc/1.1.0    vtk/8.2.0  cmake/3.15.0 python/3.9.1 fftw/3.3.8
+# cuillin (Ubuntu)
+module load cuda/11.2.0 gcc/10.2
+# infinity (CentOS)
+module purge
+module load cmake openmpi/4.1.2-gnu gcc/11.2.0 gsl/2.7.1 inteloneapi/2021.4 cuda/11.4
+            </code></pre>
+            <p>These follow pretty standard module file naming conventions, namely, the library followed by the version number. If troubleshooting, you will want to send the output of 'module avail;module list' so the troubleshooter can see what's available on the system.</p>
             <br>
             <p>We also need to figure out whether we are on a <a href="https://slurm.schedmd.com/overview.html">slurm</a> system or a <a href="https://en.wikipedia.org/wiki/Portable_Batch_System">PBS</a> system. Try either 'sinfo' (slurm) or 'qstat' (PBS) to figure out which one works! Examples to be added here...</p>
           </div>
@@ -57,7 +70,17 @@ module load [modulename1] [modulename2]
             <br>
             <p>You may have come here hoping to install EXP. Great! If so, you'll need a few specific locations on your machine, such as eigen3 and fftw3. First things first, you should always be using the latest version of EXP -- things are changing all the time (always for the better, I promise!).</p>
             <br>
-            <p>EXP now uses cmake to set up compilation, so the first order of business is sorting out what's up with cmake on your particular machine. Try out 'which cmake' to see what you will be using. One advantage of the new structure for compiling is that we are now making full use of git submodules. This is it's own <a href="https://github.blog/2016-02-01-working-with-submodules/">thing</a>, but again, helps to streamline the process.</p>
+            <p>The first thing to do is obtain EXP. <a href="">EXP lives on bitbucket</a>. If you do not have access, but should, let me know! Otherwise, the sequence of commands is standard git. The best way to give bitbucket your credentials is by registering your SSH key with bitbucket. If you navigate to your 'Personal Settings' on bitbucket, under 'Security', you will see 'SSH Keys'. Select 'Add Key', and then you need to paste in the key from the machine you'd like to copy the repository to. The key, if it has been generated (if not run 'ssh-keygen -t rsa'; feel free to use an empty passphrase but if any cluster manager asks, I [wink-wink] warned you not to do this), is located in ~/.ssh/id_rsa.pub, so you can 'more ~/.ssh/id_rsa.pub' and simply copy-paste the result that is spit out into the bitbucket key prompt. Now you're ready to git!
+            </p>
+            <pre><code>
+git clone git@bitbucket.org:mdweinberg/exp.git
+cd exp
+git submodule update --init --recursive
+            </code></pre>
+            <p>The third line here sets up some external modules that EXP needs for installation: yaml-cpp and png++. These are submodules. This is it's own <a href="https://github.blog/2016-02-01-working-with-submodules/">thing</a>, but again, helps to streamline the process. If the first line fails, your best diagnostic is to send me the output of 'git config --list'.</p>
+            <br>
+            <p>Next step: EXP now uses cmake to set up compilation, so the next order of business is sorting out what's up with cmake on your particular machine. Try out 'which cmake' to see what you will be using. This is also where we can anticipate meeting our first problems.
+            </p>
             <br>
             <p>Which program is having a problem compiling? Or, which library is not being found?</p>
             <br>
