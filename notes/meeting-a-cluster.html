@@ -16,7 +16,9 @@
           </div>-->
           <div class="title">
             <h2>Meeting a new supercomputer</h2>
-            <br>
+            <p>last update: 27 January 2022</p>
+          </div>
+          <div class="title">
 	          <p>I'm lucky enough to have had time on a number of different high-performance computing (HPC) setups across various institutes (eagle and unity at UMass, cuillin at the IfA in Edinburgh, infinity at the IAP in Paris). These are all great machines, but like all HPC setups, a bit idiosyncratic. I am generally quite good about only using proper time allocations and resources, but sometimes the pain of learning a new system has been to great, and I've overstayed my welcome on older resources. Don't be like me! On supercomputers, I'll generally assume that we don't have any ability to install new software, so we will focus on existing within the environment as much as possible, and only asking for cluster manager help when absolutely needed.
             <!--Like my note about <a href="c++survey.html">learning C++</a>,-->
             This is all self-taught material, so take it with a grain of salt. Who knew that I'd need all this stuff when starting graduate school!</p>
@@ -31,19 +33,35 @@
             <pre><code>cat /etc/os-release</code></pre>
             <p>(you can get all the same information with 'uname -a;sw_vers' on a Mac.) This will give you a bunch of report on the operating system. Ubuntu seems to be the most common, but you might also see CentOS.</p>
             <br>
+            <p>One other key UNIX concept we can use for understanding the system is the 'env' command (short for environment). This is one of the most powerful ways to see what settings are being used. Because it is so powerful, the output can be confoundingly opaque. Oftentimes I will use env in combination with 'grep' (global regular expression print) to search for specific pattens in the output. For example:</p>
+            <pre><code>
+env | grep USER # outputs USER=petersen
+env | grep HOME # outputs HOME=/home/petersen
+env | grep SHELL # outputs SHELL=/bin/bash
+            </code></pre>
+            <p>You can reset variables (but some aren't settable!) with 'export ${VARIABLE}=VALUE'. Note that 'export' is bash specific (the name of the so-called shell). If you 'env | grep SHELL' and see something different (such as /bin/csh, or /bin/zsh), it's worth making a note that some commands in this note might be different.</p>
+            <br>
             <p>It's also often useful to know which version of an executable is being run. This brings up the useful command</p>
-            <pre><code>which</code></pre>
-            <p>where you can put in your executable after, for example</p>
-            <pre><code>which gcc</code></pre>
-            <p>When searching for software, 'locate' is your friend (if available). Oftentimes, you can track down a missing library and add an extra path simply by using locate.</p>
+            <pre><code>
+which [executable]
+which gcc
+            </code></pre>
+            <p>In the second example, I tested which gcc (the standard UNIX C compiler) is being used by the system as a default. When searching for software, 'locate' is your friend (if available). Oftentimes, you can track down a missing library and add an extra path simply by using locate.</p>
+            <br>
+            <p>You can also learn which libraries are specifically being called by an executable with the command 'ldd [executable]'. For instance, if we just obtained the full path to the gcc executable above, we can see which libraries gcc depends on by using:</p>
+            <pre><code>
+ldd /softs/gcc/11.2.0-CentOS8/bin/gcc
+            </code></pre>
+            <p>ldd can be a useful debugging tool in the case of compiled programs with possible library confusion. The equivalent command on Mac OSX is 'otool -L [executable]'</p>
             <br>
             <p>Another useful tool is to check out the module environment (assuming that's what is being used -- more likely than not these days!). There are a few useful commands here:</p>
             <pre><code>
 module avail
-module list
+module purge
 module load [modulename1] [modulename2]
+module list
             </code></pre>
-            <p>For completeness, here are the module sets I'm using on three machines, for inspiration:</p>
+            <p>From the output of 'module avail' you will select the list of modules you want to then 'module load'. In general, it's reasonable to choose the highest possible version available; if you run into trouble, it can occasionally be worth backing off the version. The second line will unload all current modules, giving you a clean slate. For completeness, here are the module sets I'm using on three machines (the output of 'module list'), for inspiration:</p>
             <pre><code>
 # unity (Ubuntu)
 module load cuda/11.3.1 mpfr/4.1.0 gcc/10.2.0 boost/1.73.0 openmpi/4.1.0 eigen/3.3.7 gmp/6.2.0  mpc/1.1.0    vtk/8.2.0  cmake/3.15.0 python/3.9.1 fftw/3.3.8
@@ -52,7 +70,6 @@ module load cuda/11.3.1 mpfr/4.1.0 gcc/10.2.0 boost/1.73.0 openmpi/4.1.0 eigen/3
 module load cuda/11.5 gcc/10.2
 
 # infinity (CentOS)
-module purge
 module load cmake openmpi/4.1.2-gnu gcc/11.2.0 gsl/2.7.1 inteloneapi/2021.4 cuda/11.4
             </code></pre>
             <p>These follow pretty standard module file naming conventions, namely, the library followed by the version number. If troubleshooting, you will want to send the output of 'module avail;module list' so the troubleshooter can see what's available on the system.</p>
@@ -70,7 +87,7 @@ module load cmake openmpi/4.1.2-gnu gcc/11.2.0 gsl/2.7.1 inteloneapi/2021.4 cuda
           <div class="title">
             <h3>EXP-specific advice</h3>
             <br>
-            <p>You may have come here hoping to install EXP. Great! If so, you'll need a few specific locations on your machine, such as eigen3 and fftw3. First things first, you should always be using the latest version of EXP -- things are changing all the time (always for the better, I promise!).</p>
+            <p>You may have come here hoping to install EXP. Great! If so, you'll need a few specific locations on your machine, such as eigen3 and fftw3 (and maybe cuda). First things first, you should always be using the latest version of EXP -- things are changing all the time (always for the better, I promise!).</p>
             <br>
             <p>The first thing to do is obtain EXP. <a href="">EXP lives on bitbucket</a>. If you do not have access, but should, let me know! Otherwise, the sequence of commands is standard git. The best way to give bitbucket your credentials is by registering your SSH key with bitbucket. If you navigate to your 'Personal Settings' on bitbucket, under 'Security', you will see 'SSH Keys'. Select 'Add Key', and then you need to paste in the key from the machine you'd like to copy the repository to. The key, if it has been generated (if not run 'ssh-keygen -t rsa'; feel free to use an empty passphrase but if any cluster manager asks, I [wink-wink] warned you not to do this), is located in ~/.ssh/id_rsa.pub, so you can 'more ~/.ssh/id_rsa.pub' and simply copy-paste the result that is spit out into the bitbucket key prompt. Now you're ready to git!
             </p>
@@ -104,7 +121,14 @@ cmake -DCMAKE_C_COMPILER=/softs/gcc/11.2.0-CentOS8/bin/gcc -DCMAKE_BUILD_TYPE=Re
             <br>
             <p>You can learn a lot about the configuration of the various clusters from some of the strings in the cmake calls! For instance, I had to install eigen3 and png++ on my own for infinity. This is not inherently a problem, as both are header-only libraries.</p>
             <br>
-            <p>One thing I've learned: if you are on a non-Ubuntu machine, you are more likely to have to tinker with CMakeLists.txt. This isn't a big deal, by itself! Don't be afraid to force include paths, e.g. by adding include_directories(/home/petersen/include/eigen3/) to CMakeLists.txt.</p>
+            <p>One thing I've learned: if you are on a non-Ubuntu machine, you are more likely to have to tinker with CMakeLists.txt. This isn't a big deal, by itself! Don't be afraid to force include paths, e.g. by adding include_directories(/home/petersen/include/eigen3/) to CMakeLists.txt. You can also remove specific analysis programs if problematic.</p>
+            <br>
+            <p>Oftentimes, you will have to remind the environment about variables that were set at some previous compile time. For instance, I usually remind the machine about the location of specific libraries and executables when setting up an EXP run:</p>
+            <pre><code>
+export LD_LIBRARY_PATH=/home/petersen/lib/:$LD_LIBRARY_PATH
+export PATH=/home/petersen/bin/:$PATH
+            </code></pre>
+
           </div>
 	     </div>
      </div>
