@@ -10,7 +10,7 @@
 html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; text-rendering: optimizelegibility; }
 body {
 	font-family: 'Roboto', sans-serif;
-	font-size: 14px;
+	font-size: 12px;
 	line-height: 1.5;
 	color: #333;
 	background-color: #fff;
@@ -50,21 +50,21 @@ h2 {
 }
 
 h1 {
-	font-size: 40px;
+	font-size: 32px;
 }
 
 h2 {
-    font-size: 32px;
+    font-size: 24px;
 
 }
 
 h3 {
-	font-size: 24px;
+	font-size: 18px;
 	letter-spacing: 1.5px;
 }
 
 h4 {
-	font-size: 24px;
+	font-size: 18px;
 	letter-spacing: 1.5px;
 	text-align:justify;
 	color: #fff;
@@ -81,7 +81,7 @@ h6 {
 
 p {
 	color: #333;
-	font-size: 13px;
+	font-size: 12px;
 	line-height: 1.5;
 }
 
@@ -119,7 +119,7 @@ body.color-1 hr {
 	border-bottom: 1px solid #0b1d3f;
 }
 body.color-1 span.highlight{
-    font-size: 13px;
+    font-size: 12px;
 	color: #0b1d3f;
 }
 body.color-1 #footer {
@@ -127,7 +127,7 @@ body.color-1 #footer {
 	background: #0b1d3f;
 	color: #fff;
 	text-align: center;
-	font-size: 13px;
+	font-size: 12px;
 	padding: 20px 0 20px 0;
 }
 
@@ -322,7 +322,7 @@ hr.grey {
 /* Contact me block ------------------------------------------ */
 #contact .social a{
 	margin-right: 10px;
-	font-size: 30px;
+	font-size: 18px;
 	float: left;
 	border: none;
 }
@@ -346,14 +346,14 @@ hr.grey {
 }
 .title h2{
 	font-weight: bold;
-	font-size: 2.2em;
+	font-size: 24px;
 	margin: 0px;
 	text-align: left;
 }
 
 .title h3{
 	font-weight: bold;
-	font-size: 1.8em;
+	font-size: 18px;
 	margin: 0px;
 	text-align: left;
 }
@@ -361,7 +361,7 @@ hr.grey {
 .title p{
 	letter-spacing: 0px;
 	line-height: 1.3em;
-	font-size: 20px;
+	font-size: 15px;
 	margin: 0px;
 	text-align: left;
 	margin-left : 10px;
