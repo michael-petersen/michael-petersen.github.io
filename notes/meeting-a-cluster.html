@@ -16,7 +16,7 @@
           </div>-->
           <div class="title">
             <h2>Meeting a new supercomputer</h2>
-            <p>last update: 27 January 2022</p>
+            <p>last update: 1 February 2022</p>
           </div>
           <div class="title">
 	          <p>I'm lucky enough to have had time on a number of different high-performance computing (HPC) setups across various institutes (eagle and unity at UMass, cuillin at the IfA in Edinburgh, infinity at the IAP in Paris). These are all great machines, but like all HPC setups, a bit idiosyncratic. I am generally quite good about only using proper time allocations and resources, but sometimes the pain of learning a new system has been to great, and I've overstayed my welcome on older resources. Don't be like me! On supercomputers, I'll generally assume that we don't have any ability to install new software, so we will focus on existing within the environment as much as possible, and only asking for cluster manager help when absolutely needed.
@@ -50,6 +50,7 @@ which gcc
             <br>
             <p>You can also learn which libraries are specifically being called by an executable with the command 'ldd [executable]'. For instance, if we just obtained the full path to the gcc executable above, we can see which libraries gcc depends on by using:</p>
             <pre><code>
+# specific to infinity!
 ldd /softs/gcc/11.2.0-CentOS8/bin/gcc
             </code></pre>
             <p>ldd can be a useful debugging tool in the case of compiled programs with possible library confusion. The equivalent command on Mac OSX is 'otool -L [executable]'</p>
@@ -128,13 +129,30 @@ cmake -DCMAKE_C_COMPILER=/softs/gcc/11.2.0-CentOS8/bin/gcc -DCMAKE_BUILD_TYPE=Re
 export LD_LIBRARY_PATH=/home/petersen/lib/:$LD_LIBRARY_PATH
 export PATH=/home/petersen/bin/:$PATH
             </code></pre>
-
+          </div>
+          <div class="title">
+            <h3>Working with module files</h3>
+            <br>
+            <p>In the wild west of cluster management, modules can help a lot. However, some module files have not yet been written, depending on the module and the cluster maintenance (cuillin is a bit wilder than other clusters). To get started, read <a href="https://lmod.readthedocs.io/en/latest/100_modulefile_examples.html">this tutorial</a>. On cuillin, the software issues log is located <a href="https://cuillin.roe.ac.uk/projects/cuillin-software/issues">here</a>. For instance, a couple relevant links on cuillin:<p>
+            <pre><code>
+# modules will search the following file paths:
+/etc/environment-modules/modulespath
+# Ubuntu-provided packages should go in /usr/share, not /usr/local
+# for example:
+cd /usr/share/modules/modulefiles
+more more /usr/local/Modules/modulefiles/cuda/11.2.0
+            </code></pre>
+            <p>To hunt for a particular module requires a bit of knowledge of the file system. It's generally possible to ascertain where the modulefiles will be from looking at the ultimate root, '/'. On the various machines:</p>
+            <pre><code>
+# unity
+more /modules/modulefiles/hdf5/1.12.0.lua
+# appPath = "/modules/apps/hdf5/1.12.0"
+            </code></pre>
           </div>
 	     </div>
      </div>
    </div>
  </div>
-
 
 </body>
 </html>
