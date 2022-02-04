@@ -17,17 +17,17 @@
           <div class="title">
             <h2>Legendre Recursion</h2>
             <br>
-        	  <p>I've been interested in stable recursions for a bit now, and finally had the incentive to go through and write an improved Legendre recursion (that doesn't try to multiply a really big number by a really little number just to get close to unity) The full example can be found as a GitHub gist <a href="https://gist.github.com/michael-petersen/5943ec2d7697ea61c1c982a78ff661f4">here</a>, but I'll try to explain a bit better in this note.</p>
+            <p>Legendre functions are some of the first polynomials one comes across. They are also critical for basis function expansion work owing to their role underpinning spherical harmonics! Therefore, an accurate evaluation is critical.</p>
+            <br>
+            <p>This requirement also enables us to dip our toes in the world of highly optimised function evaluations. In this world, we are looking to (1) maximise accuracy, and (2) minimise the number of operations.</p>
+            <br>
+        	  <p>I've been interested in stable recursions for a bit now, and finally had the incentive to go through and write an improved Legendre recursion (that doesn't try to multiply a really big number by a really little number just to get close to unity). The full example can be found as a GitHub gist <a href="https://gist.github.com/michael-petersen/5943ec2d7697ea61c1c982a78ff661f4">here</a>, but I'll try to explain a bit better in this note.</p>
             <br>
             <p>This is a C++ code, but the ideas are generic. My general goal going forward is to write better recursions to minimise numerical errors -- this is a start!</p>
         	  <br>
-        	  <p>
-              <pre>
-                <code>
-                  clang++ -I/opt/local/include/eigen3 -o legendre legendre_test.cpp
-                </code>
-	            </pre>
-	          </p>
+            <pre><code>
+clang++ -I/opt/local/include/eigen3 -o legendre legendre_test.cpp
+            </code></pre>
           </div>
 	      </div>
      </div>

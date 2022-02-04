@@ -67,7 +67,7 @@ h4 {
 	font-size: 18px;
 	letter-spacing: 1.5px;
 	text-align:justify;
-	color: #fff;
+	color: #000;
 }
 
 h5 {
@@ -125,7 +125,7 @@ body.color-1 span.highlight{
 body.color-1 #footer {
 	font-weight: bold;
 	background: #0b1d3f;
-	color: #fff;
+	color: #000;
 	text-align: center;
 	font-size: 12px;
 	padding: 20px 0 20px 0;
