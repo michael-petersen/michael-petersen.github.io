@@ -12,7 +12,7 @@ body {
 	font-family: 'Roboto', sans-serif;
 	font-size: 12px;
 	line-height: 1.5;
-	color: #333;
+	color: #000;
 	background-color: #fff;
 	-webkit-font-smoothing: antialiased;
 }
@@ -67,7 +67,7 @@ h4 {
 	font-size: 18px;
 	letter-spacing: 1.5px;
 	text-align:justify;
-	color: #000;
+	color: #fff;
 }
 
 h5 {
@@ -179,14 +179,14 @@ div#top-nav #fluid-nav li:first-child, div#top-nav #fixed-nav li:first-child  {
 	margin-left: 0;
 }
 div#top-nav #fluid-nav li a, div#top-nav #fixed-nav li a {
-	color: #333;
+	color: #000;
 	font-weight: 700;
 	text-transform: uppercase;
 	font-size: 12px;
 	border: none;
 }
 div#top-nav #fluid-nav li a:hover {
-	color: #333;
+	color: #fff;
 	text-decoration: none;
 
 }
