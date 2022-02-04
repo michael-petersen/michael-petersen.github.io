@@ -33,36 +33,56 @@
             <pre><code>cat /etc/os-release</code></pre>
             <p>(you can get all the same information with 'uname -a;sw_vers' on a Mac.) This will give you a bunch of report on the operating system. Ubuntu seems to be the most common, but you might also see CentOS.</p>
             <br>
-            <p>One other key UNIX concept we can use for understanding the system is the 'env' command (short for environment). This is one of the most powerful ways to see what settings are being used. Because it is so powerful, the output can be confoundingly opaque. Oftentimes I will use env in combination with 'grep' (global regular expression print) to search for specific pattens in the output. For example:</p>
-            <pre><code>
+            <p>One other key UNIX concept we can use for understanding the system is the 'env' command (short for environment). This is one of the most powerful ways to see what settings are being used.</p>
+            <button type="button" class="collapsible">
+              <i><span class="regularblack">'env' command examples</span></i>
+            </button>
+            <div class="title collapsecontent">
+              <p>Because it is so powerful, the output can be confoundingly opaque. Oftentimes I will use env in combination with 'grep' (global regular expression print) to search for specific pattens in the output. For example:</p>
+              <pre><code>
 env | grep USER # outputs USER=petersen
 env | grep HOME # outputs HOME=/home/petersen
 env | grep SHELL # outputs SHELL=/bin/bash
-            </code></pre>
-            <p>You can reset variables (but some aren't settable!) with 'export ${VARIABLE}=VALUE'. Note that 'export' is bash specific (the name of the so-called shell). If you 'env | grep SHELL' and see something different (such as /bin/csh, or /bin/zsh), it's worth making a note that some commands in this note might be different.</p>
+              </code></pre>
+              <p>You can reset variables (but some aren't settable!) with 'export ${VARIABLE}=VALUE'. Note that 'export' is bash specific (the name of the so-called shell). If you 'env | grep SHELL' and see something different (such as /bin/csh, or /bin/zsh), it's worth making a note that some commands in this note might be different.</p>
+            </div>
+            <br><br>
+            <p>It's also often useful to know which version of an executable is being run. In particular, you can use this strategy to find libraries fairly efficiently. This brings up the useful command</p>
+            <pre><code>which [executable]</code></pre>
+
             <br>
-            <p>It's also often useful to know which version of an executable is being run. This brings up the useful command</p>
-            <pre><code>
-which [executable]
+            <button type="button" class="collapsible">
+              <i><span class="regularblack">'which' command examples</span></i>
+            </button>
+            <div class="title collapsecontent">
+              <p>For example:</p>
+              <pre><code>
 which gcc
-            </code></pre>
-            <p>In the second example, I tested which gcc (the standard UNIX C compiler) is being used by the system as a default. When searching for software, 'locate' is your friend (if available). Oftentimes, you can track down a missing library and add an extra path simply by using locate.</p>
-            <br>
-            <p>You can also learn which libraries are specifically being called by an executable with the command 'ldd [executable]'. For instance, if we just obtained the full path to the gcc executable above, we can see which libraries gcc depends on by using:</p>
-            <pre><code>
+              </code></pre>
+              <p>Here, I tested which gcc (the standard UNIX C compiler) is being used by the system as a default. When searching for software, 'locate' is your friend (if available). Oftentimes, you can track down a missing library and add an extra path simply by using locate.</p>
+              <br>
+              <p>You can also learn which libraries are specifically being called by an executable with the command 'ldd [executable]'. For instance, if we just obtained the full path to the gcc executable above, we can see which libraries gcc depends on by using:</p>
+              <pre><code>
 # specific to infinity!
 ldd /softs/gcc/11.2.0-CentOS8/bin/gcc
-            </code></pre>
-            <p>ldd can be a useful debugging tool in the case of compiled programs with possible library confusion. The equivalent command on Mac OSX is 'otool -L [executable]'</p>
+              </code></pre>
+              <p>ldd can be a useful debugging tool in the case of compiled programs with possible library confusion. The equivalent command on Mac OSX is 'otool -L [executable]'</p>
+            </div>
+            <br><br>
+            <p>Another useful tool is to check out the module environment (assuming that's what is being used -- more likely than not these days!).</p>
             <br>
-            <p>Another useful tool is to check out the module environment (assuming that's what is being used -- more likely than not these days!). There are a few useful commands here:</p>
-            <pre><code>
+            <button type="button" class="collapsible">
+              <i><span class="regularblack">Useful 'module'-related commands</span></i>
+            </button>
+            <div class="title collapsecontent">
+              <p>There are a few useful commands here:</p>
+              <pre><code>
 module avail
 module purge
 module load [modulename1] [modulename2]
 module list
-            </code></pre>
-            <p>From the output of 'module avail' you will select the list of modules you want to then 'module load'. In general, it's reasonable to choose the highest possible version available; if you run into trouble, it can occasionally be worth backing off the version. The second line will unload all current modules, giving you a clean slate. For completeness, here are the module sets I'm using on three machines (the output of 'module list'), for inspiration:</p>
+              </code></pre>
+              <p>From the output of 'module avail' you will select the list of modules you want to then 'module load'. In general, it's reasonable to choose the highest possible version available; if you run into trouble, it can occasionally be worth backing off the version. The second line will unload all current modules, giving you a clean slate. For completeness, here are the module sets I'm using on three machines (the output of 'module list'), for inspiration:</p>
             <pre><code>
 # unity (Ubuntu)
 module load cuda/11.3.1 mpfr/4.1.0 gcc/10.2.0 boost/1.73.0 openmpi/4.1.0 eigen/3.3.7 gmp/6.2.0  mpc/1.1.0    vtk/8.2.0  cmake/3.15.0 python/3.9.1 fftw/3.3.8
@@ -74,7 +94,8 @@ module load cuda/11.5 gcc/10.2
 module load cmake openmpi/4.1.2-gnu gcc/11.2.0 gsl/2.7.1 inteloneapi/2021.4 cuda/11.4
             </code></pre>
             <p>These follow pretty standard module file naming conventions, namely, the library followed by the version number. If troubleshooting, you will want to send the output of 'module avail;module list' so the troubleshooter can see what's available on the system.</p>
-            <br>
+            </div>
+            <br><br>
             <p>We also need to figure out whether we are on a <a href="https://slurm.schedmd.com/overview.html">slurm</a> system or a <a href="https://en.wikipedia.org/wiki/Portable_Batch_System">PBS</a> system. Try either 'sinfo' (slurm) or 'qstat' (PBS) to figure out which one works! Examples to be added here...</p>
           </div>
           <div class="title">
