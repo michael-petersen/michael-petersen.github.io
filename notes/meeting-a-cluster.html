@@ -39,11 +39,9 @@
             </button>
             <div class="title collapsecontent">
               <p>Because it is so powerful, the output can be confoundingly opaque. Oftentimes I will use env in combination with 'grep' (global regular expression print) to search for specific pattens in the output. For example:</p>
-              <pre><code>
-env | grep USER # outputs USER=petersen
+              <pre><code>env | grep USER # outputs USER=petersen
 env | grep HOME # outputs HOME=/home/petersen
-env | grep SHELL # outputs SHELL=/bin/bash
-              </code></pre>
+env | grep SHELL # outputs SHELL=/bin/bash</code></pre>
               <p>You can reset variables (but some aren't settable!) with 'export ${VARIABLE}=VALUE'. Note that 'export' is bash specific (the name of the so-called shell). If you 'env | grep SHELL' and see something different (such as /bin/csh, or /bin/zsh), it's worth making a note that some commands in this note might be different.</p>
             </div>
             <br><br>
@@ -56,16 +54,12 @@ env | grep SHELL # outputs SHELL=/bin/bash
             </button>
             <div class="title collapsecontent">
               <p>For example:</p>
-              <pre><code>
-which gcc
-              </code></pre>
+              <pre><code>which gcc</code></pre>
               <p>Here, I tested which gcc (the standard UNIX C compiler) is being used by the system as a default. When searching for software, 'locate' is your friend (if available). Oftentimes, you can track down a missing library and add an extra path simply by using locate.</p>
               <br>
               <p>You can also learn which libraries are specifically being called by an executable with the command 'ldd [executable]'. For instance, if we just obtained the full path to the gcc executable above, we can see which libraries gcc depends on by using:</p>
-              <pre><code>
-# specific to infinity!
-ldd /softs/gcc/11.2.0-CentOS8/bin/gcc
-              </code></pre>
+              <pre><code># specific to infinity!
+ldd /softs/gcc/11.2.0-CentOS8/bin/gcc</code></pre>
               <p>ldd can be a useful debugging tool in the case of compiled programs with possible library confusion. The equivalent command on Mac OSX is 'otool -L [executable]'</p>
             </div>
             <br><br>
@@ -76,23 +70,19 @@ ldd /softs/gcc/11.2.0-CentOS8/bin/gcc
             </button>
             <div class="title collapsecontent">
               <p>There are a few useful commands here:</p>
-              <pre><code>
-module avail
+              <pre><code>module avail
 module purge
 module load [modulename1] [modulename2]
-module list
-              </code></pre>
+module list</code></pre>
               <p>From the output of 'module avail' you will select the list of modules you want to then 'module load'. In general, it's reasonable to choose the highest possible version available; if you run into trouble, it can occasionally be worth backing off the version. The second line will unload all current modules, giving you a clean slate. For completeness, here are the module sets I'm using on three machines (the output of 'module list'), for inspiration:</p>
-            <pre><code>
-# unity (Ubuntu)
+            <pre><code># unity (Ubuntu)
 module load cuda/11.3.1 mpfr/4.1.0 gcc/10.2.0 boost/1.73.0 openmpi/4.1.0 eigen/3.3.7 gmp/6.2.0  mpc/1.1.0    vtk/8.2.0  cmake/3.15.0 python/3.9.1 fftw/3.3.8
 
 # cuillin (Ubuntu)
 module load cuda/11.5 gcc/10.2
 
 # infinity (CentOS)
-module load cmake openmpi/4.1.2-gnu gcc/11.2.0 gsl/2.7.1 inteloneapi/2021.4 cuda/11.4
-            </code></pre>
+module load cmake openmpi/4.1.2-gnu gcc/11.2.0 gsl/2.7.1 inteloneapi/2021.4 cuda/11.4</code></pre>
             <p>These follow pretty standard module file naming conventions, namely, the library followed by the version number. If troubleshooting, you will want to send the output of 'module avail;module list' so the troubleshooter can see what's available on the system.</p>
             </div>
             <br><br>
@@ -113,15 +103,13 @@ module load cmake openmpi/4.1.2-gnu gcc/11.2.0 gsl/2.7.1 inteloneapi/2021.4 cuda
             <br>
             <p>The first thing to do is obtain EXP. <a href="">EXP lives on bitbucket</a>. If you do not have access, but should, let me know! Otherwise, the sequence of commands is standard git. The best way to give bitbucket your credentials is by registering your SSH key with bitbucket. If you navigate to your 'Personal Settings' on bitbucket, under 'Security', you will see 'SSH Keys'. Select 'Add Key', and then you need to paste in the key from the machine you'd like to copy the repository to. The key, if it has been generated (if not run 'ssh-keygen -t rsa'; feel free to use an empty passphrase but if any cluster manager asks, I [wink-wink] warned you not to do this), is located in ~/.ssh/id_rsa.pub, so you can 'more ~/.ssh/id_rsa.pub' and simply copy-paste the result that is spit out into the bitbucket key prompt. Now you're ready to git!
             </p>
-            <pre><code>
-git clone git@bitbucket.org:mdweinberg/exp.git
+            <pre><code>git clone git@bitbucket.org:mdweinberg/exp.git
 cd exp
 git branch devel
 git checkout devel
 git branch --set-upstream-to=origin/devel devel
 git pull
-git submodule update --init --recursive
-            </code></pre>
+git submodule update --init --recursive</code></pre>
             <p>The last line here sets up some external modules that EXP needs for installation: yaml-cpp and png++. These are submodules. This is it's own <a href="https://github.blog/2016-02-01-working-with-submodules/">thing</a>, but again, helps to streamline the process. If the first line fails, your best diagnostic is to send me the output of 'git config --list'. The middle lines navigate, and then switch to the most up-to-date branch of the code (there are lots of branches, but we can ignore those for now). You will see some warnings when switching branches about deprecated files, you can feel free to ignore those.</p>
             <br>
             <p>Next step: EXP now uses cmake to set up compilation, so the next order of business is sorting out what's up with cmake on your particular machine. Try out 'which cmake' to see what you will be using. This is also where we can anticipate meeting our first problems. Now is also a good time to mention that EXP does come with some compile instructions, <a href="https://bitbucket.org/mdweinberg/exp/raw/f4090892c7b638112c1163bf57c0157cc67d6e72/README.build">called README.build</a>.
@@ -143,18 +131,14 @@ cmake -DFFTW_ROOT=/modules/apps/fftw/3.3.8 -DCMAKE_BUILD_TYPE=Release -DCUDA_USE
               <i><span class="regularblack">cuillin (Ubuntu)</span></i>
             </button>
             <div class="title collapsecontent">
-            <pre><code>
-cmake -DCMAKE_CXX_COMPILER=/usr/local/gcc/10.2/bin/g++ -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=NO -DENABLE_USER=YES -DEigen3_DIR=$EIGEN_BASE/share/eigen3/cmake -DCMAKE_INSTALL_PREFIX=/home/mpetersen -Wno-dev ..
-            </code></pre>
+            <pre><code>cmake -DCMAKE_CXX_COMPILER=/usr/local/gcc/10.2/bin/g++ -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=NO -DENABLE_USER=YES -DEigen3_DIR=$EIGEN_BASE/share/eigen3/cmake -DCMAKE_INSTALL_PREFIX=/home/mpetersen -Wno-dev ..</code></pre>
             </div>
             <br><br>
             <button type="button" class="collapsible">
               <i><span class="regularblack">infinity (CentOS)</span></i>
             </button>
             <div class="title collapsecontent">
-            <pre><code>
-cmake -DCMAKE_C_COMPILER=/softs/gcc/11.2.0-CentOS8/bin/gcc -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=YES -DENABLE_USER=YES -DEigen3_DIR=/home/petersen/eigen-3.2.10/cmake -DPNG_PNG_INCLUDE_DIR=/home/petersen/code -D C_INCLUDE_PATH=/home/petersen/include/eigen3 -DCMAKE_INSTALL_PREFIX=/home/petersen -Wno-dev ..
-            </code></pre>
+            <pre><code>cmake -DCMAKE_C_COMPILER=/softs/gcc/11.2.0-CentOS8/bin/gcc -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=YES -DENABLE_USER=YES -DEigen3_DIR=/home/petersen/eigen-3.2.10/cmake -DPNG_PNG_INCLUDE_DIR=/home/petersen/code -D C_INCLUDE_PATH=/home/petersen/include/eigen3 -DCMAKE_INSTALL_PREFIX=/home/petersen -Wno-dev ..</code></pre>
             </div>
             <br><br>
             <p>You can learn a lot about the configuration of the various clusters from some of the strings in the cmake calls! For instance, I had to install eigen3 and png++ on my own for infinity. This is not inherently a problem, as both are header-only libraries.</p>
@@ -164,59 +148,49 @@ cmake -DCMAKE_C_COMPILER=/softs/gcc/11.2.0-CentOS8/bin/gcc -DCMAKE_BUILD_TYPE=Re
             </button>
             <div class="title collapsecontent">
             <p>You need only download a tarball from the <a href="https://eigen.tuxfamily.org/index.php?title=Main_Page">main Eigen webpage</a> (go for the latest stable release!), then manoeuvre it to your home directory on the cluster in question, unpack (tar -xvf), and record the directory for setting the -DEigen3_DIR value in the cmake call above! You can also short-circuit the Eigen3_DIR variable by editing CMakeLists.txt (se directly below). On infinity, I ended up doing</p>
-            <pre><code>
-# install Eigen separately: pull from github, and then need to cmake
+            <pre><code># install Eigen separately: pull from github, and then need to cmake
 git clone https://gitlab.com/libeigen/eigen.git
 cd eigen
 mkdir build
 cd build
 cmake -DCMAKE_INSTALL_PREFIX=/home/petersen ..
-make install
-            </code></pre>
+make install</code></pre>
             </div>
             <br><br>
             <button type="button" class="collapsible">
               <i><span class="regularblack">To install png++...</span></i>
             </button>
             <div class="title collapsecontent">
-            <p>I constructed the needed files from source, starting from the instructions on the delightfully web-1.0 <a href="http://www.libpng.org/pub/png/libpng.html">libpng page</a></p>
-            <pre><code>
-git clone git://git.code.sf.net/p/libpng/code
+              <p>I constructed the needed files from source, starting from the instructions on the delightfully web-1.0 <a href="http://www.libpng.org/pub/png/libpng.html">libpng page</a></p>
+              <pre><code>git clone git://git.code.sf.net/p/libpng/code
 cd code
 mkdir build
 cd build
 cmake -DCMAKE_INSTALL_PREFIX=/home/petersen ..
 make -j 8
-make install
-            </code></pre>
-          </div>
+make install</code></pre>
+            </div>
             <br><br>
             <p>One thing I've learned: if you are on a non-Ubuntu machine, you are more likely to have to tinker with CMakeLists.txt. This isn't a big deal, by itself! Don't be afraid to force include paths, e.g. by adding include_directories(/home/petersen/include/eigen3/) to CMakeLists.txt. You can also remove specific analysis programs if problematic.</p>
             <br>
             <p>Oftentimes, you will have to remind the environment about variables that were set at some previous compile time. For instance, I usually remind the machine about the location of specific libraries and executables when setting up an EXP run:</p>
-            <pre><code>
-export LD_LIBRARY_PATH=/home/petersen/lib/:$LD_LIBRARY_PATH
-export PATH=/home/petersen/bin/:$PATH
-            </code></pre>
+            <pre><code>export LD_LIBRARY_PATH=/home/petersen/lib/:$LD_LIBRARY_PATH
+export PATH=/home/petersen/bin/:$PATH</code></pre>
           </div>
           <div class="title">
             <h3>Working with module files</h3>
             <br>
             <p>In the wild west of cluster management, modules can help a lot. However, some module files have not yet been written, depending on the module and the cluster maintenance (cuillin is a bit wilder than other clusters). To get started, read <a href="https://lmod.readthedocs.io/en/latest/100_modulefile_examples.html">this tutorial</a>. On cuillin, the software issues log is located <a href="https://cuillin.roe.ac.uk/projects/cuillin-software/issues">here</a>. For instance, a couple relevant links on cuillin:<p>
-            <pre><code>
-# modules will search the following file paths:
+            <pre><code># modules will search the following file paths:
 /etc/environment-modules/modulespath
 # Ubuntu-provided packages should go in /usr/share, not /usr/local
 # for example:
 cd /usr/share/modules/modulefiles
-more more /usr/local/Modules/modulefiles/cuda/11.2.0
-            </code></pre>
+more more /usr/local/Modules/modulefiles/cuda/11.2.0</code></pre>
             <p>To hunt for a particular module requires a bit of knowledge of the file system. It's generally possible to ascertain where the modulefiles will be from looking at the ultimate root, '/'. On the various machines:</p>
-            <pre><code>
-# unity
+            <pre><code># unity
 more /modules/modulefiles/hdf5/1.12.0.lua
-# appPath = "/modules/apps/hdf5/1.12.0"
-            </code></pre>
+# appPath = "/modules/apps/hdf5/1.12.0"</code></pre>
           </div>
 	     </div>
      </div>
