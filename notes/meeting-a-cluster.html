@@ -16,7 +16,7 @@
           </div>-->
           <div class="title">
             <h2>Meeting a new supercomputer</h2>
-            <p>last update: 4 February 2022</p>
+            <p>last update: 7 February 2022</p>
           </div>
           <div class="title">
 	          <p>I'm lucky enough to have had time on a number of different high-performance computing (HPC) setups across various institutes (eagle and unity at UMass, cuillin at the IfA in Edinburgh, infinity at the IAP in Paris). These are all great machines, but like all HPC setups, a bit idiosyncratic. I am generally quite good about only using proper time allocations and resources, but sometimes the pain of learning a new system has been to great, and I've overstayed my welcome on older resources. Don't be like me! On supercomputers, I'll generally assume that we don't have any ability to install new software, so we will focus on existing within the environment as much as possible, and only asking for cluster manager help when absolutely needed.
@@ -25,6 +25,19 @@
             <br>
             <p>To mitigate the chances that I'll get lost again in the future on a prospective new machine, I'm writing down some helpful things that I've learned. For the most part, I'm trying to save myself troubleshooting pain going forward, and also save cluster managers time whenever possible. Note that I'm skipping all the UNIX-y stuff for background because these are mostly notes for me -- if you're reading this and need a UNIX refresher, feel free to reach out for a chat!</p>
             <br>
+            <p>I've set a lot of this page up as dropdowns to try and streamline the information. Click on any plus sign to see more details. For example:</p>
+            <br>
+            <button type="button" class="collapsible">
+              <i><span class="regularblack">Goals for this page</span></i>
+            </button>
+            <div class="title collapsecontent">
+              <p><b>Answer the following questions:</b></p>
+              <p>1. What operating system is the machine running?</p>
+              <p>2. Does the machine use module files?</p>
+              <p>3. Where are some common libraries located?</p>
+              <p>4. What queuing system is the machine running?</p>
+              <p>5. How do I troubleshoot EXP installs?</p>
+            </div>
           </div>
           <div class="title">
             <h3>What's under the hood (software)?</h3>
@@ -101,8 +114,15 @@ module load cmake openmpi/4.1.2-gnu gcc/11.2.0 gsl/2.7.1 inteloneapi/2021.4 cuda
             <br>
             <p>You may have come here hoping to install EXP. Great! If so, you'll need a few specific locations on your machine, such as eigen3 and fftw3 (and maybe cuda). First things first, you should always be using the latest version of EXP -- things are changing all the time (always for the better, I promise!).</p>
             <br>
-            <p>The first thing to do is obtain EXP. <a href="">EXP lives on bitbucket</a>. If you do not have access, but should, let me know! Otherwise, the sequence of commands is standard git. The best way to give bitbucket your credentials is by registering your SSH key with bitbucket. If you navigate to your 'Personal Settings' on bitbucket, under 'Security', you will see 'SSH Keys'. Select 'Add Key', and then you need to paste in the key from the machine you'd like to copy the repository to. The key, if it has been generated (if not run 'ssh-keygen -t rsa'; feel free to use an empty passphrase but if any cluster manager asks, I [wink-wink] warned you not to do this), is located in ~/.ssh/id_rsa.pub, so you can 'more ~/.ssh/id_rsa.pub' and simply copy-paste the result that is spit out into the bitbucket key prompt. Now you're ready to git!
-            </p>
+            <p>The first thing to do is obtain EXP. <a href="">EXP lives on bitbucket</a>. If you do not have access, but should, let me know! Otherwise, the sequence of commands is standard git. The best way to give bitbucket your credentials is by registering your SSH key with bitbucket.</p>
+            <button type="button" class="collapsible">
+              <i><span class="regularblack">SSH keys and bitbucket</span></i>
+            </button>
+            <div class="title collapsecontent">
+              <p>If you navigate to your 'Personal Settings' on bitbucket, under 'Security', you will see 'SSH Keys'. Select 'Add Key', and then you need to paste in the key from the machine you'd like to copy the repository to. If you are copying the code to both your laptop and a cluster, you will need to do this process twice: the key pairs are different for every machine (that is, you will have different key pairs on every machine you use). <i>If you have not generated your key, run 'ssh-keygen -t rsa' (Feel free to use an empty passphrase but if any cluster manager asks, I [wink-wink] warned you not to do this).</i> To see your key, you can  'more ~/.ssh/id_rsa.pub' and simply copy-paste the result that is spit out into the bitbucket key prompt. Now you're ready to git! Note that these instructions also work for GitHub; you'll have to navigate the settings in a similar way to upload your public key.</p>
+            </div>
+            <br><br>
+            <p>To 'git' the code from bitbucket,</p>
             <pre><code>git clone git@bitbucket.org:mdweinberg/exp.git
 cd exp
 git branch devel
@@ -122,9 +142,7 @@ git submodule update --init --recursive</code></pre>
               <i><span class="regularblack">unity (Ubuntu)</span></i>
             </button>
             <div class="title collapsecontent">
-            <pre><code>
-cmake -DFFTW_ROOT=/modules/apps/fftw/3.3.8 -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=YES -DENABLE_USER=YES -DEigen3_DIR=$EIGEN_BASE/share/eigen3/cmake -DCMAKE_INSTALL_PREFIX=/home/mpete0_umass_edu -Wno-dev ..
-            </code></pre>
+            <pre><code>cmake -DFFTW_ROOT=/modules/apps/fftw/3.3.8 -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=YES -DENABLE_USER=YES -DEigen3_DIR=$EIGEN_BASE/share/eigen3/cmake -DCMAKE_INSTALL_PREFIX=/home/mpete0_umass_edu -Wno-dev ..</code></pre>
             </div>
             <br><br>
             <button type="button" class="collapsible">
