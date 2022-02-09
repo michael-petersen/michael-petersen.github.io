@@ -7,7 +7,19 @@
 </head>
 
 <body class="home color-1">
-  <div class="section" id="research">
+  <div id="headerstatic">
+    <div class="container">
+      <div class="row">
+      	<h2 id="logostatic">
+          <a href="../index.html">
+      	    <span>Michael S. Petersen</span>
+      	    <span class="highlightstatic">Institut d'Astrophysique de Paris</span>
+      	  </a>
+        </h2>
+      </div>
+    </div>
+  </div>
+  <div class="section">
     <div class="container">
       <div class="content">
         <div class="row">
@@ -16,7 +28,7 @@
           </div>-->
           <div class="title">
             <h2>Meeting a new supercomputer</h2>
-            <p>last update: 8 February 2022</p>
+            <p>last update: 9 February 2022</p>
           </div>
           <div class="title">
 	          <p>I'm lucky enough to have had time on a number of different high-performance computing (HPC) setups across various institutes (eagle and unity at UMass, cuillin at the IfA in Edinburgh, infinity at the IAP in Paris). These are all great machines, but like all HPC setups, a bit idiosyncratic. I am generally quite good about only using proper time allocations and resources, but sometimes the pain of learning a new system has been to great, and I've overstayed my welcome on older resources. Don't be like me! On supercomputers, I'll generally assume that we don't have any ability to install new software, so we will focus on existing within the environment as much as possible, and only asking for cluster manager help when absolutely needed.
@@ -86,20 +98,24 @@ ldd /softs/gcc/11.2.0-CentOS8/bin/gcc</code></pre>
             </button>
             <div class="title collapsecontent">
               <p>There are a few useful commands here:</p>
-              <pre><code>module avail
-module purge
-module load [modulename1] [modulename2]
-module list</code></pre>
+              <pre><code>module avail                             # see list of available modules
+module purge                             # un-load loaded modules
+module load [modulename1] [modulename2]  # load modules (as many as you want at once!)
+module list                              # list loaded modules</code></pre>
               <p>From the output of 'module avail' you will select the list of modules you want to then 'module load'. In general, it's reasonable to choose the highest possible version available; if you run into trouble, it can occasionally be worth backing off the version. The second line will unload all current modules, giving you a clean slate. For completeness, here are the module sets I'm using on three machines (the output of 'module list'), for inspiration:</p>
-            <pre><code># unity (Ubuntu)
+              <pre><code># unity (Ubuntu)
 module load cuda/11.3.1 mpfr/4.1.0 gcc/10.2.0 boost/1.73.0 openmpi/4.1.0 eigen/3.3.7 gmp/6.2.0  mpc/1.1.0    vtk/8.2.0  cmake/3.15.0 python/3.9.1 fftw/3.3.8
 
 # cuillin (Ubuntu)
 module load cuda/11.5 gcc/10.2
 
 # infinity (CentOS)
-module load cmake openmpi/4.1.2-gnu gcc/11.2.0 gsl/2.7.1 inteloneapi/2021.4 cuda/11.4</code></pre>
-            <p>These follow pretty standard module file naming conventions, namely, the library followed by the version number. If troubleshooting, you will want to send the output of 'module avail;module list' so the troubleshooter can see what's available on the system.</p>
+module load cmake openmpi/4.1.2-gnu gcc/11.2.0 gsl/2.7.1 inteloneapi/2021.4 cuda/11.4
+
+# iron cluster
+module load modules-new; module load boost vtk cmake cuda eigen emacs fftw gcc hdf5 openmpi</code></pre>
+              <p>These follow pretty standard module file naming conventions, namely, the library followed by the version number. If troubleshooting, you will want to send the output of 'module avail;module list' so the troubleshooter can see what's available on the system.</p>
+              <br>
             </div>
             <br>
             <br><br>
@@ -120,6 +136,7 @@ module load cmake openmpi/4.1.2-gnu gcc/11.2.0 gsl/2.7.1 inteloneapi/2021.4 cuda
             <br>
             <p><i>Almost all steps below are better run on a node of the cluster (i.e. a machine that will actually be using EXP)! To this end, a good first step is to check out a node for an interactive session to compile. </i>A basic checkout command (for slurm) looks like</p>
             <pre><code>srun -n8 --exclusive --pty $SHELL</code></pre>
+            <!--srun -p cca --nodes=1 --ntasks=16 --pty $SHELL-->
             <p>Which will drop you at a terminal prompt on a node. Proceed...</p>
             <br>
             <p>The first thing to do is obtain EXP. <a href="">EXP lives on bitbucket</a>. If you do not have access, but should, let me know! Otherwise, the sequence of commands is standard git. The best way to give bitbucket your credentials is by registering your SSH key with bitbucket.</p>
@@ -141,9 +158,12 @@ git submodule update --init --recursive</code></pre>
               <i><span class="regularblack">A few more git pointers</span></i>
             </button>
             <div class="title collapsecontent">
-              <p>Since EXP is operating in shared risk mode right now, you may have to install updates from time to time. To do so, you will get the most recent code from bitbucket, and then reinstall. Fortunately, git makes this easy. To update the code:</p>
-              <pre><code>git pull</code></pre>
-              <p>Then proceed to the cmake and make steps below.</p>
+              <p>Since EXP is operating in shared risk mode right now, you may have to install updates from time to time. To do so, you will get the most recent code from bitbucket, and then reinstall. Fortunately, git makes this easy.</p>
+              <pre><code>git fetch    # to update the code, without attempted merge
+git pull     # to update the code, with attempted merge
+git log      # see recent repository changes, as recorded by git
+git status   # see the current status of git, uncommitted code, changes, etc.</code></pre>
+              <p>After updating code, you may proceed to the cmake and make steps below.</p>
               <br>
             </div>
             <br><br>
@@ -177,6 +197,7 @@ cmake [options] ..</code></pre>
 -DFFTW_ROOT                      # the location of the FFTW libraries (typically a module)
 -DEigen3_DIR                     # the Eigen3 cmake install location
 -DPNG_PNG_INCLUDE_DIR            # the libpng install location
+-DCMAKE_CUDA_FLAGS               # extra cuda flags (typically not needed)
 -DCMAKE_INSTALL_PREFIX           # the base directory to install executables. typically your ${HOME}.</code></pre>
               <br>
             </div>
@@ -185,7 +206,9 @@ cmake [options] ..</code></pre>
               <i><span class="regularblack">cmake notes for specific machines</span></i>
             </button>
             <div class="title collapsecontent">
-              <br><br>
+              <br>
+              <p>These are working cmake recipes for specific machines. If you try one and it doesn't work, please let me know!</p>
+              <br>
               <button type="button" class="collapsible">
                 <i><span class="regularblack">unity (Ubuntu)</span></i>
               </button>
@@ -206,9 +229,16 @@ cmake [options] ..</code></pre>
                 <i><span class="regularblack">infinity (CentOS)</span></i>
               </button>
               <div class="title collapsecontent">
-              <pre><code>cmake -DCMAKE_C_COMPILER=/softs/gcc/11.2.0-CentOS8/bin/gcc -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=YES -DENABLE_USER=YES -DEigen3_DIR=/home/petersen/eigen-3.2.10/cmake -DPNG_PNG_INCLUDE_DIR=/home/petersen/code -DC_INCLUDE_PATH=/home/petersen/include/eigen3 -DCMAKE_INSTALL_PREFIX=/home/petersen -Wno-dev ..</code></pre>
-              <br>
+                <pre><code>cmake -DCMAKE_C_COMPILER=/softs/gcc/11.2.0-CentOS8/bin/gcc -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=YES -DENABLE_USER=YES -DEigen3_DIR=/home/petersen/eigen-3.2.10/cmake -DPNG_PNG_INCLUDE_DIR=/home/petersen/code -DC_INCLUDE_PATH=/home/petersen/include/eigen3 -DCMAKE_INSTALL_PREFIX=/home/petersen -Wno-dev ..</code></pre>
               </div>
+              <br><br>
+              <button type="button" class="collapsible">
+                <i><span class="regularblack">iron cluster (CentOS)</span></i>
+              </button>
+              <div class="title collapsecontent">
+                <pre><code>cmake -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=1 -DEigen3_DIR=$EIGEN_BASE/share/eigen3/cmake/ -DCMAKE_INSTALL_PREFIX=$HOME -DCMAKE_BUILD_TYPE=Release -DCMAKE_CUDA_FLAGS="-arch=compute_60 -code=sm_60,sm_70,sm_80" -Wno-dev ..</code></pre>
+              </div>
+              <br><br>
             </div>
             <br><br>
             <p>Now we need to actually compile EXP! cmake has conveniently generated all of the configuration files we need, so the next step is as straightforward as</p>
@@ -246,12 +276,12 @@ export PATH=${HOME}/bin/:$PATH</code></pre>
               <div class="title collapsecontent">
                 <p>You need only download a tarball from the <a href="https://eigen.tuxfamily.org/index.php?title=Main_Page">main Eigen webpage</a> (go for the latest stable release!), then manoeuvre it to your home directory on the cluster in question, unpack (tar -xvf), and record the directory for setting the -DEigen3_DIR value in the cmake call above! You can also short-circuit the Eigen3_DIR variable by editing CMakeLists.txt (se directly below). On infinity, I ended up doing</p>
                 <pre><code># install Eigen separately: pull from github, and then need to cmake
-              git clone https://gitlab.com/libeigen/eigen.git
-              cd eigen
-              mkdir build
-              cd build
-              cmake -DCMAKE_INSTALL_PREFIX=/home/petersen ..
-              make install</code></pre>
+git clone https://gitlab.com/libeigen/eigen.git
+cd eigen
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=/home/petersen ..
+make install</code></pre>
                 <br>
               </div>
               <br><br>
@@ -261,12 +291,12 @@ export PATH=${HOME}/bin/:$PATH</code></pre>
               <div class="title collapsecontent">
                 <p>I constructed the needed files from source, starting from the instructions on the delightfully web-1.0 <a href="http://www.libpng.org/pub/png/libpng.html">libpng page</a></p>
                 <pre><code>git clone git://git.code.sf.net/p/libpng/code
-            cd code
-            mkdir build
-            cd build
-            cmake -DCMAKE_INSTALL_PREFIX=/home/petersen ..
-            make -j 8
-            make install</code></pre>
+cd code
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=/home/petersen ..
+make -j 8
+make install</code></pre>
               </div>
               <br><br>
               <p>One thing I've learned: if you are on a non-Ubuntu machine, you are more likely to have to tinker with CMakeLists.txt. This isn't a big deal, by itself! Don't be afraid to force include paths, e.g. by adding include_directories(/home/petersen/include/eigen3/) to CMakeLists.txt. You can also remove specific analysis programs if problematic.</p>
@@ -311,5 +341,8 @@ more /modules/modulefiles/hdf5/1.12.0.lua
    });
  }
  </script>
+
+ <div id="footer"> petersen@iap.fr </div>
+
 </body>
 </html>

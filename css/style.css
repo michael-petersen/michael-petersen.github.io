@@ -122,16 +122,43 @@ body.color-1 span.highlight{
     font-size: 12px;
 	color: #0b1d3f;
 }
+body.color-1 span.highlightstatic{
+    font-size: 12px;
+	color: #FFFFFF;
+}
 body.color-1 #footer {
 	font-weight: bold;
 	background: #0b1d3f;
-	color: #000;
+	color: #FFFFFF;
 	text-align: center;
 	font-size: 12px;
 	padding: 20px 0 20px 0;
 }
 
 /* Navigation & Logo ------------------------------------------ */
+#headerstatic{
+	top:0px;
+	width: 100%;
+	background: #0b1d3f;
+	height: 50px;
+}
+#logostatic {
+	display: block;
+	border: none;
+	margin-top: 4px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	float: left;
+}
+#logostatic a{
+	color: #FFFFFF;
+	text-decoration: none;
+	border: none;
+}
+#logostatic span{
+	margin-left: +12px;
+}
+
 #header{
 	top:0px;
 	width: 100%;
