@@ -6,6 +6,11 @@
   <link rel="stylesheet" href="../css/main.css">
 </head>
 
+<!--
+TODO:
+-add note about nano usage for text editing
+-->
+
 <body class="home color-1">
   <div id="headerstatic">
     <div class="container">
@@ -28,7 +33,7 @@
           </div>-->
           <div class="title">
             <h2>Meeting a new supercomputer</h2>
-            <p>last update: 9 February 2022</p>
+            <p>last update: 10 February 2022</p>
           </div>
           <div class="title">
 	          <p>I'm lucky enough to have had time on a number of different high-performance computing (HPC) setups across various institutes (eagle and unity at UMass, cuillin at the IfA in Edinburgh, infinity at the IAP in Paris). These are all great machines, but like all HPC setups, a bit idiosyncratic. I am generally quite good about only using proper time allocations and resources, but sometimes the pain of learning a new system has been to great, and I've overstayed my welcome on older resources. Don't be like me! On supercomputers, I'll generally assume that we don't have any ability to install new software, so we will focus on existing within the environment as much as possible, and only asking for cluster manager help when absolutely needed.
@@ -102,7 +107,7 @@ ldd /softs/gcc/11.2.0-CentOS8/bin/gcc</code></pre>
 module purge                             # un-load loaded modules
 module load [modulename1] [modulename2]  # load modules (as many as you want at once!)
 module list                              # list loaded modules</code></pre>
-              <p>From the output of 'module avail' you will select the list of modules you want to then 'module load'. In general, it's reasonable to choose the highest possible version available; if you run into trouble, it can occasionally be worth backing off the version. The second line will unload all current modules, giving you a clean slate. For completeness, here are the module sets I'm using on three machines (the output of 'module list'), for inspiration:</p>
+              <p>From the output of 'module avail' you will select the list of modules you want to then 'module load'. In general, it's reasonable to choose the highest possible version available; if you run into trouble, it can occasionally be worth backing off the version. The second line will unload all current modules, giving you a clean slate. For completeness, here are module sets (the output of 'module list') from some machines that can compile EXP, for inspiration:</p>
               <pre><code># unity (Ubuntu)
 module load cuda/11.3.1 mpfr/4.1.0 gcc/10.2.0 boost/1.73.0 openmpi/4.1.0 eigen/3.3.7 gmp/6.2.0  mpc/1.1.0    vtk/8.2.0  cmake/3.15.0 python/3.9.1 fftw/3.3.8
 
@@ -112,8 +117,11 @@ module load cuda/11.5 gcc/10.2
 # infinity (CentOS)
 module load cmake openmpi/4.1.2-gnu gcc/11.2.0 gsl/2.7.1 inteloneapi/2021.4 cuda/11.4
 
-# iron cluster (from Martin Weinberg)
-module load modules-new; module load boost vtk cmake cuda eigen emacs fftw gcc hdf5 openmpi</code></pre>
+# CCA iron cluster (from Martin Weinberg)
+module load modules-new; module load boost vtk cmake cuda eigen emacs fftw gcc hdf5 openmpi
+
+# Columbia Ginsburg cluster (from Courtney Carter)
+module load hdf5/1.10.1 slurm/20.02.6 openmpi/gcc/64/1.10.7 gcc/10.2.0 openblas/dynamic/0.3.7 cmake 3.22.1 fftw3/openmpi/gcc/64/3.3.8</code></pre>
               <p>These follow pretty standard module file naming conventions, namely, the library followed by the version number. If troubleshooting, you will want to send the output of 'module avail;module list' so the troubleshooter can see what's available on the system.</p>
               <br>
             </div>
@@ -196,9 +204,11 @@ cmake [options] ..</code></pre>
 -DENABLE_CUDA                    # compile with cuda. set to NO unless you specifically want cuda
 -DENABLE_USER                    # compile with user libraries. set to YES unless you want vanilla EXP only
 -DFFTW_ROOT                      # the location of the FFTW libraries (typically a module)
--DEigen3_DIR                     # the Eigen3 cmake install location
+-DFFTW_INCLUDE_DIRS              # the location of FFTW include directories
+-DEigen3_DIR                     # the Eigen3 cmake install location (if cmake done correctly)
 -DPNG_PNG_INCLUDE_DIR            # the libpng install location
--DCMAKE_CUDA_FLAGS               # extra cuda flags (typically not needed)
+-DCMAKE_CUDA_FLAGS               # extra cuda flags, passed in "" (typically not needed)
+-DCMAKE_CXX_FLAGS                # extra C++ flags, passed in "" (typically not needed)
 -DCMAKE_INSTALL_PREFIX           # the base directory to install executables. typically your ${HOME}.</code></pre>
               <br>
             </div>
@@ -234,11 +244,19 @@ cmake [options] ..</code></pre>
               </div>
               <br><br>
               <button type="button" class="collapsible">
-                <i><span class="regularblack">iron cluster (CentOS)</span></i>
+                <i><span class="regularblack">CCA iron cluster (CentOS)</span></i>
               </button>
               <div class="title collapsecontent">
                 <br><p>(from Martin Weinberg)</p>
                 <pre><code>cmake -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=1 -DEigen3_DIR=$EIGEN_BASE/share/eigen3/cmake/ -DCMAKE_INSTALL_PREFIX=$HOME -DCMAKE_BUILD_TYPE=Release -DCMAKE_CUDA_FLAGS="-arch=compute_60 -code=sm_60,sm_70,sm_80" -Wno-dev ..</code></pre>
+              </div>
+              <br><br>
+              <button type="button" class="collapsible">
+                <i><span class="regularblack">Columbia Ginsburg cluster (RedHat)</span></i>
+              </button>
+              <div class="title collapsecontent">
+                <br><p>(from Courtney Carter)</p>
+                <pre><code>cmake -DFFTW_ROOT=/cm/shared/apps/fftw/openmpi/gcc/64/3.3.8 -DFFTW_INCLUDE_DIRS=/cm/shared/apps/fftw/openmpi/gcc/64/3.3.8/include -DCMAKE_C_COMPILER=/cm/local/apps/gcc/10.2.0/bin/gcc -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=NO -DENABLE_USER=YES -DCMAKE_INSTALL_PREFIX=$HOME -Wno-dev ..</code></pre>
               </div>
               <br><br>
             </div>
