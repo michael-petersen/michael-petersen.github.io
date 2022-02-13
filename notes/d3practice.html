@@ -2,12 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Notes</title>
+  <title>Web-based figures</title>
   <link rel="stylesheet" href="../css/main.css">
 </head>
 
 <body class="home color-1">
-  <div class="section" id="research">
+  <div id="headerstatic">
+    <div class="container">
+      <div class="row">
+      	<h2 id="logostatic">
+          <a href="../index.html">
+      	    <span>Michael S. Petersen</span>
+      	    <span class="highlightstatic">Institut d'Astrophysique de Paris</span>
+      	  </a>
+        </h2>
+      </div>
+    </div>
+  </div>
+  <div class="section">
     <div class="container">
       <div class="content">
         <div class="row">
@@ -16,22 +28,34 @@
           </div>
           <div class="title">
             <h2>D3 Basics</h2>
-	    <p>Web-based, interactive visualisations can really help with science storytelling. However, I build the visualisations so infrequently that I regularly forget what I'm doing. This note consolidates some of the things I repeatedly forget when designing D3 visualisations.</p>
-      <br>
-      <p>The key start begins with firing up a local server to execute the D3 javascript code.</p>
-	    <br>
-	    <p>
-	    <pre>
-              <code>
-python -m http.server 8889
-              </code>
-	    </pre>
-	    </p>
-	</div>
-     </div>
-   </div>
- </div>
+        	    <p>Web-based, interactive visualisations can really help with science storytelling. However, I build the visualisations so infrequently that I regularly forget how I made a visualisation previously. This note consolidates some of the things I repeatedly forget when designing D3 visualisations. D3 stands for <i>data driven documents</i>, and is my preferred javascript library for making online visualisations. Unfortunately, D3 can feel like a bit of black magic, and I find myself repeatedly copying code when I should almost certainly be writing something new.</p>
+              <br>
+              <p>The key start begins with firing up a local server to execute the D3 javascript code. Really, this step is common for any javascript code that we want to prototype. Ideally this will be run in whichever directory holds your webpage, or you will end up navigating a lot of your computer directory structure.</p>
+        	    <pre><code>python -m http.server 8889</code></pre>
+        	    <p>Now head to <b>http://localhost:8889/</b> to see the local webpage in action (note that you might not want to use 8889 if you have a bunch of jupyter servers running: it could already be taken!).</p>
+              <br>
+              <p>The most useful link for me getting started with visualisations is <a href="https://www.d3-graph-gallery.com/index.html">'The D3 Graph Gallery'</a>.</p>
+              <br>
+              <p>To debug: In Chrome, View->Developer->JavaScript Console. The first thing you will probably notice is that you have some errors. The console is really helpful for debugging those! However, you can also use the console to interact with your data.</p>
+              <br>
+              <p>For a first demo, I have reminded myself how to make simple line plots, with a single additional option to select between diffrent data sets. I've started with MLB data, which is usually an excellent playground!</p>
+              <br>
+              <p>I have quite a few goals for interactive visualisations, starting with some real-time updates of CSVs that are immediately ingested into a webpage.</p>
+              <br>
+              <p>Glossary: <i>SVG, </i> structured vector graphics (where we can embed graphics directly in html); </p>
+              <br>
+              <!-- borrow an SVG example from here: https://perso.telecom-paristech.fr/eagan/class/ces-ds/labs/d3 -->
+              <svg width="200" height="200">
+                <rect x="10" y="10" width="125" height="125" style="fill: red; stroke: black; stroke-width: 2px;" />
+                <rect x="40" y="40" width="125" height="125" rx="10" style="fill: blue; stroke: black; stroke-width: 2px; opacity:0.7;" />
+              </svg>
+        	</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <div id="footer"> petersen@iap.fr </div>
 
 </body>
 </html>

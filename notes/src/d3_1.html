@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <title>Line figure demo</title>
+  <link rel="stylesheet" href="../../css/main.css">
+</head>
+
+<body>
+  <div id="headerstatic">
+    <div class="container">
+      <div class="row">
+        <h2 id="logostatic">
+          <a href="../index.html">
+            <span>Michael S. Petersen</span>
+            <span class="highlightstatic">Institut d'Astrophysique de Paris</span>
+          </a>
+        </h2>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="content">
+        <div class="row">
+	        <div class="title">
+            <h4><a href="../list.html">(back to notes list)</a></h4>
+          </div>
+          <div class="title">
+            <h2>A test set of charts.</h2>
+            <p>How many stolen bases were there in the MLB, by year?</p>
+            <!-- now show the chart -->
+            <div id="chart1"></div>
+            <p>How many home runs were there in the MLB, by year, by league?</p>
+            <!-- now show the chart -->
+            <!-- Add 2 buttons -->
+            <button onclick="update(data1)">AL</button>
+            <button onclick="update(data2)">NL</button>
+            <div id="chart2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer"> petersen@iap.fr </div>
+
+</body>
+
+<!-- the JavaScript stuff -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+
+<!-- MLB data for stolen bases-->
+<script src="sbs.js"></script>
+<script src="hrs.js"></script>
