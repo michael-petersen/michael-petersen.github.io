@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--borrowed from https://jsbin.com/gevocahihu/edit?html,js,output -->
+<head>
+  <meta charset="utf-8" />
+  <title>Interactive calculations</title>
+  <link rel="stylesheet" href="../../css/main.css">
+</head>
+
+<body onload="getValues()">
+  <div id="headerstatic">
+    <div class="container">
+      <div class="row">
+        <h2 id="logostatic">
+          <a href="../index.html">
+            <span>Michael S. Petersen</span>
+            <span class="highlightstatic">Institut d'Astrophysique de Paris</span>
+          </a>
+        </h2>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="content">
+        <div class="row">
+	        <div class="title">
+            <h4><a href="../list.html">(back to notes list)</a></h4>
+          </div>
+          <div class="title">
+            <h2>A test updating table</h2>
+            <p>Calculate a model the velocity uncertainty for RR Lyrae stars as a function of distance. Useful when constructing mock datasets. See Petersen, Peñarrubia, Jones (2022) for details.</p>
+            <table id='worksheet_table' class="table table-striped">
+              <thead>
+                <tr>
+                  <th>EDR3 Star Class</th>
+                  <th>Distance (kpc)</th>
+                  <th>Linear term</th>
+                  <th>Quadratic term</th>
+                  <th>Uncertainty (km/s)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td id="starclass" name="starclass">RR Lyrae</td>
+                  <td><input type="text" name="distance" id="distance" class="form-control" onkeyup="getValues()" value="50" /></td>
+                  <td><input type="text" name="linear" id="linear" class="form-control" onkeyup="getValues()" value="0.0043" /></td>
+                  <td><input type="text" name="quad" id="quad" class="form-control" onkeyup="getValues()" value="0.0000166"  /></td>
+                  <td name="revenue" id="uncertainty"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer"> petersen@iap.fr </div>
+
+</body>
+
+<!-- the JavaScript stuff -->
+<script src="calculate.js"></script>
