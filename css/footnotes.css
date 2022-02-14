@@ -1,0 +1,45 @@
+details, details summary {
+  display: inline;
+  vertical-align: super;
+  font-size: 0.75em;
+  list-style: none;
+  white-space: nowrap;
+  background-image:none;
+-webkit-appearance:none;
+}
+summary {
+  cursor: pointer;
+}
+details[open] {
+  display: contents;
+}
+details[open]::before {
+  content: " ";
+}
+details[open]::after {
+  content: "";
+}
+
+details summary::-webkit-details-marker {
+  display: inline;
+  display:none;
+}
+
+/* Details don't like being inside a p */
+.fake-p {
+  margin: 0 0 1rem 0;
+}
+
+.details-content {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 90%;
+  padding: 1rem;
+  font-size: 1rem;
+  background: lightyellow;
+  box-shadow: 0 0 100px black;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
