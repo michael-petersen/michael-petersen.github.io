@@ -1,3 +1,5 @@
+/*https://css-tricks.com/a-terrible-way-to-do-footnotes-in-html/ */
+
 details, details summary {
   display: inline;
   vertical-align: super;

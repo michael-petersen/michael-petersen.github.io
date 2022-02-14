@@ -66,193 +66,193 @@ And then module load hdf5/1.10.8
           </div>
 
 
-                    <div class="title">
-                      <h3>EXP-specific advice</h3>
-                      <br>
-                      <p>You may have come here hoping to install EXP. Great! First things first, you should always be using the latest version of EXP -- things are changing all the time (always for the better, I promise!).</p>
-                      <br>
-                      <p><i>Almost all steps below are better run on a node of the cluster (i.e. a machine that will actually be using EXP)! To this end, a good first step is to check out a node for an interactive session to compile. </i>A basic checkout command (for slurm) looks like</p>
-                      <pre><code>srun -n8 --exclusive --pty $SHELL</code></pre>
-                      <!--srun -p cca --nodes=1 --ntasks=16 --pty $SHELL-->
-                      <p>Which will drop you at a terminal prompt on a node. Proceed...</p>
-                      <br>
-                      <p>The first thing to do is obtain EXP. <a href="https://bitbucket.org/mdweinberg/exp/src/devel/">EXP lives on bitbucket</a>. If you do not have access, but should, let me know! Otherwise, the sequence of commands is standard git.</p>
-                      <button type="button" class="collapsible">
-                        <i><span class="regularblack">SSH keys and bitbucket</span></i>
-                      </button>
-                      <div class="title collapsecontent">
-                        <p>The best way to give bitbucket your credentials is by registering your SSH key with bitbucket.</p>
-                        <p>If you navigate to your 'Personal Settings' on bitbucket, under 'Security', you will see 'SSH Keys'. Select 'Add Key', and then you need to paste in the key from the machine you'd like to copy the repository to. If you are copying the code to both your laptop and a cluster, you will need to do this process twice: the key pairs are different for every machine (that is, you will have different key pairs on every machine you use). <i>If you have not generated your key, run 'ssh-keygen -t rsa' (Feel free to use an empty passphrase but if any cluster manager asks, I [wink-wink] warned you not to do this).</i> To see your key, you can  'more ~/.ssh/id_rsa.pub' and simply copy-paste the result that is spit out into the bitbucket key prompt. Now you're ready to git! Note that these instructions also work for GitHub; you'll have to navigate the settings in a similar way to upload your public key.</p>
-                        <br>
-                      </div>
-                      <br><br>
-                      <p>To 'git' the code from bitbucket,</p>
-                      <pre><code>git clone -b devel git@bitbucket.org:mdweinberg/exp.git
-          cd exp
-          git submodule update --init --recursive</code></pre>
-                      <p>The last line here sets up some external modules that EXP needs for installation: yaml-cpp and png++. These are submodules. This is it's own <a href="https://github.blog/2016-02-01-working-with-submodules/">thing</a>, but again, helps to streamline the process.</p>
-                      <br>
-                      <button type="button" class="collapsible">
-                        <i><span class="regularblack">A few more git pointers</span></i>
-                      </button>
-                      <div class="title collapsecontent">
-                        <p>Since EXP is operating in shared risk mode right now, you may have to install updates from time to time. To do so, you will get the most recent code from bitbucket, and then reinstall. Fortunately, git makes this easy.</p>
-                        <pre><code>git fetch    # to update the code, without attempted merge
-          git pull     # to update the code, with attempted merge
-          git log      # see recent repository changes, as recorded by git
-          git status   # see the current status of git, uncommitted code, changes, etc.</code></pre>
-                        <p>After updating code, you may proceed to the cmake and make steps below.</p>
-                        <br>
-                      </div>
-                      <br><br>
-                      <p>Next step: EXP now uses cmake to set up compilation, so the next order of business is setting up the configurations correctly. From the exp directory, you need to make a workspace, and then execute the configuring command:</p>
-                      <pre><code>mkdir build
-          cd build
-          cmake [options] ..</code></pre>
-                      <br>
-                      <p><i>Don't forget the trailing '..' in the cmake command to pick up the CMakeLists.txt file one directory up!</i> cmake will generate quite a lot of output, and will warn you if libraries are missing. In general, if the configuration doesn't complete, you should get an error message that makes sense; if can't make sense of the error, you can try sorting through the log or errors, in CMakeFiles/CMakeOutput.log and CMakeFiles/CMakeError.log. Since these files are huge, it typically makes sense to search in them using grep for specific keywords. If you see some final output like</p>
-                      <pre><code>Configuring build for devel/cb06b990c4f22aec9b5c76004bed0c43234be6bd at 2022-02-08 16:25:13 UTC
-          -- Configuring done
-          -- Generating done
-          -- Build files have been written to: ...</code></pre>
-                      <p>The configuration has likely been successful!</p>
-                      <br>
-                      <p>To help with the cmake process, I'm also listing some working cmake configuration calls and notes, which fill out the options part of 'cmake [options]' instruction above. The specific configuration recipes work on the specific machines referenced above, but you may be able to draw inspiration from them!</p>
-                      <br>
-                      <button type="button" class="collapsible">
-                        <i><span class="regularblack">generic cmake EXP pointers</span></i>
-                      </button>
-                      <div class="title collapsecontent">
-                        <p>Now is also a good time to mention that EXP does come with some compile instructions, <a href="https://bitbucket.org/mdweinberg/exp/raw/f4090892c7b638112c1163bf57c0157cc67d6e72/README.build">called README.build</a>.</p>
-                        <p>A list of potentially relevant options for cmake:</p>
-                        <pre><code>-DCMAKE_C_COMPILER               # the location of the C compiler, from 'which gcc'
-          -DCMAKE_CXX_COMPILER             # the location of the C++ compiler, from 'which g++'
-          -DC_INCLUDE_PATH                 # the location of extra C headers, if not automatically found
-          -DCMAKE_BUILD_TYPE               # set to 'Release' for standard optimisation flags
-          -DCUDA_USE_STATIC_CUDA_RUNTIME   # set to 'off'
-          -DENABLE_CUDA                    # compile with cuda. set to NO unless you specifically want cuda
-          -DENABLE_USER                    # compile with user libraries. set to YES unless you want vanilla EXP only
-          -DFFTW_ROOT                      # the location of the FFTW libraries (typically a module)
-          -DFFTW_INCLUDE_DIRS              # the location of FFTW include directories
-          -DEigen3_DIR                     # the Eigen3 cmake install location (if cmake done correctly)
-          -DPNG_PNG_INCLUDE_DIR            # the libpng install location
-          -DCMAKE_CUDA_FLAGS               # extra cuda flags, passed in "" (typically not needed)
-          -DCMAKE_CXX_FLAGS                # extra C++ flags, passed in "" (typically not needed)
-          -DCMAKE_INSTALL_PREFIX           # the base directory to install executables. typically your ${HOME}.</code></pre>
-                        <br>
-                      </div>
-                      <br><br>
-                      <button type="button" class="collapsible">
-                        <i><span class="regularblack">cmake notes for specific machines</span></i>
-                      </button>
-                      <div class="title collapsecontent">
-                        <br>
-                        <p>These are working cmake recipes for specific machines. If you try one and it doesn't work, please let me know!</p>
-                        <br>
-                        <button type="button" class="collapsible">
-                          <i><span class="regularblack">unity (Ubuntu)</span></i>
-                        </button>
-                        <div class="title collapsecontent">
-                        <pre><code>cmake -DFFTW_ROOT=/modules/apps/fftw/3.3.8 -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=YES -DENABLE_USER=YES -DEigen3_DIR=$EIGEN_BASE/share/eigen3/cmake -DCMAKE_INSTALL_PREFIX=/home/mpete0_umass_edu -Wno-dev ..</code></pre>
-                        <br>
-                        </div>
-                        <br><br>
-                        <button type="button" class="collapsible">
-                          <i><span class="regularblack">cuillin (Ubuntu)</span></i>
-                        </button>
-                        <div class="title collapsecontent">
-                        <pre><code>cmake -DCMAKE_CXX_COMPILER=/usr/local/gcc/10.2/bin/g++ -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=NO -DENABLE_USER=YES -DEigen3_DIR=$EIGEN_BASE/share/eigen3/cmake -DCMAKE_INSTALL_PREFIX=/home/mpetersen -Wno-dev ..</code></pre>
-                        <br>
-                        </div>
-                        <br><br>
-                        <button type="button" class="collapsible">
-                          <i><span class="regularblack">infinity (CentOS)</span></i>
-                        </button>
-                        <div class="title collapsecontent">
-                          <pre><code>cmake -DCMAKE_C_COMPILER=/softs/gcc/11.2.0-CentOS8/bin/gcc -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=YES -DENABLE_USER=YES -DEigen3_DIR=/home/petersen/eigen-3.2.10/cmake -DPNG_PNG_INCLUDE_DIR=/home/petersen/code -DC_INCLUDE_PATH=/home/petersen/include/eigen3 -DCMAKE_INSTALL_PREFIX=/home/petersen -Wno-dev ..</code></pre>
-                        </div>
-                        <br><br>
-                        <button type="button" class="collapsible">
-                          <i><span class="regularblack">CCA iron cluster (CentOS)</span></i>
-                        </button>
-                        <div class="title collapsecontent">
-                          <br><p>(from Martin Weinberg)</p>
-                          <pre><code>cmake -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=1 -DEigen3_DIR=$EIGEN_BASE/share/eigen3/cmake/ -DCMAKE_INSTALL_PREFIX=$HOME -DCMAKE_BUILD_TYPE=Release -DCMAKE_CUDA_FLAGS="-arch=compute_60 -code=sm_60,sm_70,sm_80" -Wno-dev ..</code></pre>
-                        </div>
-                        <br><br>
-                        <button type="button" class="collapsible">
-                          <i><span class="regularblack">Columbia Ginsburg cluster (RedHat)</span></i>
-                        </button>
-                        <div class="title collapsecontent">
-                          <br><p>(from Courtney Carter)</p>
-                          <pre><code>cmake -DFFTW_ROOT=/cm/shared/apps/fftw/openmpi/gcc/64/3.3.8 -DFFTW_INCLUDE_DIRS=/cm/shared/apps/fftw/openmpi/gcc/64/3.3.8/include -DCMAKE_C_COMPILER=/cm/local/apps/gcc/10.2.0/bin/gcc -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=NO -DENABLE_USER=YES -DCMAKE_INSTALL_PREFIX=$HOME -Wno-dev ..</code></pre>
-                        </div>
-                        <br><br>
-                      </div>
-                      <br><br>
-                      <p>Now we need to actually compile EXP! cmake has conveniently generated all of the configuration files we need, so the next step is as straightforward as</p>
-                      <pre><code>make -j 8</code></pre>
-                      <p>In this command, we've asked for 8 processes to compile EXP simultaneously. cmake is good at utilising parallel processes, so don't be shy about using multiple processes. Typically I request either 1x or 2x the number of cores (either native to the machine, or requested in the 'srun' allocation at the start of the process).</p>
-                      <br>
-                      <p>Final step: install the executables in your home directory, so that you have access to them everywhere:</p>
-                      <pre><code>make install</code></pre>
-                      <br>
-                      <p><b>You are now ready to run EXP.</b> Oftentimes, you will have to remind the environment about variables that were set at some previous compile time. For instance, I usually remind the machine about the location of specific libraries and executables when setting up an EXP run:</p>
-                      <pre><code>export LD_LIBRARY_PATH=${HOME}/lib/:$LD_LIBRARY_PATH
-          export PATH=${HOME}/bin/:$PATH</code></pre>
-                      <br>
-                      <button type="button" class="collapsible">
-                        <i><span class="regularblack">Some troubleshooting tips.</span></i>
-                      </button>
-                      <div class="title collapsecontent">
-                        <br>
-                        <button type="button" class="collapsible">
-                          <i><span class="regularblack">Questions to try debugging the install</span></i>
-                        </button>
-                        <div class="title collapsecontent">
-                          <p>Which executable program is having a problem compiling (and in which directory)?</p>
-                          <p>Can I find the relevant piece of the CMakeLists.txt recipe and figure out what source code might be having a problem?</p>
-                          <p>Which library is not being found during install?</p>
-                          <p>Is the missing library part of a module, that might indicate some dependency problems?</p>
-                          <br>
-                        </div>
-                        <br><br>
-                        <p>For some clusters, you may need to install libraries on your own. I had to install eigen3 and png++ on my own for infinity. This is not inherently a problem, as both are header-only libraries.</p>
-                        <br>
-                        <button type="button" class="collapsible">
-                          <i><span class="regularblack">To install eigen3...</span></i>
-                        </button>
-                        <div class="title collapsecontent">
-                          <p>You need only download a tarball from the <a href="https://eigen.tuxfamily.org/index.php?title=Main_Page">main Eigen webpage</a> (go for the latest stable release!), then manoeuvre it to your home directory on the cluster in question, unpack (tar -xvf), and record the directory for setting the -DEigen3_DIR value in the cmake call above! You can also short-circuit the Eigen3_DIR variable by editing CMakeLists.txt (se directly below). On infinity, I ended up doing</p>
-                          <pre><code># install Eigen separately: pull from github, and then need to cmake
-          git clone https://gitlab.com/libeigen/eigen.git
-          cd eigen
-          mkdir build
-          cd build
-          cmake -DCMAKE_INSTALL_PREFIX=/home/petersen ..
-          make install</code></pre>
-                          <br>
-                        </div>
-                        <br><br>
-                        <button type="button" class="collapsible">
-                          <i><span class="regularblack">To install png++...</span></i>
-                        </button>
-                        <div class="title collapsecontent">
-                          <p>I constructed the needed files from source, starting from the instructions on the delightfully web-1.0 <a href="http://www.libpng.org/pub/png/libpng.html">libpng page</a></p>
-                          <pre><code>git clone git://git.code.sf.net/p/libpng/code
-          cd code
-          mkdir build
-          cd build
-          cmake -DCMAKE_INSTALL_PREFIX=/home/petersen ..
-          make -j 8
-          make install</code></pre>
-                        </div>
-                        <br><br>
-                        <p>One thing I've learned: if you are on a non-Ubuntu machine, you are more likely to have to tinker with CMakeLists.txt. This isn't a big deal, by itself! Don't be afraid to force include paths, e.g. by adding include_directories(/home/petersen/include/eigen3/) to CMakeLists.txt. You can also remove specific analysis programs if problematic.</p>
-                        <br>
-                      </div>
-                      <br><br>
-                    </div>
+          <div class="title">
+            <h3>EXP-specific advice</h3>
+            <br>
+            <p>You may have come here hoping to install EXP. Great! First things first, you should always be using the latest version of EXP -- things are changing all the time (always for the better, I promise!).</p>
+            <br>
+            <p><i>Almost all steps below are better run on a node of the cluster (i.e. a machine that will actually be using EXP)! To this end, a good first step is to check out a node for an interactive session to compile. </i>A basic checkout command (for slurm) looks like</p>
+            <pre><code>srun -n8 --exclusive --pty $SHELL</code></pre>
+            <!--srun -p cca --nodes=1 --ntasks=16 --pty $SHELL-->
+            <p>Which will drop you at a terminal prompt on a node. Proceed...</p>
+            <br>
+            <p>The first thing to do is obtain EXP. <a href="https://bitbucket.org/mdweinberg/exp/src/devel/">EXP lives on bitbucket</a>. If you do not have access, but should, let me know! Otherwise, the sequence of commands is standard git.</p>
+            <button type="button" class="collapsible">
+              <i><span class="regularblack">SSH keys and bitbucket</span></i>
+            </button>
+            <div class="title collapsecontent">
+              <p>The best way to give bitbucket your credentials is by registering your SSH key with bitbucket.</p>
+              <p>If you navigate to your 'Personal Settings' on bitbucket, under 'Security', you will see 'SSH Keys'. Select 'Add Key', and then you need to paste in the key from the machine you'd like to copy the repository to. If you are copying the code to both your laptop and a cluster, you will need to do this process twice: the key pairs are different for every machine (that is, you will have different key pairs on every machine you use). <i>If you have not generated your key, run 'ssh-keygen -t rsa' (Feel free to use an empty passphrase but if any cluster manager asks, I [wink-wink] warned you not to do this).</i> To see your key, you can  'more ~/.ssh/id_rsa.pub' and simply copy-paste the result that is spit out into the bitbucket key prompt. Now you're ready to git! Note that these instructions also work for GitHub; you'll have to navigate the settings in a similar way to upload your public key.</p>
+              <br>
+            </div>
+            <br><br>
+            <p>To 'git' the code from bitbucket,</p>
+            <pre><code>git clone -b devel git@bitbucket.org:mdweinberg/exp.git
+cd exp
+git submodule update --init --recursive</code></pre>
+            <p>The last line here sets up some external modules that EXP needs for installation: yaml-cpp and png++. These are submodules. This is it's own <a href="https://github.blog/2016-02-01-working-with-submodules/">thing</a>, but again, helps to streamline the process.</p>
+            <br>
+            <button type="button" class="collapsible">
+              <i><span class="regularblack">A few more git pointers</span></i>
+            </button>
+            <div class="title collapsecontent">
+              <p>Since EXP is operating in shared risk mode right now, you may have to install updates from time to time. To do so, you will get the most recent code from bitbucket, and then reinstall. Fortunately, git makes this easy.</p>
+              <pre><code>git fetch    # to update the code, without attempted merge
+git pull     # to update the code, with attempted merge
+git log      # see recent repository changes, as recorded by git
+git status   # see the current status of git, uncommitted code, changes, etc.</code></pre>
+              <p>After updating code, you may proceed to the cmake and make steps below.</p>
+              <br>
+            </div>
+            <br><br>
+            <p>Next step: EXP now uses cmake to set up compilation, so the next order of business is setting up the configurations correctly. From the exp directory, you need to make a workspace, and then execute the configuring command:</p>
+            <pre><code>mkdir build
+cd build
+cmake [options] ..</code></pre>
+            <br>
+            <p><i>Don't forget the trailing '..' in the cmake command to pick up the CMakeLists.txt file one directory up!</i> cmake will generate quite a lot of output, and will warn you if libraries are missing. In general, if the configuration doesn't complete, you should get an error message that makes sense; if can't make sense of the error, you can try sorting through the log or errors, in CMakeFiles/CMakeOutput.log and CMakeFiles/CMakeError.log. Since these files are huge, it typically makes sense to search in them using grep for specific keywords. If you see some final output like</p>
+            <pre><code>Configuring build for devel/cb06b990c4f22aec9b5c76004bed0c43234be6bd at 2022-02-08 16:25:13 UTC
+-- Configuring done
+-- Generating done
+-- Build files have been written to: ...</code></pre>
+            <p>The configuration has likely been successful!</p>
+            <br>
+            <p>To help with the cmake process, I'm also listing some working cmake configuration calls and notes, which fill out the options part of 'cmake [options]' instruction above. The specific configuration recipes work on the specific machines referenced above, but you may be able to draw inspiration from them!</p>
+            <br>
+            <button type="button" class="collapsible">
+              <i><span class="regularblack">generic cmake EXP pointers</span></i>
+            </button>
+            <div class="title collapsecontent">
+              <p>Now is also a good time to mention that EXP does come with some compile instructions, <a href="https://bitbucket.org/mdweinberg/exp/raw/f4090892c7b638112c1163bf57c0157cc67d6e72/README.build">called README.build</a>.</p>
+              <p>A list of potentially relevant options for cmake:</p>
+              <pre><code>-DCMAKE_C_COMPILER               # the location of the C compiler, from 'which gcc'
+-DCMAKE_CXX_COMPILER             # the location of the C++ compiler, from 'which g++'
+-DC_INCLUDE_PATH                 # the location of extra C headers, if not automatically found
+-DCMAKE_BUILD_TYPE               # set to 'Release' for standard optimisation flags
+-DCUDA_USE_STATIC_CUDA_RUNTIME   # set to 'off'
+-DENABLE_CUDA                    # compile with cuda. set to NO unless you specifically want cuda
+-DENABLE_USER                    # compile with user libraries. set to YES unless you want vanilla EXP only
+-DFFTW_ROOT                      # the location of the FFTW libraries (typically a module)
+-DFFTW_INCLUDE_DIRS              # the location of FFTW include directories
+-DEigen3_DIR                     # the Eigen3 cmake install location (if cmake done correctly)
+-DPNG_PNG_INCLUDE_DIR            # the libpng install location
+-DCMAKE_CUDA_FLAGS               # extra cuda flags, passed in "" (typically not needed)
+-DCMAKE_CXX_FLAGS                # extra C++ flags, passed in "" (typically not needed)
+-DCMAKE_INSTALL_PREFIX           # the base directory to install executables. typically your ${HOME}.</code></pre>
+              <br>
+            </div>
+            <br><br>
+            <button type="button" class="collapsible">
+              <i><span class="regularblack">cmake notes for specific machines</span></i>
+            </button>
+            <div class="title collapsecontent">
+              <br>
+              <p>These are working cmake recipes for specific machines. If you try one and it doesn't work, please let me know!</p>
+              <br>
+              <button type="button" class="collapsible">
+                <i><span class="regularblack">unity (Ubuntu)</span></i>
+              </button>
+              <div class="title collapsecontent">
+              <pre><code>cmake -DFFTW_ROOT=/modules/apps/fftw/3.3.8 -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=YES -DENABLE_USER=YES -DEigen3_DIR=$EIGEN_BASE/share/eigen3/cmake -DCMAKE_INSTALL_PREFIX=/home/mpete0_umass_edu -Wno-dev ..</code></pre>
+              <br>
+              </div>
+              <br><br>
+              <button type="button" class="collapsible">
+                <i><span class="regularblack">cuillin (Ubuntu)</span></i>
+              </button>
+              <div class="title collapsecontent">
+              <pre><code>cmake -DCMAKE_CXX_COMPILER=/usr/local/gcc/10.2/bin/g++ -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=NO -DENABLE_USER=YES -DEigen3_DIR=$EIGEN_BASE/share/eigen3/cmake -DCMAKE_INSTALL_PREFIX=/home/mpetersen -Wno-dev ..</code></pre>
+              <br>
+              </div>
+              <br><br>
+              <button type="button" class="collapsible">
+                <i><span class="regularblack">infinity (CentOS)</span></i>
+              </button>
+              <div class="title collapsecontent">
+                <pre><code>cmake -DCMAKE_C_COMPILER=/softs/gcc/11.2.0-CentOS8/bin/gcc -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=YES -DENABLE_USER=YES -DEigen3_DIR=/home/petersen/eigen-3.2.10/cmake -DPNG_PNG_INCLUDE_DIR=/home/petersen/code -DC_INCLUDE_PATH=/home/petersen/include/eigen3 -DCMAKE_INSTALL_PREFIX=/home/petersen -Wno-dev ..</code></pre>
+              </div>
+              <br><br>
+              <button type="button" class="collapsible">
+                <i><span class="regularblack">CCA iron cluster (CentOS)</span></i>
+              </button>
+              <div class="title collapsecontent">
+                <br><p>(from Martin Weinberg)</p>
+                <pre><code>cmake -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=1 -DEigen3_DIR=$EIGEN_BASE/share/eigen3/cmake/ -DCMAKE_INSTALL_PREFIX=$HOME -DCMAKE_BUILD_TYPE=Release -DCMAKE_CUDA_FLAGS="-arch=compute_60 -code=sm_60,sm_70,sm_80" -Wno-dev ..</code></pre>
+              </div>
+              <br><br>
+              <button type="button" class="collapsible">
+                <i><span class="regularblack">Columbia Ginsburg cluster (RedHat)</span></i>
+              </button>
+              <div class="title collapsecontent">
+                <br><p>(from Courtney Carter)</p>
+                <pre><code>cmake -DFFTW_ROOT=/cm/shared/apps/fftw/openmpi/gcc/64/3.3.8 -DFFTW_INCLUDE_DIRS=/cm/shared/apps/fftw/openmpi/gcc/64/3.3.8/include -DCMAKE_C_COMPILER=/cm/local/apps/gcc/10.2.0/bin/gcc -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=NO -DENABLE_USER=YES -DCMAKE_INSTALL_PREFIX=$HOME -Wno-dev ..</code></pre>
+              </div>
+              <br><br>
+            </div>
+            <br><br>
+            <p>Now we need to actually compile EXP! cmake has conveniently generated all of the configuration files we need, so the next step is as straightforward as</p>
+            <pre><code>make -j 8</code></pre>
+            <p>In this command, we've asked for 8 processes to compile EXP simultaneously. cmake is good at utilising parallel processes, so don't be shy about using multiple processes. Typically I request either 1x or 2x the number of cores (either native to the machine, or requested in the 'srun' allocation at the start of the process).</p>
+            <br>
+            <p>Final step: install the executables in your home directory, so that you have access to them everywhere:</p>
+            <pre><code>make install</code></pre>
+            <br>
+            <p><b>You are now ready to run EXP.</b> Oftentimes, you will have to remind the environment about variables that were set at some previous compile time. For instance, I usually remind the machine about the location of specific libraries and executables when setting up an EXP run:</p>
+            <pre><code>export LD_LIBRARY_PATH=${HOME}/lib/:$LD_LIBRARY_PATH
+export PATH=${HOME}/bin/:$PATH</code></pre>
+            <br>
+            <button type="button" class="collapsible">
+              <i><span class="regularblack">Some troubleshooting tips.</span></i>
+            </button>
+            <div class="title collapsecontent">
+              <br>
+              <button type="button" class="collapsible">
+                <i><span class="regularblack">Questions to try debugging the install</span></i>
+              </button>
+              <div class="title collapsecontent">
+                <p>Which executable program is having a problem compiling (and in which directory)?</p>
+                <p>Can I find the relevant piece of the CMakeLists.txt recipe and figure out what source code might be having a problem?</p>
+                <p>Which library is not being found during install?</p>
+                <p>Is the missing library part of a module, that might indicate some dependency problems?</p>
+                <br>
+              </div>
+              <br><br>
+              <p>For some clusters, you may need to install libraries on your own. I had to install eigen3 and png++ on my own for infinity. This is not inherently a problem, as both are header-only libraries.</p>
+              <br>
+              <button type="button" class="collapsible">
+                <i><span class="regularblack">To install eigen3...</span></i>
+              </button>
+              <div class="title collapsecontent">
+                <p>You need only download a tarball from the <a href="https://eigen.tuxfamily.org/index.php?title=Main_Page">main Eigen webpage</a> (go for the latest stable release!), then manoeuvre it to your home directory on the cluster in question, unpack (tar -xvf), and record the directory for setting the -DEigen3_DIR value in the cmake call above! You can also short-circuit the Eigen3_DIR variable by editing CMakeLists.txt (se directly below). On infinity, I ended up doing</p>
+                <pre><code># install Eigen separately: pull from github, and then need to cmake
+git clone https://gitlab.com/libeigen/eigen.git
+cd eigen
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=/home/petersen ..
+make install</code></pre>
+                <br>
+              </div>
+              <br><br>
+              <button type="button" class="collapsible">
+                <i><span class="regularblack">To install png++...</span></i>
+              </button>
+              <div class="title collapsecontent">
+                <p>I constructed the needed files from source, starting from the instructions on the delightfully web-1.0 <a href="http://www.libpng.org/pub/png/libpng.html">libpng page</a></p>
+                <pre><code>git clone git://git.code.sf.net/p/libpng/code
+cd code
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=/home/petersen ..
+make -j 8
+make install</code></pre>
+              </div>
+              <br><br>
+              <p>One thing I've learned: if you are on a non-Ubuntu machine, you are more likely to have to tinker with CMakeLists.txt. This isn't a big deal, by itself! Don't be afraid to force include paths, e.g. by adding include_directories(/home/petersen/include/eigen3/) to CMakeLists.txt. You can also remove specific analysis programs if problematic.</p>
+              <br>
+            </div>
+            <br><br>
+          </div>
 
           <div class="title">
             <h3>What's under the hood (software)?</h3>
