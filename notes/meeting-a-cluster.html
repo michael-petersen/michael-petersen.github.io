@@ -117,6 +117,10 @@ cmake [options] ..</code></pre>
 -- Build files have been written to: ...</code></pre>
             <p>The configuration has likely been successful!</p>
             <br>
+            <p>In general, cmake will warn you about missing variables. Typically it is as simple as setting the variable in the cmake command-line call, with the appropriate value (which you will have to track down!).</p>
+            <br>
+            <p>When compiling for <i>not</i> the first time, you may need to 'rm CMakeCache.txt' to remove any stale variables from the configuration process.</p>
+            <br>
             <p>To help with the cmake process, I'm also listing some working cmake configuration calls and notes, which fill out the options part of 'cmake [options]' instruction above. The specific configuration recipes work on the specific machines referenced above, but you may be able to draw inspiration from them!</p>
             <br>
             <button type="button" class="collapsible">
@@ -259,6 +263,15 @@ make install</code></pre>
                 <p>If you are on a linux machine (with superuser privileges!), you can 'sudo apt-get install libblas-dev'</p>
                 <br>
                 <p>If you are on a shared cluster, you can check in the module files for a module that is either (a) blas itself, or (b) likely to also contain blas. Many HPC libraries will come with blas, so a simple 'locate libblas' might also be sufficient to identify an appropriate path.</p>
+              </div>
+              <br><br>
+              <button type="button" class="collapsible">
+                <i><span class="regularblack">To debug FFTW3 (missing: FFTW_INCLUDE_DIRS FFTW_DOUBLE_LIB)</span></i>
+              </button>
+              <div class="title collapsecontent">
+                <p>If you are on a linux machine (with superuser privileges!), you can 'sudo apt-get install libfftw3-dev'. This will install by default in /usr/local/lib. You will likely have to specify whichever variable is missing above (e.g. FFTW_INCLUDE_DIRS, FFTW_ROOT, or FFTW_DOUBLE_LIB).</p>
+                <br>
+                <p>If you are on a shared cluster, you can check in the module files for an FFTW3 module, or install from source. If you install from source, you will have to specifically tell cmake where to look.</p>
               </div>
               <br><br>
               <p>One thing I've learned: if you are on a non-Ubuntu machine, you are more likely to have to tinker with CMakeLists.txt. This isn't a big deal, by itself! Don't be afraid to force include paths, e.g. by adding include_directories(/home/petersen/include/eigen3/) to CMakeLists.txt. You can also remove specific analysis programs if problematic.</p>
