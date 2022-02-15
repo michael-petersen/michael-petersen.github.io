@@ -134,11 +134,13 @@ cmake [options] ..</code></pre>
 -DENABLE_USER                    # compile with user libraries. set to YES unless you want vanilla EXP only
 -DFFTW_ROOT                      # the location of the FFTW libraries (typically a module)
 -DFFTW_INCLUDE_DIRS              # the location of FFTW include directories
--DEigen3_DIR                     # the Eigen3 cmake install location (if cmake done correctly)
+-DEigen3_DIR                     # hint for the Eigen3 .cmake install location (if cmake done correctly)
+-DHDF5_DIR                       # hint for the HDF5 .cmake install location
 -DPNG_PNG_INCLUDE_DIR            # the libpng install location
 -DCMAKE_CUDA_FLAGS               # extra cuda flags, passed in "" (typically not needed)
 -DCMAKE_CXX_FLAGS                # extra C++ flags, passed in "" (typically not needed)
--DCMAKE_INSTALL_PREFIX           # the base directory to install executables. typically your ${HOME}.</code></pre>
+-DCMAKE_INSTALL_PREFIX           # the base directory to install executables. typically your ${HOME}.
+-Wno-dev                         # silence developer warnings</code></pre>
               <br>
             </div>
             <br><br>
@@ -235,9 +237,11 @@ make install</code></pre>
               </div>
               <br><br>
               <button type="button" class="collapsible">
-                <i><span class="regularblack">To install png++...</span></i>
+                <i><span class="regularblack">To install libpng (missing: PNG_LIBRARY PNG_PNG_INCLUDE_DIR)</span></i>
               </button>
               <div class="title collapsecontent">
+                <p>If you are on a linux machine (with superuser privileges!), you can 'sudo apt-get install libpng-dev'</p>
+                <br>
                 <p>I constructed the needed files from source, starting from the instructions on the delightfully web-1.0 <a href="http://www.libpng.org/pub/png/libpng.html">libpng page</a></p>
                 <pre><code>git clone git://git.code.sf.net/p/libpng/code
 cd code
@@ -246,6 +250,15 @@ cd build
 cmake -DCMAKE_INSTALL_PREFIX=/home/petersen ..
 make -j 8
 make install</code></pre>
+              </div>
+              <br><br>
+              <button type="button" class="collapsible">
+                <i><span class="regularblack">To install libblas (missing: BLAS_LIBRARIES)</span></i>
+              </button>
+              <div class="title collapsecontent">
+                <p>If you are on a linux machine (with superuser privileges!), you can 'sudo apt-get install libblas-dev'</p>
+                <br>
+                <p>If you are on a shared cluster, you can check in the module files for a module that is either (a) blas itself, or (b) likely to also contain blas. Many HPC libraries will come with blas, so a simple 'locate libblas' might also be sufficient to identify an appropriate path.</p>
               </div>
               <br><br>
               <p>One thing I've learned: if you are on a non-Ubuntu machine, you are more likely to have to tinker with CMakeLists.txt. This isn't a big deal, by itself! Don't be afraid to force include paths, e.g. by adding include_directories(/home/petersen/include/eigen3/) to CMakeLists.txt. You can also remove specific analysis programs if problematic.</p>
