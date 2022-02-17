@@ -41,52 +41,28 @@ TODO:
             <br>
             <p>Let's try a very simple example: drawing points from a normal distribution and comparing to a Gaussian, to get a feel for convergence with particle draws.</p>
   	        <br>
-  	        <p>
-  	          <pre>
-                <code>
-  import numpy as np
-  import matplotlib.pyplot as plt
+  	        <pre><code>import numpy as np; import matplotlib.pyplot as plt
+# first, set up the gaussian we want to approximate
+gaussmean = 0.0
+gaussdisp = 0.3
+# select sample points
+nbins = 20; xgauss = np.linspace(-1.,1.,nbins)
+# use the formula for a gaussian pdf
+ygauss = (1./(gaussdisp*np.sqrt(2*np.pi)))*np.exp(-(xgauss-gaussmean)**2./(2*gaussdisp**2.))
+plt.plot(xgauss,ygauss,color='black') # plot</code></pre>
+            <p>So far, so good. But what if we didn't know the pdf, and we wanted to build it up from scratch? This is where Monte Carlo comes in.</p>
+            <pre><code># pick the number of samples: the more samples, the more accurate, BUT, the more time. try a few?
+nsamples = 100
+sample_values = np.random.normal(gaussmean,gaussdisp,nsamples) # select the list of random variates
 
-  # first, set up the gaussian we want to approximate
-  gaussmean = 0.0
-  gaussdisp = 0.3
+# put the sample points in bins, count how many in each bin, and normalise (histogram construction)
+sbins = np.round(((sample_values - np.nanmin(xgauss))/(xgauss[1]-xgauss[0]))).astype('int')
+sample_dist = np.zeros(len(xgauss))
+for b in range(0,len(xgauss)): sample_dist[b] += len(np.where(sbins==b)[0])/(nsamples*(xgauss[1]-xgauss[0]))
 
-  # select sample points
-  nbins = 20
-  xgauss = np.linspace(-1.,1.,nbins)
-
-  # use the formula for a gaussian
-  ygauss = (1./(gaussdisp*np.sqrt(2*np.pi)))*np.exp(-(xgauss-gaussmean)**2./(2*gaussdisp**2.))
-
-  # plot
-  plt.plot(xgauss,ygauss,color='black')
-
-
-  # next, get ready for Monte Carlo
-
-  # pick the number of samples: the more samples, the more accurate,
-  # BUT, the more time. try a few?
-  nsamples = 100
-
-  # select the list of random variates
-  sample_values = np.random.normal(gaussmean,gaussdisp,nsamples)
-
-  # create the histogram...the is just boilerplate stuff, don't worry too much about it
-
-  # put the points in bins
-  sbins = np.round(((sample_values - np.nanmin(xgauss))/(xgauss[1]-xgauss[0]))).astype('int')
-
-  # count how many in each bin, and normalise
-  sample_dist = np.zeros(len(xgauss))
-  for b in range(0,len(xgauss)):
-      w = np.where(sbins==b)[0]
-      sample_dist[b] += len(w)/(nsamples*(xgauss[1]-xgauss[0]))
-
-  # plot for comparison to the analytic case
-  plt.plot(xgauss,sample_dist,color='red',linestyle='dashed')
-                </code>
-  	          </pre>
-  	        </p>
+# plot for comparison to the analytic case
+plt.plot(xgauss,sample_dist,color='red',linestyle='dashed')</code></pre>
+  	        <p>If you've chosen a large enough number of samples, the Monte Carlo histogram will converge to the true Gaussian pdf. This is obviously a contrived example (we won't always know how to pull from the distribution!), but this is an illustrative step.</p>
         </div>
     	</div>
      </div>
