@@ -167,7 +167,7 @@ cmake [options] ..</code></pre>
                 <i><span class="regularblack">cuillin (Ubuntu)</span></i>
               </button>
               <div class="title collapsecontent">
-              <pre><code>cmake -DCMAKE_CXX_COMPILER=/usr/local/gcc/10.2/bin/g++ -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=NO -DENABLE_USER=YES -DEigen3_DIR=$EIGEN_BASE/share/eigen3/cmake -DCMAKE_INSTALL_PREFIX=/home/mpetersen -Wno-dev ..</code></pre>
+              <pre><code>cmake -DCMAKE_CXX_COMPILER=/usr/local/gcc/10.2/bin/g++ -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=off -DENABLE_CUDA=YES -DENABLE_USER=YES -DEigen3_DIR=$EIGEN_BASE/share/eigen3/cmake -DCMAKE_INSTALL_PREFIX=/home/mpetersen -Wno-dev ..</code></pre>
               <br>
               </div>
               <br><br>
@@ -275,6 +275,8 @@ make install</code></pre>
               </div>
               <br><br>
               <p>One thing I've learned: if you are on a non-Ubuntu machine, you are more likely to have to tinker with CMakeLists.txt. This isn't a big deal, by itself! Don't be afraid to force include paths, e.g. by adding include_directories(/home/petersen/include/eigen3/) to CMakeLists.txt. You can also remove specific analysis programs if problematic.</p>
+              <br><br>
+              <p>If you are on Unity, cuillin, or infinity, I have additional scattered debug notes that I am happy to share offline.</p>
               <br>
             </div>
             <br><br>
@@ -335,7 +337,7 @@ module list                              # list loaded modules</code></pre>
 module load cuda/11.3.1 mpfr/4.1.0 gcc/10.2.0 boost/1.73.0 openmpi/4.1.0 eigen/3.3.7 gmp/6.2.0  mpc/1.1.0    vtk/8.2.0  cmake/3.15.0 python/3.9.1 fftw/3.3.8
 
 # cuillin (Ubuntu)
-module load cuda/11.5 gcc/10.2
+module load cuda/11.6 gcc/10.2 hdf5-openmpi
 
 # infinity (CentOS)
 module load cmake openmpi/4.1.2-gnu gcc/11.2.0 gsl/2.7.1 inteloneapi/2021.4 cuda/11.4
@@ -371,7 +373,7 @@ module load hdf5/1.10.1 slurm/20.02.6 openmpi/gcc/64/1.10.7 gcc/10.2.0 openblas/
 # Ubuntu-provided packages should go in /usr/share, not /usr/local
 # for example:
 cd /usr/share/modules/modulefiles
-more more /usr/local/Modules/modulefiles/cuda/11.2.0</code></pre>
+more /usr/local/Modules/modulefiles/cuda/11.6</code></pre>
             <p>To hunt for a particular module requires a bit of knowledge of the file system. It's generally possible to ascertain where the modulefiles will be from looking at the ultimate root, '/'. On the various machines:</p>
             <pre><code># unity
 more /modules/modulefiles/hdf5/1.12.0.lua
