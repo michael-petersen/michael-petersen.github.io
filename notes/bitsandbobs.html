@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Bit Flags</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body class="home color-1">
+  <div id="headerstatic">
+    <div class="container">
+      <div class="row">
+      	<h2 id="logostatic">
+          <a href="../index.html">
+      	    <span>Michael S. Petersen</span>
+      	    <span class="highlightstatic">Institut d'Astrophysique de Paris</span>
+      	  </a>
+        </h2>
+      </div>
+    </div>
+  </div>
+  <div class="section" id="research">
+    <div class="container">
+      <div class="content">
+        <div class="row">
+	        <div class="title">
+            <h4><a href="list.html">(back to notes list)</a></h4>
+          </div>
+          <div class="title">
+            <h2>Bit Flags</h2>
+            <br>
+        	  <p>I recently needed a compact way to set a bunch of sequential flags in C++ (for a given set $l\in[0,6]$, we want a compact flag that can evaluate each as true or false). This is a semi-common problem in computer science, so there are many discussions about bit flags. I ended up back down the rabbit hole of my undergraduate electronics engineering class, where we build calculators from scratch, relying on lots of logic.</p>
+            <br>
+            <p>But I just need a trivial bit flag in C++, so here's what I did:</p>
+            <pre><code>int check_flags(int flag, int l)
+{
+  /*
+  check binary flag for whether harmonic term is enabled
+
+  monopole is always enabled!
+
+  the rest of the values are a binary flag,
+  2^0 = dipole
+  2^1 = quadropole
+  2^2 = octopole
+  2^3 = l4
+  etc
+
+  for example, 111 -> 7 is 2^2 + 2^1 + 2^0, so l<=octopole are enabled.
+               101 -> 5 is 2^2 +       2^0, so l=1,3 are enabled
+               010 -> 2 is       2^1      , so l=2 only is enabled
+
+  (in these examples, you set the integer value as flag, so 7, 5, 2 respectively.)
+
+  */
+  if (l==0) {
+    return 1;
+  } else {
+    int lflag = int(pow(2,l-1));
+    return (flag & lflag) == lflag;
+}
+}</code></pre><br>
+            <p>This seems to work pretty well! There were a couple 'gotcha' moments, like learning that the built-in function pow doesn't automatically return an integer, and if you try to logical and (&) non-integers, you will get an error.</p>
+            <br>
+            <p>One can also do all of the bit operations in Python, as told in <a href="https://realpython.com/python-bitwise-operators/">this post</a>. I'd like to shift more operations (bit joke) at some point, or make better use of binary flags in Python as well.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div id="footer"> petersen@iap.fr </div>
+
+
+</body>
+</html>
