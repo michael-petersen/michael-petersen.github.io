@@ -37,7 +37,7 @@ And then module load hdf5/1.10.8
           </div>-->
           <div class="title">
             <h2>Meeting a new supercomputer</h2>
-            <p>last update: 10 February 2022</p>
+            <p>last update: 25 May 2022</p>
           </div>
           <div class="title">
 	          <!--<div class="fake-p">-->
@@ -73,18 +73,18 @@ And then module load hdf5/1.10.8
             <br>
             <p><i>Almost all steps below are better run on a node of the cluster (i.e. a machine that will actually be using EXP)! To this end, a good first step is to check out a node for an interactive session to compile. </i>A basic checkout command looks like</p>
             <pre><code>srun -n8 --exclusive --pty $SHELL # for slurm
-qsub -I -l nodes=1:ppn=8 # for PBS</code></pre>
+qsub -I -l nodes=1:ppn=8        # for PBS</code></pre>
             <!--srun -p cca --nodes=1 --ntasks=16 --pty $SHELL-->
             <p>Which will drop you at a terminal prompt on a node. Proceed...</p>
             <br>
             <p>The first thing to do is obtain EXP. <a href="https://bitbucket.org/mdweinberg/exp/src/devel/">EXP lives on bitbucket</a>. If you do not have access, but should, let me know! Otherwise, the sequence of commands is standard git.</p>
             <button type="button" class="collapsible">
-              <i><span class="regularblack">SSH keys and bitbucket</span></i>
+              <i><span class="regularblack">SSH keys and bitbucket (+aside about GitHub)</span></i>
             </button>
             <div class="title collapsecontent">
               <p>The best way to give bitbucket your credentials is by registering your SSH key with bitbucket.</p>
-              <p>If you navigate to your 'Personal Settings' on bitbucket, under 'Security', you will see 'SSH Keys'. Select 'Add Key', and then you need to paste in the key from the machine you'd like to copy the repository to. If you are copying the code to both your laptop and a cluster, you will need to do this process twice: the key pairs are different for every machine (that is, you will have different key pairs on every machine you use). <i>If you have not generated your key, run 'ssh-keygen -t rsa' (Feel free to use an empty passphrase but if any cluster manager asks, I [wink-wink] warned you not to do this).</i> To see your key, you can  'more ~/.ssh/id_rsa.pub' and simply copy-paste the result that is spit out into the bitbucket key prompt. Now you're ready to git! Note that these instructions also work for GitHub; you'll have to navigate the settings in a similar way to upload your public key.</p>
-              <br>
+              <br><p>If you navigate to your 'Personal Settings' on bitbucket, under 'Security', you will see 'SSH Keys'. Select 'Add Key', and then you need to paste in the key from the machine you'd like to copy the repository to. If you are copying the code to both your laptop and a cluster, you will need to do this process twice: the key pairs are different for every machine (that is, you will have different key pairs on every machine you use). <i>If you have not generated your key, run 'ssh-keygen -t rsa' (Feel free to use an empty passphrase but if any cluster manager asks, I [wink-wink] warned you not to do this).</i> To see your key, you can  'more ~/.ssh/id_rsa.pub' and simply copy-paste the result that is spit out into the bitbucket key prompt. Now you're ready to git! Note that these instructions also work for GitHub; you'll have to navigate the settings in a similar way to upload your public key.</p>
+              <br><p> Fortunately or unfortunately, GitHub has recently deprecated SHA-1 hashes. This means the key I told you about above <i>will not</i> work on GitHub. See <a href="https://github.blog/2021-09-01-improving-git-protocol-security-github/">this blog post</a> and consider updating your keys.</p><br>
             </div>
             <br><br>
             <p>To 'git' the code from bitbucket,</p>
