@@ -37,7 +37,7 @@ And then module load hdf5/1.10.8
           </div>-->
           <div class="title">
             <h2>Meeting a new supercomputer</h2>
-            <p>last update: 10 February 2022</p>
+            <p>last update: 25 May 2022</p>
           </div>
           <div class="title">
 	          <!--<div class="fake-p">-->
@@ -71,19 +71,20 @@ And then module load hdf5/1.10.8
             <br>
             <p>You may have come here hoping to install EXP. Great! First things first, you should always be using the latest version of EXP -- things are changing all the time (always for the better, I promise!).</p>
             <br>
-            <p><i>Almost all steps below are better run on a node of the cluster (i.e. a machine that will actually be using EXP)! To this end, a good first step is to check out a node for an interactive session to compile. </i>A basic checkout command (for slurm) looks like</p>
-            <pre><code>srun -n8 --exclusive --pty $SHELL</code></pre>
+            <p><i>Almost all steps below are better run on a node of the cluster (i.e. a machine that will actually be using EXP)! To this end, a good first step is to check out a node for an interactive session to compile. </i>A basic checkout command looks like</p>
+            <pre><code>srun -n8 --exclusive --pty $SHELL # for slurm
+qsub -I -l nodes=1:ppn=8        # for PBS</code></pre>
             <!--srun -p cca --nodes=1 --ntasks=16 --pty $SHELL-->
             <p>Which will drop you at a terminal prompt on a node. Proceed...</p>
             <br>
             <p>The first thing to do is obtain EXP. <a href="https://bitbucket.org/mdweinberg/exp/src/devel/">EXP lives on bitbucket</a>. If you do not have access, but should, let me know! Otherwise, the sequence of commands is standard git.</p>
             <button type="button" class="collapsible">
-              <i><span class="regularblack">SSH keys and bitbucket</span></i>
+              <i><span class="regularblack">SSH keys and bitbucket (+aside about GitHub)</span></i>
             </button>
             <div class="title collapsecontent">
               <p>The best way to give bitbucket your credentials is by registering your SSH key with bitbucket.</p>
-              <p>If you navigate to your 'Personal Settings' on bitbucket, under 'Security', you will see 'SSH Keys'. Select 'Add Key', and then you need to paste in the key from the machine you'd like to copy the repository to. If you are copying the code to both your laptop and a cluster, you will need to do this process twice: the key pairs are different for every machine (that is, you will have different key pairs on every machine you use). <i>If you have not generated your key, run 'ssh-keygen -t rsa' (Feel free to use an empty passphrase but if any cluster manager asks, I [wink-wink] warned you not to do this).</i> To see your key, you can  'more ~/.ssh/id_rsa.pub' and simply copy-paste the result that is spit out into the bitbucket key prompt. Now you're ready to git! Note that these instructions also work for GitHub; you'll have to navigate the settings in a similar way to upload your public key.</p>
-              <br>
+              <br><p>If you navigate to your 'Personal Settings' on bitbucket, under 'Security', you will see 'SSH Keys'. Select 'Add Key', and then you need to paste in the key from the machine you'd like to copy the repository to. If you are copying the code to both your laptop and a cluster, you will need to do this process twice: the key pairs are different for every machine (that is, you will have different key pairs on every machine you use). <i>If you have not generated your key, run 'ssh-keygen -t rsa' (Feel free to use an empty passphrase but if any cluster manager asks, I [wink-wink] warned you not to do this).</i> To see your key, you can  'more ~/.ssh/id_rsa.pub' and simply copy-paste the result that is spit out into the bitbucket key prompt. Now you're ready to git! Note that these instructions also work for GitHub; you'll have to navigate the settings in a similar way to upload your public key.</p>
+              <br><p> Fortunately or unfortunately, GitHub has recently deprecated SHA-1 hashes. This means the key I told you about above <i>will not</i> work on GitHub. See <a href="https://github.blog/2021-09-01-improving-git-protocol-security-github/">this blog post</a> and consider updating your keys.</p><br>
             </div>
             <br><br>
             <p>To 'git' the code from bitbucket,</p>
@@ -129,13 +130,14 @@ cmake [options] ..</code></pre>
             <div class="title collapsecontent">
               <p>Now is also a good time to mention that EXP does come with some compile instructions, <a href="https://bitbucket.org/mdweinberg/exp/raw/f4090892c7b638112c1163bf57c0157cc67d6e72/README.build">called README.build</a>.</p>
               <p>A list of potentially relevant options for cmake:</p>
-              <pre><code>-DCMAKE_C_COMPILER               # the location of the C compiler, from 'which gcc'
--DCMAKE_CXX_COMPILER             # the location of the C++ compiler, from 'which g++'
--DC_INCLUDE_PATH                 # the location of extra C headers, if not automatically found
--DCMAKE_BUILD_TYPE               # set to 'Release' for standard optimisation flags
+              <pre><code>-DCMAKE_BUILD_TYPE               # set to 'Release' for standard optimisation flags
 -DCUDA_USE_STATIC_CUDA_RUNTIME   # set to 'off'
+-DENABLE_NBODY                   # default on, will compile Nbody side of EXP.
 -DENABLE_CUDA                    # compile with cuda. set to NO unless you specifically want cuda
 -DENABLE_USER                    # compile with user libraries. set to YES unless you want vanilla EXP only
+-DCMAKE_C_COMPILER               # the location of the C compiler, from 'which gcc'
+-DCMAKE_CXX_COMPILER             # the location of the C++ compiler, from 'which g++'
+-DC_INCLUDE_PATH                 # the location of extra C headers, if not automatically found
 -DFFTW_ROOT                      # the location of the FFTW libraries (typically a module)
 -DFFTW_INCLUDE_DIRS              # the location of FFTW include directories
 -DEigen3_DIR                     # hint for the Eigen3 .cmake install location (if cmake done correctly)
@@ -146,6 +148,7 @@ cmake [options] ..</code></pre>
 -DCMAKE_INSTALL_PREFIX           # the base directory to install executables. typically your ${HOME}.
 -Wno-dev                         # silence developer warnings</code></pre>
               <br>
+              <p>You may also be interesting in other build types (likely for debugging). These may be read from CMakeLists.txt: None, Debug, Release, RelWithDebInfo, etc.</p>
             </div>
             <br><br>
             <button type="button" class="collapsible">
@@ -175,7 +178,7 @@ cmake [options] ..</code></pre>
                 <i><span class="regularblack">infinity (CentOS)</span></i>
               </button>
               <div class="title collapsecontent">
-                <pre><code>cmake -DCMAKE_C_COMPILER=/softs/gcc/11.2.0-CentOS8/bin/gcc -DCMAKE_CXX_COMPILER=/softs/gcc/11.2.0-CentOS8/bin/g++ -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=OFF -DENABLE_CUDA=NO -DENABLE_USER=YES -DEigen3_DIR=/home/petersen/eigen-3.2.10/cmake -DCMAKE_INSTALL_PREFIX=/home/petersen -Wno-dev ..</code></pre>
+                <pre><code>cmake -DCMAKE_C_COMPILER=/softs/gcc/11.2.0-CentOS8/bin/gcc -DCMAKE_CXX_COMPILER=/softs/gcc/11.2.0-CentOS8/bin/g++ -DCMAKE_BUILD_TYPE=Release -DCUDA_USE_STATIC_CUDA_RUNTIME=OFF -DENABLE_CUDA=NO -DENABLE_USER=YES -DEigen3_DIR=/home/petersen/eigen/cmake -DCMAKE_INSTALL_PREFIX=/home/petersen -Wno-dev ..</code></pre>
               </div>
               <br><br>
               <button type="button" class="collapsible">
@@ -340,7 +343,7 @@ module load cuda/11.3.1 mpfr/4.1.0 gcc/10.2.0 boost/1.73.0 openmpi/4.1.0 eigen/3
 module load cuda/11.6 gcc/10.2 hdf5-openmpi
 
 # infinity (CentOS)
-module load cmake gcc/11.2.0 gsl/2.7.1 cuda/11.6 inteloneapi/2022.1.2 openmpi/4.1.3-intel
+module load cmake intelpython/3-2022.0.2 gcc/11.2.0 gsl/2.7.1 cuda/11.7 inteloneapi/2022.2 openmpi/4.1.3-gnu
 
 # CCA iron cluster (from Martin Weinberg)
 module load modules-new; module load boost vtk cmake cuda eigen emacs fftw gcc hdf5 openmpi
