@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Computer Languages</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body class="home color-1">
+  <div id="headerstatic">
+    <div class="container">
+      <div class="row">
+      	<h2 id="logostatic">
+          <a href="../index.html">
+      	    <span>Michael S. Petersen</span>
+      	    <span class="highlightstatic">Institut d'Astrophysique de Paris</span>
+      	  </a>
+        </h2>
+      </div>
+    </div>
+  </div>
+  <div class="section" id="research">
+    <div class="container">
+      <div class="content">
+        <div class="row">
+	        <div class="title">
+            <h4><a href="list.html">(back to notes list)</a></h4>
+          </div>
+          <div class="title">
+            <h2>Choosing a computer language</h2>
+            <br>
+        	  <p>I've been dabbling in computer science for long enough that I want to actually make sure I know what I'm doing. For my latest position, I picked up Julia, which is a clever just-in-time compiled language. It got me thinking: can I offer facilities to students who want to learn to program in language X? Is it irresponsible of me to say yes to some languages? How would I evaluate if it's a good idea to try a different language?</p>
+            <br>
+            <p>I'm imagining some sort of cheat sheet where, in order to use a new language, we agree on some common functionality and show that it won't be a bottleneck. Something like the smoothness of numpy operations. I'm still mulling this over, but I don't want to stop qualified students from expanding their capabilities just because I don't know a language!</p>
+            <br>
+            <p>Some ideas: Go, Rust, Lambda, Haskell.</p>
+            <br>
+            <p>Review (write?) a summary of key language differences, for example in <a href="https://docs.julialang.org/en/v1/manual/noteworthy-differences/">Julia</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div id="footer"> petersen@iap.fr </div>
+
+
+</body>
+</html>
+
+<!--
+One thing that kept me from using it in my own work was that at the time there were not many astronomical or scientific libraries wrapped or ported. The top linear algebra library on Cargo did not seem very stable or complete when I last looked. Rust has great strengths in other areas however, like system programming and even operating systems made in it: https://www.redox-os.org/ .
+
+Overall, it is a very well thought out language, especially since it's memory model enables "fearless concurrency". It is also very ergonomic with modern language features (although to be fair, the most recent standards of fortran, C, and C++ all are much more featureful than the "bad old days"). I love the concept of pattern matching (in the "match" keyword https://doc.rust-lang.org/rust-by-example/flow_control/match.html ). Rust has absolutely exquisite official documentation. I read thru the online rust book and it was fun, but at the end of it I didn't feel very secure in writing my own programs (but cargo is super useful in setting up and handling projects). This person's list on GitHub has a bunch of useful resources: https://github.com/ctjhoa/rust-learning .
+
+Philosophically I very much like the idea of rust for science. I think we mostly have a choice between two options for the future of general-use efficient computation in science by your typical academic:
+    (1) make generic, easy to use dynamically typed languages fast (like python/pypy/numba/cython or julia), or
+    (2) make statically typed languages like C generic enough to use easily (like rust).
+Julia has come along way since I first investigated it in 2015, maybe it is worth another look! I tested it a month ago and was shocked how easy it was to import and use python libraries, even making interactive plots in matplotlib.
+-->
