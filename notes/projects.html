@@ -52,7 +52,43 @@
             <p><b>4. Simulated stellar velocity lines.</b> Follow <a href="https://ui.adsabs.harvard.edu/abs/2020MNRAS.499.5806S/abstract">Sanders & Evans (2020)</a> to make predictions for line profiles coming out of simulations, and what the structure of line profiles might mean for different orbits.</p>
             <br>-->
             <!--
-            <p><b>4. Closed orbits in 3d.</b> Follow the commensurability paper, extend to 3d. This is computational geometry at it's heart (Delaunay Triangulation). The first algorithm can be published, and then extended to 3d.</p>
+            <p><b>4. Closed orbits in 3d.</b> Follow the commensurability paper, extend to 3d. This is computational geometry at its heart (Delaunay Triangulation). The first algorithm can be published, and then extended to 3d.</p>
+            <br>-->
+          </div>
+          <br><br>
+          <button type="button" class="collapsible">
+            <div class="title">
+              <h3>Non-programming projects</h3>
+              <p><i>These projects are suitable for a 8-12 week time frame. The deliverable for each project is a summary write-up of the project findings (some projects will have other specified deliverables). These projects explicitly do not require any specialised computer skills.</i></p>
+            </div>
+          </button>
+          <div class="title collapsecontent">
+            <br>
+            <p><b>1. Collecting halo star spectra.</b> One of the major limitations in probing the outer reaches of our Milky Way galaxy is the lack of tracers. However, several studies have either targeted, or <a href="https://zenodo.org/record/4695135#.YpHYzS8RpQI">seredipitously discovered</a>, distant halo stars. In this project, we will review the literature, looking for additional reports of halo stars. The product will be a collection of halo star positions, that can then be cross-matched with other data sources -- primarily <a href="https://gea.esac.esa.int/archive/">Gaia</a> -- and used to make a fuller picture of the Milky Way halo.</p>
+            <br>
+            <p><b>2. History of the Royal Observatory Edinburgh.</b> The Royal Observatory Edinburgh (ROE) was created with a donation by a wealthy patron, the Earl of Crawford. Several of the patron's writings are held in the Observatory's archives, and other historians have also written about the family (e.g. <a href="https://www.tandfonline.com/doi/full/10.1080/03086534.2020.1765532">Hodgson 2020</a>). In this project, we will read through some relevant source documents to add more context to presentations of the history of the ROE.</p>
+            <br>
+            <p><b>3. A stars in SDSS spectra.</b> A-type stars come in several varieties, with two particular kinds I am interested in: Blue Horizontal Branch (BHB) and Blue Stragger (BS) stars. However, separating the two types of stars has proved to be difficult (<a href="https://ui.adsabs.harvard.edu/abs/2019MNRAS.486..378L/abstract">Lancaster et al. 2019</a>). In this project, we will use new summary statistics for BHB and BS stars to try and develop a classification system that more cleanly delineates the two.</p>
+            <br>
+            <!-- citation metrics (bibliometrics) + skills project? astro-ph digest? how to find new papers and 'hot' papers? altmetric understanding?
+            https://ui.adsabs.harvard.edu/abs/2005PNAS..10216569H/abstract
+            https://arxiv.org/pdf/2203.17123.pdf
+          -->
+          </div>
+          <br><br>
+          <button type="button" class="collapsible">
+            <div class="title">
+              <h3>Galactic dynamics and public engagement tools</h3>
+              <p><i>These projects are suitable for a 8-12 week time frame. The deliverable for each project is a half-hour presentation featuring novel visualisation or data interaction. These projects do not require any special prerequisite skills; we will work together to decide on technical development during the project.</i></p>
+            </div>
+          </button>
+          <div class="title collapsecontent">
+            <br>
+            <p><b>1. Supercomputer energy analysis.</b> One source of energy usage in astronomy is through supercomputers. See several recent works <a href="https://ui.adsabs.harvard.edu/abs/2021NatAs...5..857B/abstract">here</a>, <a href="https://ui.adsabs.harvard.edu/abs/2021NatAs...5.1195V/abstract">here</a>, and <a href="https://ui.adsabs.harvard.edu/abs/2020NatAs...4..823B/abstract">here</a>. As astronomers have largely not been trained as computer scientists, much of the software written by astronomers is inefficient and <a href="https://ui.adsabs.harvard.edu/abs/2020NatAs...4..819P/abstract">uses more energy than necessary</a>. In this project, we will build an accounting tool for simple software applications to try and inspire users to develop more efficient astronomical software. We will also develop general recommendations for the IfA regarding computational efficiency and 'greening' of the computer systems.</p>
+            <br>
+            <p><b>2. 3d orbit printing.</b> The orbits of stars in the Milky Way can be hard to visualise -- particularly when the orbit is part of a larger structure, such as the galactic bar. Using the program Blender, the student will extract orbit data from high-resolution galaxy simulations and make novel visualisation of the orbits in 3d. Then, the 3d visualisations will be printed for both scientific study and public engagement purposes.</p>
+            <br>
+            <!--<p><b>3. 3d visualisation development for planetarium projection.</b> </p>
             <br>-->
           </div>
           <br><br>
@@ -61,31 +97,15 @@
               <h3>Fundamental linear algebra algorithm development</h3>
               <p><i>These projects are suitable for a 6-9 month time frame. The deliverable for each project is a pedagogical mathematical writeup of a newly-developed algorithm (with the possibility for extension to a journal submission). These projects require some computer programming (described on a per-project basis), but will mainly be focused on mathematical development. These projects may be suitable as the start of a PhD project.</i></p>
             </div>
+          <br><br>
           </button>
           <div class="title collapsecontent">
             <br>
             <p><b>1. Analysing RR Lyrae stars with M-SSA (Multichannel Singular Spectral Analysis).</b>In a recent paper, we brought a machine learning technique from climate science to astrophysics (<a href="https://ui.adsabs.harvard.edu/abs/2021MNRAS.501.5408W/abstract">Weinberg & Petersen 2021</a>). The M-SSA technique has proved particularly fruitful for analysing simulations of galaxies. However, the technique is much more general than just galaxy simulations: M-SSA can pull repeat signals out of (almost) any time series data. In this project, we'll let M-SSA loose on a real data set from the Kepler telescope, which observed a number of bright RR Lyrae-type variable stars. During the project, we will extend the existing M-SSA framework to handle censored (missing) data. We will then look for standard oscillation periods and build  templates for even more sparse datasets.</p>
             <br>
-            <p><b>2. Derivation of 2d basis functions for surface density decomposition of MaNGa galaxies.</b> There is a whole industry built around describing the structure of galaxies using computational techniques (e.g. for a recent example, see
-<a href="https://ui.adsabs.harvard.edu/abs/2021ApJ...923..124M/abstract">Miller & van Dokkum 2021</a>). Basis function expansions are a natural way to compress information, but haven't been applied in any significant way to galaxy data (despite the idea being around for almost 50 years for simulations: <a href="https://ui.adsabs.harvard.edu/abs/1976ApJ...205..745K/abstract">Kalnajs 1976</a>) In Section 5.3 of <a href="https://ui.adsabs.harvard.edu/abs/2021MNRAS.501.5408W/abstract">Weinberg & Petersen (2021)</a>, we lay out some mathematics to do face-on descriptions of galactic discs, using a Fourier-Laguerre expansion on simulated data. In this project, we will extend the Fourier-Laguerre basis to real data. The project is primarily focused on developing the mathematics behind the expansions, and then applying the expansions to real data. There are some big improvements to be made to the Fourier-Laguerre basis: in particular, we could use PCA-like procedures to define a new empirical basis to even more efficiently compress the information. The point of the information compression is to have some sort of uniform way of describing galaxies so that we can look for structural trends, such as describing the structure of spiral arms.</p>
+            <p><b>2. Derivation of 2d basis functions for surface density decomposition of MaNGa galaxies.</b> There is a whole industry built around describing the structure of galaxies using computational techniques (e.g. for a recent example, see <a href="https://ui.adsabs.harvard.edu/abs/2021ApJ...923..124M/abstract">Miller & van Dokkum 2021</a>). Basis function expansions are a natural way to compress information, but haven't been applied in any significant way to galaxy data (despite the idea being around for almost 50 years for simulations: <a href="https://ui.adsabs.harvard.edu/abs/1976ApJ...205..745K/abstract">Kalnajs 1976</a>) In Section 5.3 of <a href="https://ui.adsabs.harvard.edu/abs/2021MNRAS.501.5408W/abstract">Weinberg & Petersen (2021)</a>, we lay out some mathematics to do face-on descriptions of galactic discs, using a Fourier-Laguerre expansion on simulated data. In this project, we will extend the Fourier-Laguerre basis to real data. The project is primarily focused on developing the mathematics behind the expansions, and then applying the expansions to real data. There are some big improvements to be made to the Fourier-Laguerre basis: in particular, we could use PCA-like procedures to define a new empirical basis to even more efficiently compress the information. The point of the information compression is to have some sort of uniform way of describing galaxies so that we can look for structural trends, such as describing the structure of spiral arms.</p>
             <br>
             <!--<p><b>3. Characterising simulated orbits with Manifold Learning.</b></p>
-            <br>-->
-          </div>
-          <br><br>
-          <button type="button" class="collapsible">
-            <div class="title">
-              <h3>Galactic dynamics as a public engagement tool</h3>
-              <p><i>These projects are suitable for a 8-12 week time frame. The deliverable for each project is a half-hour presentation featuring novel visualisation or data interaction. These projects do not require any special prerequisite skills; we will work together to decide on technical development during the project.</i></p>
-            </div>
-          </button>
-          <div class="title collapsecontent">
-            <br>
-            <p><b>1. 3d orbit printing.</b> The orbits of stars in the Milky Way can be hard to visualise -- particularly when the orbit is part of a larger structure, such as the galactic bar. Using the program Blender, the student will extract orbit data from high-resolution galaxy simulations and make novel visualisation of the orbits in 3d. Then, the 3d visualisations will be printed for both scientific study and public engagement purposes.</p>
-            <br>
-            <p><b>2. Supercomputer energy analysis.</b> One source of energy usage in astronomy is through supercomputers. See several recent works <a href="https://ui.adsabs.harvard.edu/abs/2021NatAs...5..857B/abstract">here</a>, <a href="https://ui.adsabs.harvard.edu/abs/2021NatAs...5.1195V/abstract">here</a>, and <a href="https://ui.adsabs.harvard.edu/abs/2020NatAs...4..823B/abstract">here</a>. As astronomers have largely not been trained as computer scientists, much of the software written by astronomers is inefficient and <a href="https://ui.adsabs.harvard.edu/abs/2020NatAs...4..819P/abstract">uses more energy than necessary</a>. In this project, we will build an accounting tool for simple software applications to try and inspire users to develop more efficient astronomical software. We will also develop general recommendations for the IfA regarding computational efficiency and 'greening' of the computer systems.</p>
-            <br>
-            <!--<p><b>3. 3d visualisation development for planetarium projection.</b> </p>
             <br>-->
           </div>
           <br><br>
@@ -99,7 +119,7 @@
             <br>
             <p><b>1. Triaxiality measurement in idealised galaxies.</b> Most galaxies in cosmological simulations appear to be triaxial. What does this mean for morphological structure?</p>
             <br>
-            <p><b>2. Spin parameter and distribution in cosmological halos.</b> We've known for twenty+ years that galactic dark matter halos have some angular momentum (<a href="https://ui.adsabs.harvard.edu/abs/2001ApJ...555..240B/abstract">Bullock et al. 2001</a>). The angular momentum distribution has implications for the type of structure that can form in the disc inside these halos. In some pilot simulations, I found that the galactic bars that formed in dark matter halos were sensitive to the structure of the angular momentum profile (an idea also developed in <a href="https://ui.adsabs.harvard.edu/abs/2019MNRAS.488.5788C/abstract">Collier et al. 2021</a>). I'd be interested in investigating these implications with more rigor, by designing a tandem suite of analytic linear stability models, and also releasing more N-body models. This project has the benefit that we could also try to draw in some of the large-scale structure simulation people. For a recent study, see <a href="https://arxiv.org/abs/2203.10098">this TNG100 paper</a>.</p>
+            <p><b>2. Spin parameter and distribution in cosmological halos.</b> We've known for more than twenty years that galactic dark matter halos have some angular momentum (<a href="https://ui.adsabs.harvard.edu/abs/2001ApJ...555..240B/abstract">Bullock et al. 2001</a>). The angular momentum distribution has implications for the type of structure that can form in the disc inside these halos. In some pilot simulations, I found that the galactic bars that formed in dark matter halos were sensitive to the structure of the angular momentum profile (an idea also developed in <a href="https://ui.adsabs.harvard.edu/abs/2019MNRAS.488.5788C/abstract">Collier et al. 2021</a>). In this project, the student will investigate these implications with more rigor by designing a tandem suite of analytic linear stability models, and also releasing more N-body models. This project will also be undertaken with a large-scale structure team at the University of Edinburgh. For more recent context, see <a href="https://arxiv.org/abs/2203.10098">this TNG100 paper</a>.</p>
             <br>
             <!--<p><b>3. Milky Way halo profile models: MW+LMC+M31+M33 integrations in point mass cases.</b></p>
             <br>-->
@@ -107,25 +127,6 @@
             -->
           </div>
           <br><br>
-          <button type="button" class="collapsible">
-            <div class="title">
-              <h3>Non-programming projects</h3>
-              <p><i>These projects are suitable for a 8-12 week time frame. The deliverable for each project is a summary write-up of the project findings (some projects will have other specified deliverables). These projects explicitly do not require any specialised computer skills.</i></p>
-            </div>
-          </button>
-          <div class="title collapsecontent">
-            <br>
-            <p><b>1. Collecting halo star spectra.</b> One of the major limitations in probing the outer reaches of our Milky Way galaxy is the lack of tracers. However, several studies have either targeted, or seredipitously discovered, distant halo stars. In this project, we will review the literature, looking for additional reports of halo stars. The product will be a collection of halo star positions, that can then be cross-matched with other data sources and used to make a fuller picture of the Milky Way halo.</p>
-            <br>
-            <p><b>2. History of the Royal Observatory Edinburgh.</b> The Royal Observatory Edinburgh (ROE) was created with a donation by a wealthy patron, the Early of Crawford. Several of the patron's writings are held in th Observatory's archives, and other historians have also written about the family (e.g. <a href="https://www.tandfonline.com/doi/full/10.1080/03086534.2020.1765532">Hodgson 2020</a>). In this project, we will read through some relevant source documents to add more context to presentations of the history of the ROE.</p>
-            <br>
-            <p><b>3. A stars in SDSS spectra.</b> A-type stars come in several varieties, with two particular kinds I am interested in: Blue Horizontal Branch (BHB) and Blue Stragger (BS) stars. However, separating the two types of stars has proved to be difficult (Lancaster et al. 2019). In this project, we will use new summary statistics for BHB and BS stars to try and develop a classification system that more cleanly delineates the two.</p>
-            <br>
-            <!-- citation metrics (bibliometrics) + skills project? astro-ph digest? how to find new papers and 'hot' papers? altmetric understanding?
-            https://ui.adsabs.harvard.edu/abs/2005PNAS..10216569H/abstract
-            https://arxiv.org/pdf/2203.17123.pdf
-          -->
-          </div>
           <br><br>
           <div class="title">
             <h2>Ongoing and completed project list</h2>
