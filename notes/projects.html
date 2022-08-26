@@ -32,7 +32,7 @@
           </div>-->
           <div class="title">
             <h2>Available project list</h2>
-            <p>Here is a list of projects that I'm interested in developing further. Projects are sorted by the general scope of the project (click the headings to show individual projects). However, almost all of the projects can be extended.</p>
+            <p>Here is a list of projects that I'm interested in developing further. Projects are sorted by the general scope of the project (click the headings to show individual projects). 8-12 week projects are suitable for Senior Honours or summer projects. 6-9 month projects are suitable for MPhys projects. Almost all of the projects can be extended: any 8-12 week project could easily become an MPhys, and any project could be a part of a larger PhD thesis. It is harder to descope some projects, but if one really catches your eye, I can try!</p>
           </div>
           <button type="button" class="collapsible">
             <div class="title">
@@ -48,20 +48,22 @@
             <p><b>2. Dark matter velocity distribution descriptions with Bayesian blocks histogram technique.</b>
             Binning quantities to create a histogram of values is a fundamental technique for compactly displaying data. Recently (<a href="https://ui.adsabs.harvard.edu/abs/2021arXiv211115440D/abstract">Donaldson et al 2022</a>), we characterised velocity distributions for dark matter particles in the solar neighbourhood using histograms. However, we can improve on the histogram using a novel technique called 'Bayesian blocks' <a href="https://ui.adsabs.harvard.edu/abs/1998ApJ...504..405S/abstract">(Scargle 1998)</a>. In this project, we will design a software package to perform Bayesian block calculations and apply the software to velocity distributions of particles in the solar neighbourhood, looking for features that depart from a smooth distribution -- possible indications of relic substructure from undigested galaxies.
             </p><br>
-            <p><b>3. Comparing dark matter velocity distributions from simulations, using the upgraded Kolmogorov-Smirnov techniques and survival analysis.</b> Recently (<a href="https://ui.adsabs.harvard.edu/abs/2021arXiv211115440D/abstract">Donaldson et al 2022</a>), we characterised velocity distributions for dark matter particles in the solar neighbourhood using cumulative density functions (CDFs). CDFs allow for direct comparison between multiple distributions, with a half-century of statistics underpinning. In the first part of the project, we will develop a software package that is a clean implementation of CDF comparison techniques. Then, we will extend the analysis to so-called 'censored data', where some observations are missing -- a very typical problem in astronomy! Following algorithms laid out in <a href="https://ui.adsabs.harvard.edu/abs/1985ApJ...293..192F/abstract">Feigelson & Nelson (1985)</a>, we will extend the software package to mimic real observations for dark matter detectors based on extracts of Milky Way-like galaxies from cosmological simulations.
-            </p>
+            <p><b>3. Tilted ring models for galactic discs.</b> Galactic discs in the real universe are observed in every possible orientation, yet simulations tend to prefer a single face-on view. In this project, we will bring published models for tilted ring dynamics to a public release, and then explore the implications of bringing in satellites to these systems.</p>
             <br>
             <!--
+            <p><b>4. We will extend the significance analysis to so-called 'censored data', where some observations are missing -- a very typical problem in astronomy! Following algorithms laid out in <a href="https://ui.adsabs.harvard.edu/abs/1985ApJ...293..192F/abstract">Feigelson & Nelson (1985)</a>, we will extend the software package to mimic real observations for dark matter detectors based on extracts of Milky Way-like galaxies from cosmological simulations. For normal distributions, when do we need higher-order moments (such as in <a href="https://ui.adsabs.harvard.edu/abs/2020MNRAS.499.5806S/abstract">Sanders & Evans 2020</a>)?
+            </p>
             <p><b>4. Simulated stellar velocity lines.</b> Follow <a href="https://ui.adsabs.harvard.edu/abs/2020MNRAS.499.5806S/abstract">Sanders & Evans (2020)</a> to make predictions for line profiles coming out of simulations, and what the structure of line profiles might mean for different orbits.</p>
             <br>-->
             <!--
-            <p><b>4. Closed orbits in 3d.</b> Follow the commensurability paper, extend to 3d. This is computational geometry at its heart (Delaunay Triangulation). The first algorithm can be published, and then extended to 3d.</p>
+            <p><b>4. Closed disc orbits in 3d.</b> Most orbits in a galactic disc (or halo) will fill an entire torus, given enough time. However, orbits that are in resonance will repeat tracks that only probe a small fraction of the torus.
+            Follow the commensurability paper, extend to 3d. This is computational geometry at its heart (Delaunay Triangulation). The first algorithm can be published, and then extended to 3d.</p>
             <br>-->
           </div>
           <br><br>
           <button type="button" class="collapsible">
             <div class="title">
-              <h3>Non-programming projects</h3>
+              <h3>Programming-light projects</h3>
               <p><i>These projects are suitable for a 8-12 week time frame. The deliverable for each project is a summary write-up of the project findings (some projects will have other specified deliverables). These projects explicitly do not require any specialised computer skills.</i></p>
             </div>
           </button>
@@ -71,15 +73,13 @@
             <br>
             <p><b>2. A stars in SDSS spectra.</b> A-type stars come in several varieties, with two particular kinds I am interested in: Blue Horizontal Branch (BHB) and Blue Stragger (BS) stars. However, separating the two types of stars has proved to be difficult (<a href="https://ui.adsabs.harvard.edu/abs/2019MNRAS.486..378L/abstract">Lancaster et al. 2019</a>). In this project, we will use new summary statistics for BHB and BS stars to try and develop a classification system that more cleanly delineates the two.</p>
             <br>
-            <p><b>3. History of the Royal Observatory Edinburgh.</b> The Royal Observatory Edinburgh (ROE) was created with a donation by a wealthy patron, the Earl of Crawford. Several of the patron's writings are held in the Observatory's archives, and other historians have also written about the family (e.g. <a href="https://www.tandfonline.com/doi/full/10.1080/03086534.2020.1765532">Hodgson 2020</a>). In this project, we will read through some relevant source documents to add more context to presentations of the history of the ROE.</p>
-            <br>
-            <p><b>4. Finding paper diamonds in the rough.</b> The Astrophysics Data System (<a href="https://ui.adsabs.harvard.edu">ADS</a>) is a powerful tool maintained by the Smithsonian Astrophysical Observatory. The service provides a powerful search tool that is presently underutilised by the average astronomer. Additional repositories exist for data (Zenodo) and <a href="https://asclepias.aas.org">consolidation of software</a>. In this meta-project, the student will use ADS to design libraries for various research topics, and build a history report (examples: <a href="https://iopscience.iop.org/article/10.3847/2515-5172/ac72af">the history of 'supergiants'</a>,or <a href="https://arxiv.org/abs/2205.14153">non-astronomy papers citation trends in astronomy</a>) on a topic of their choice. Possible extensions for the project include research citation metrics/bibliometrics (see <a href="https://ui.adsabs.harvard.edu/abs/2005PNAS..10216569H/abstract">the infamous <i>h</i>-index</a> and <a href="https://arxiv.org/pdf/2203.17123.pdf">a cheeky take on the <i>h</i>-index</a>), studying the promotion of papers (including the new service <a href="https://www.altmetric.com">Altmetric</a>), or building a web scraping tool to find 'trendy' papers.</p>
+            <p><b>3. Globular Clusters and Streams(?) around the LMC.</b> The LMC has a known globular cluster population (<a href="https://ui.adsabs.harvard.edu/abs/2022arXiv220713100B/abstract">Bennett et al. 2022</a>), and hints of some stellar streams (<a href="https://ui.adsabs.harvard.edu/abs/2019MNRAS.483.4160N/abstract">Navarrete et al. 2019</a>). In this project, the student will first produce a homogeneous catalog of observations, and then examine the correspondence between the inferred orbits for globular clusters and stellar streams around the LMC to discern whether the streams could be disrupted globular clusters.</p>
             <br>
           </div>
           <br><br>
           <button type="button" class="collapsible">
             <div class="title">
-              <h3>Galactic dynamics and public engagement tools</h3>
+              <h3>Public engagement tools</h3>
               <p><i>These projects are suitable for a 8-12 week time frame. The deliverable for each project is a half-hour presentation featuring novel visualisation or data interaction. These projects do not require any special prerequisite skills; we will work together to decide on technical development during the project.</i></p>
             </div>
           </button>
@@ -89,7 +89,11 @@
             <br>
             <p><b>2. 3d orbit printing.</b> The orbits of stars in the Milky Way can be hard to visualise -- particularly when the orbit is part of a larger structure, such as the galactic bar. Using the program Blender, the student will extract orbit data from high-resolution galaxy simulations and make novel visualisation of the orbits in 3d. Then, the 3d visualisations will be printed for both scientific study and public engagement purposes.</p>
             <br>
-            <!--<p><b>3. 3d visualisation development for planetarium projection.</b> </p>
+            <p><b>3. History of the Royal Observatory Edinburgh.</b> The Royal Observatory Edinburgh (ROE) was created with a donation by a wealthy patron, the Earl of Crawford. Several of the patron's writings are held in the Observatory's archives, and other historians have also written about the family (e.g. <a href="https://www.tandfonline.com/doi/full/10.1080/03086534.2020.1765532">Hodgson 2020</a>). In this project, we will read through some relevant source documents to add more context to presentations of the history of the ROE.</p>
+            <br>
+            <p><b>4. Finding paper diamonds in the rough.</b> The Astrophysics Data System (<a href="https://ui.adsabs.harvard.edu">ADS</a>) is a powerful tool maintained by the Smithsonian Astrophysical Observatory. The service provides a powerful search tool that is presently underutilised by the average astronomer. Additional repositories exist for data (Zenodo) and <a href="https://asclepias.aas.org">consolidation of software</a>. In this meta-project, the student will use ADS to design libraries for various research topics, and build a history report (examples: <a href="https://iopscience.iop.org/article/10.3847/2515-5172/ac72af">the history of 'supergiants'</a>,or <a href="https://arxiv.org/abs/2205.14153">non-astronomy papers citation trends in astronomy</a>) on a topic of their choice. The student may also use the 'ads' Python package to perform queries interactively: see <a href="https://adrian.pw/blog/python-literature/">this blog post</a>. Possible extensions for the project include research citation metrics/bibliometrics (see <a href="https://ui.adsabs.harvard.edu/abs/2005PNAS..10216569H/abstract">the infamous <i>h</i>-index</a> and <a href="https://arxiv.org/pdf/2203.17123.pdf">a cheeky take on the <i>h</i>-index</a>), studying the promotion of papers (including the new service <a href="https://www.altmetric.com">Altmetric</a>), or building a web scraping tool to find 'trendy' papers.</p>
+            <br>
+            <!--<p><b>5. 3d visualisation development for planetarium projection.</b> </p>
             <br>-->
           </div>
           <br><br>
@@ -104,6 +108,8 @@
             <p><b>1. Analysing RR Lyrae stars with M-SSA (Multichannel Singular Spectral Analysis).</b>In a recent paper, we brought a machine learning technique from climate science to astrophysics (<a href="https://ui.adsabs.harvard.edu/abs/2021MNRAS.501.5408W/abstract">Weinberg & Petersen 2021</a>). The M-SSA technique has proved particularly fruitful for analysing simulations of galaxies. However, the technique is much more general than just galaxy simulations: M-SSA can pull repeat signals out of (almost) any time series data. In this project, we'll let M-SSA loose on a real data set from the Kepler telescope, which observed a number of bright RR Lyrae-type variable stars. During the project, we will extend the existing M-SSA framework to handle censored (missing) data. We will then look for standard oscillation periods and build  templates for even more sparse datasets.</p>
             <br>
             <p><b>2. Derivation of 2d basis functions for surface density decomposition of MaNGa galaxies.</b> There is a whole industry built around describing the structure of galaxies using computational techniques (e.g. for a recent example, see <a href="https://ui.adsabs.harvard.edu/abs/2021ApJ...923..124M/abstract">Miller & van Dokkum 2021</a>). Basis function expansions are a natural way to compress information, but haven't been applied in any significant way to galaxy data (despite the idea being around for almost 50 years for simulations: <a href="https://ui.adsabs.harvard.edu/abs/1976ApJ...205..745K/abstract">Kalnajs 1976</a>) In Section 5.3 of <a href="https://ui.adsabs.harvard.edu/abs/2021MNRAS.501.5408W/abstract">Weinberg & Petersen (2021)</a>, we lay out some mathematics to do face-on descriptions of galactic discs, using a Fourier-Laguerre expansion on simulated data. In this project, we will extend the Fourier-Laguerre basis to real data. The project is primarily focused on developing the mathematics behind the expansions, and then applying the expansions to real data. There are some big improvements to be made to the Fourier-Laguerre basis: in particular, we could use PCA-like procedures to define a new empirical basis to even more efficiently compress the information. The point of the information compression is to have some sort of uniform way of describing galaxies so that we can look for structural trends, such as describing the structure of spiral arms.</p>
+            <br>
+            <p><b>3. Examining the outskirts of clusters.</b> Globular clusters and dwarf galaxies orbiting in the Milky Way tidal field will lose stars over time as they linger too close to the outskirts. In this project, we will build N-body simulations of globular clusters orbiting a Milky Way-like galaxy and examine their destruction. The student may also develop algorithms to classify the structure that develops in the tidal tails as a result of disc crossings, pericentre passages, and more.</p>
             <br>
             <!--<p><b>3. Characterising simulated orbits with Manifold Learning.</b></p>
             <br>-->
@@ -166,6 +172,8 @@
             <br>
             <p><b>4. The role of the interloping Triangulum galaxy in sculpting the Andromeda galaxy.</b> In this project the student will investigate the ongoing interaction between the two galaxies Andromeda and Triangulum: First, the student will build up-to-date numerical models of the two galaxies. Second, the student will search for plausible orbits of Triangulum around Andromeda, using the latest proper motion data from the Gaia satellite. Third, the student will design high performance N-body simulations to study the full time-dependent evolution of the interaction. The models will be used to diagnose the state of dark matter disequilibrium around Andromeda, resulting in predictions for the distribution around both galaxies.</p>
             <br>
+            <p><b>5. Comparing dark matter velocity distributions from simulations, using the upgraded Kolmogorov-Smirnov techniques and survival analysis.</b> Recently (<a href="https://ui.adsabs.harvard.edu/abs/2021arXiv211115440D/abstract">Donaldson et al 2022</a>), we characterised velocity distributions for dark matter particles in the solar neighbourhood using cumulative density functions (CDFs). CDFs allow for direct comparison between multiple distributions, with a half-century of statistics underpinning. In the first part of the project, we will develop a software package that is a clean implementation of CDF comparison techniques.
+            </p>
           </div>
         </div>
       </div>
