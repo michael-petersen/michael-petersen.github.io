@@ -15,6 +15,7 @@ How can we make progress on the technical challenge of simulating gas and stars 
 
 Missing out on the necessary observations to look at the IMF in dwarfs -- cannot firmly say anything about differences from GCs yet.
 
+New questions:
 
-
-
+1. Where are the LMC satellites?
+2. Is the designation of 'Ultra-Faint Star Clusters' valid?
