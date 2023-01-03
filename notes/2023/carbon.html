@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Coffee Carbon Footprint</title>
+
+  <link rel="stylesheet" href="../css/main.css">
+
+  <!-- The icon marking the tab -->
+  <link rel="shortcut icon" href="../papers/shadowbar/iconimg.png" type="image/png">
+
+</head>
+
+<body class="home color-1">
+  <div id="headerstatic">
+    <div class="container">
+      <div class="row">
+      	<h2 id="logostatic">
+          <a href="../index.html">
+      	    <span>Michael S. Petersen</span>
+      	    <span class="highlightstatic">University of Edinburgh</span>
+      	  </a>
+        </h2>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="content">
+        <div class="row">
+	        <div class="title">
+            <h4><a href="list.html">(back to notes list)</a></h4>
+          </div>
+          <div class="title">
+            <h2>Coffee Carbon Footprint</h2>
+        	    <p>At the risk of being a stereotype of an academic, I like coffee.</p>
+              <br>
+              <p>I recently purchased an espresso machine for my flat as an absurd luxury: a Rubino Luxe Heat Exchanger. I also simultaneously was reading the book <i>How bad are bananas?</i> by Mike Berners-Lee, in which he recommends getting a plug adapter that will check the wattage draw of an appliance. This got me thinking: how much carbon am I spending to have a coffee (ignoring the obvious cost of getting the beans to me)? Is there some ideal method I should be using?</p>
+              <br>
+              <p>For a physics-y angle here, there is a 1500W heating element powering a 3L boiler. It takes 1000 calories to heat 1L of water by a degree, 1 calorie is 0.24 Watts per second, and I'm probably going from roughly 25C to 100C (75C). I've observed (using the Watt meter) that it takes about 7 minutes (420 seconds) to heat up. That suggests I'm adding 420*1500*0.24 = 151kcal to the water, enough to raise 3L by 50 degrees. I'm a little suspicious at this point, because that seems to good to be true. A mystery! My leading theory is that the machine isn't actually filling 3L of water, but maybe closer to 2L. I could test by fully draining the machine at some point and measuring the water.</p>
+              <br>
+              <p>Note that the pump in the espresso machine also draws about 60W when running (pulling the shot), which lasts 30 seconds, so there is some non-zero cost there. But really, to get a fair cost, I have to consider how many shots I'm pulling when turning on the machine, and how often the heater runs. To be measured.</p>
+              <br>
+              <p>I also checked my kettle. It's a pretty standard-looking one that came with the flat. When I fired up the Watt measurement, it drew a whopping 2500W (similar to the dryer, which I also tested for fun). It blew through 1L of water to boiling in 2 minutes (120 seconds). Running through similar math as above, 120*2500*0.24 = 72kcal, enough to raise 1L of water by 72 degrees. That seems about right for back of the envelope, so what gives in the espresso machine?</p>
+              <br>
+              <p>I also checked the grinder (a Niche Zero). This was pretty fun, because (like the other machines) there is a negligible pull when simply powered up (of the order 0.1W), but when the motor is engaged, that jumps to 24W. But, when coffee is added and the motor engaged (i.e. the typical use case), the wattage jumps to 100W. This also takes about 30 seconds, or roughly the same energy as the pump action for the shot itself.</p>
+        	</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer"> michael.petersen@roe.ac.uk </div>
+
+</body>
+</html>
