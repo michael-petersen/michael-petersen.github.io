@@ -36,6 +36,24 @@
           </div>
           <button type="button" class="collapsible">
             <div class="title">
+              <h3>Science-forward projects</h3>
+              <p><i>These projects are suitable for a 8-12 week time frame. The deliverable for each project is a summary write-up of the project findings (some projects will have other specified deliverables). These projects explicitly do not require any specialised computer skills, and offer the opportunity to become more comfortable with data analysis.</i></p>
+            </div>
+          </button>
+          <div class="title collapsecontent">
+            <br>
+            <p><b>1. Collecting halo star spectra.</b> One of the major limitations in probing the outer reaches of our Milky Way galaxy is the lack of tracers. However, several studies have either targeted, or <a href="https://zenodo.org/record/4695135#.YpHYzS8RpQI">seredipitously discovered</a>, distant halo stars. In this project, we will review the literature, looking for additional reports of halo stars. The product will be a collection of halo star positions, that can then be cross-matched with other data sources -- primarily <a href="https://gea.esac.esa.int/archive/">Gaia</a> -- and used to make a fuller picture of the Milky Way halo.</p>
+            <br>
+            <p><b>2. A stars in SDSS spectra.</b> A-type stars come in several varieties, with two particular kinds I am interested in: Blue Horizontal Branch (BHB) and Blue Stragger (BS) stars. However, separating the two types of stars has proved to be difficult (<a href="https://ui.adsabs.harvard.edu/abs/2019MNRAS.486..378L/abstract">Lancaster et al. 2019</a>). In this project, we will use new summary statistics for BHB and BS stars to try and develop a classification system that more cleanly delineates the two.</p>
+            <br>
+            <p><b>3. Globular Clusters and Streams(?) around the LMC.</b> The LMC has a known globular cluster population (<a href="https://ui.adsabs.harvard.edu/abs/2022arXiv220713100B/abstract">Bennett et al. 2022</a>), and hints of some stellar streams (<a href="https://ui.adsabs.harvard.edu/abs/2019MNRAS.483.4160N/abstract">Navarrete et al. 2019</a>). In this project, the student will first produce a homogeneous catalog of observations, and then examine the correspondence between the inferred orbits for globular clusters and stellar streams around the LMC to discern whether the streams could be disrupted globular clusters.</p>
+            <br>
+            <p><b>4. What is a bulge?</b> Galaxies seem to largely have concentrations of stars at thir centre. Simulations largely reproduce this feature, but it is not clear if the mechanisms are the same. Progress is severely hambered by a lack of clear definition for a bulge. In this project, the student will develop definitions for bulges by applying new methods to simulated galaxies. See also a recent discussion of data <a href="https://ui.adsabs.harvard.edu/abs/2022arXiv220901550H/abstract">here</a>.</p>
+            <br>
+          </div>
+          <br><br>
+          <button type="button" class="collapsible">
+            <div class="title">
               <h3>Simulation analysis with a target code release</h3>
               <p><i>These projects are suitable for a 8-12 week time frame. The deliverable for each project is a public release (i.e. on GitHub) of an example astrophysical application. These projects require some level of comfort with one of the following computer languages: Python, C++, Julia.</i></p>
             </div>
@@ -50,37 +68,22 @@
             </p><br>
             <p><b>3. Tilted ring models for galactic discs.</b> Galactic discs in the real universe are observed in every possible orientation, yet simulations tend to prefer a single face-on view. In this project, we will bring published models for tilted ring dynamics to a public release, and then explore the implications of bringing in satellites to these systems.</p>
             <br>
+            <p><b>4. Closed disc orbits in 3d.</b> Most orbits in a galactic disc (or halo) will fill an entire torus, given enough time. However, orbits that are in resonance will repeat tracks that only probe a small fraction of the torus. This was an idea I used in an <a href="https://ui.adsabs.harvard.edu/abs/2021MNRAS.500..838P/abstract">earlier paper</a> on commensurate orbits in discs.
+            Following the commensurability paper, the student will extend the algoritm to 3d. This is computational geometry at its heart (Delaunay Triangulation). The first algorithm can be published (see <a href="https://github.com/michael-petersen/exptool/blob/main/exptool/analysis/commensurability.py">here for code</a> that needs refactoring), and then extended to 3d. This project can also be designed as a more computationally heavy project, with <a href="https://gist.github.com/adrn/7beb04b776399986fd36e19f0abb4766">JAX integration of orbits</a>.</p>
+            <br>
+            <p><b>5. The orbital inclination instability.</b> A newly-discovered instability in Keplerian systems is called the <a href="https://ui.adsabs.harvard.edu/abs/2018AJ....156..141M/abstract">orbital inclination instability</a>. Along with a dynamical description, the researchers published some <a href="https://github.com/mkmcc/orbit-torque">code</a>, but it can be refactored and made accessible. In this project, we will refactor and release the orbital inclination instability code, specifically asking whether this mechanism could be at play in barred galaxies.</p>
+            <br>
             <!--
             <p><b>4. We will extend the significance analysis to so-called 'censored data', where some observations are missing -- a very typical problem in astronomy! Following algorithms laid out in <a href="https://ui.adsabs.harvard.edu/abs/1985ApJ...293..192F/abstract">Feigelson & Nelson (1985)</a>, we will extend the software package to mimic real observations for dark matter detectors based on extracts of Milky Way-like galaxies from cosmological simulations. For normal distributions, when do we need higher-order moments (such as in <a href="https://ui.adsabs.harvard.edu/abs/2020MNRAS.499.5806S/abstract">Sanders & Evans 2020</a>)?
             </p>
             <p><b>4. Simulated stellar velocity lines.</b> Follow <a href="https://ui.adsabs.harvard.edu/abs/2020MNRAS.499.5806S/abstract">Sanders & Evans (2020)</a> to make predictions for line profiles coming out of simulations, and what the structure of line profiles might mean for different orbits.</p>
             <br>-->
             <!--
-            <p><b>4. Closed disc orbits in 3d.</b> Most orbits in a galactic disc (or halo) will fill an entire torus, given enough time. However, orbits that are in resonance will repeat tracks that only probe a small fraction of the torus.
-            Follow the commensurability paper, extend to 3d. This is computational geometry at its heart (Delaunay Triangulation). The first algorithm can be published, and then extended to 3d.</p>
-            <br>-->
+            -->
             <!--
-            <p><b>5. What is a bulge?</b> Galaxies seem to largely have concentrations of stars at thir centre. Simulations largely reproduce this feature, but it is not clear if the mechanisms are the same. Progress is severely hambered by a lack of clear definition for a bulge. In this project, the student will develop definitions for bulges by applying new methods to simulated galaxies. See also a recent discussion of data <a href="https://ui.adsabs.harvard.edu/abs/2022arXiv220901550H/abstract">here</a>.</p>
-            <br>-->
+            -->
             <!--
-            <p><b>6. The orbital inclination instability.</b> A newly-discovered instability in Keplerian systems is called the <a href="https://ui.adsabs.harvard.edu/abs/2018AJ....156..141M/abstract">orbital inclination instability</a>. Along with a dynamical description, the researchers published some <a href="https://github.com/mkmcc/orbit-torque">code</a>, but it can be refactored and made accessible.</p>
-            <br>-->
-          </div>
-          <br><br>
-          <button type="button" class="collapsible">
-            <div class="title">
-              <h3>Programming-light projects</h3>
-              <p><i>These projects are suitable for a 8-12 week time frame. The deliverable for each project is a summary write-up of the project findings (some projects will have other specified deliverables). These projects explicitly do not require any specialised computer skills.</i></p>
-            </div>
-          </button>
-          <div class="title collapsecontent">
-            <br>
-            <p><b>1. Collecting halo star spectra.</b> One of the major limitations in probing the outer reaches of our Milky Way galaxy is the lack of tracers. However, several studies have either targeted, or <a href="https://zenodo.org/record/4695135#.YpHYzS8RpQI">seredipitously discovered</a>, distant halo stars. In this project, we will review the literature, looking for additional reports of halo stars. The product will be a collection of halo star positions, that can then be cross-matched with other data sources -- primarily <a href="https://gea.esac.esa.int/archive/">Gaia</a> -- and used to make a fuller picture of the Milky Way halo.</p>
-            <br>
-            <p><b>2. A stars in SDSS spectra.</b> A-type stars come in several varieties, with two particular kinds I am interested in: Blue Horizontal Branch (BHB) and Blue Stragger (BS) stars. However, separating the two types of stars has proved to be difficult (<a href="https://ui.adsabs.harvard.edu/abs/2019MNRAS.486..378L/abstract">Lancaster et al. 2019</a>). In this project, we will use new summary statistics for BHB and BS stars to try and develop a classification system that more cleanly delineates the two.</p>
-            <br>
-            <p><b>3. Globular Clusters and Streams(?) around the LMC.</b> The LMC has a known globular cluster population (<a href="https://ui.adsabs.harvard.edu/abs/2022arXiv220713100B/abstract">Bennett et al. 2022</a>), and hints of some stellar streams (<a href="https://ui.adsabs.harvard.edu/abs/2019MNRAS.483.4160N/abstract">Navarrete et al. 2019</a>). In this project, the student will first produce a homogeneous catalog of observations, and then examine the correspondence between the inferred orbits for globular clusters and stellar streams around the LMC to discern whether the streams could be disrupted globular clusters.</p>
-            <br>
+            -->
           </div>
           <br><br>
           <button type="button" class="collapsible">
@@ -93,11 +96,11 @@
             <br>
             <p><b>1. Supercomputer energy analysis.</b> One source of energy usage in astronomy is through supercomputers. See several recent works <a href="https://ui.adsabs.harvard.edu/abs/2021NatAs...5..857B/abstract">here</a>, <a href="https://ui.adsabs.harvard.edu/abs/2021NatAs...5.1195V/abstract">here</a>, and <a href="https://ui.adsabs.harvard.edu/abs/2020NatAs...4..823B/abstract">here</a>. As astronomers have largely not been trained as computer scientists, much of the software written by astronomers is inefficient and <a href="https://ui.adsabs.harvard.edu/abs/2020NatAs...4..819P/abstract">uses more energy than necessary</a>. In this project, we will build an accounting tool for simple software applications to try and inspire users to develop more efficient astronomical software. We will also develop general recommendations for the IfA regarding computational efficiency and 'greening' of the computer systems.</p>
             <br>
-            <p><b>2. 3d orbit printing.</b> The orbits of stars in the Milky Way can be hard to visualise -- particularly when the orbit is part of a larger structure, such as the galactic bar. Using the program Blender, the student will extract orbit data from high-resolution galaxy simulations and make novel visualisation of the orbits in 3d. Then, the 3d visualisations will be printed for both scientific study and public engagement purposes.</p>
+            <p><b>2. 3d orbit printing.</b> The orbits of stars in the Milky Way can be hard to visualise -- particularly when the orbit is part of a larger structure, such as the galactic bar. Using the program <a href="https://www.blender.org">Blender</a>, the student will extract orbit data from high-resolution galaxy simulations and make novel visualisation of the orbits in 3d. Then, the 3d visualisations will be printed for both scientific study and public engagement purposes.</p>
             <br>
             <p><b>3. History of the Royal Observatory Edinburgh.</b> The Royal Observatory Edinburgh (ROE) was created with a donation by a wealthy patron, the Earl of Crawford. Several of the patron's writings are held in the Observatory's archives, and other historians have also written about the family (e.g. <a href="https://www.tandfonline.com/doi/full/10.1080/03086534.2020.1765532">Hodgson 2020</a>). In this project, we will read through some relevant source documents to add more context to presentations of the history of the ROE.</p>
             <br>
-            <p><b>4. Finding paper diamonds in the rough.</b> The Astrophysics Data System (<a href="https://ui.adsabs.harvard.edu">ADS</a>) is a powerful tool maintained by the Smithsonian Astrophysical Observatory. The service provides a powerful search tool that is presently underutilised by the average astronomer. Additional repositories exist for data (Zenodo) and <a href="https://asclepias.aas.org">consolidation of software</a>. In this meta-project, the student will use ADS to design libraries for various research topics, and build a history report (examples: <a href="https://iopscience.iop.org/article/10.3847/2515-5172/ac72af">the history of 'supergiants'</a>,or <a href="https://arxiv.org/abs/2205.14153">non-astronomy papers citation trends in astronomy</a>) on a topic of their choice. The student may also use the 'ads' Python package to perform queries interactively: see <a href="https://adrian.pw/blog/python-literature/">this blog post</a>. Possible extensions for the project include research citation metrics/bibliometrics (see <a href="https://ui.adsabs.harvard.edu/abs/2005PNAS..10216569H/abstract">the infamous <i>h</i>-index</a> and <a href="https://arxiv.org/pdf/2203.17123.pdf">a cheeky take on the <i>h</i>-index</a>), studying the promotion of papers (including the new service <a href="https://www.altmetric.com">Altmetric</a>), or building a web scraping tool to find 'trendy' papers.</p>
+            <p><b>4. Finding paper diamonds in the rough.</b> The Astrophysics Data System (<a href="https://ui.adsabs.harvard.edu">ADS</a>) is a powerful tool maintained by the Smithsonian Astrophysical Observatory. The service provides a powerful search tool that is presently underutilised by the average astronomer. Additional repositories exist for data (Zenodo) and <a href="https://asclepias.aas.org">consolidation of software</a>. In this meta-project, the student will use ADS to design libraries for various research topics, and build a history report (examples: <a href="https://iopscience.iop.org/article/10.3847/2515-5172/ac72af">the history of 'supergiants'</a>,or <a href="https://arxiv.org/abs/2205.14153">non-astronomy papers citation trends in astronomy</a>) on a topic of their choice. The student may also use the 'ads' Python package to perform queries interactively: see <a href="https://adrian.pw/blog/python-literature/">this blog post</a>. Possible extensions for the project include research citation metrics/bibliometrics (see <a href="https://ui.adsabs.harvard.edu/abs/2005PNAS..10216569H/abstract">the infamous <i>h</i>-index</a> and <a href="https://arxiv.org/pdf/2203.17123.pdf">a cheeky take on the <i>h</i>-index</a>), studying the promotion of papers (including the new service <a href="https://www.altmetric.com">Altmetric</a>), or building a web scraping tool to find 'trendy' papers. Or what about reflecting on <a href="https://medium.com/@sjb015/when-pigs-fly-changing-author-lists-on-scientific-papers-c143af826bcb">changing author lists</a>?</p>
             <br>
             <!--<p><b>5. 3d visualisation development for planetarium projection.</b> </p>
             <br>-->
