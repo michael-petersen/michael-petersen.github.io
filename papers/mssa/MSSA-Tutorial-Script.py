@@ -4,11 +4,11 @@
 # # Demystifying multichannel Singular Spectral Analysis (mSSA)
 # ### Mike Petersen, 16 May 2022
 # ### updated for 3 May 2023
-# 
+#
 # A visual approach to the linear algebra steps of mSSA. This tutorial follows Weinberg & Petersen (2021) -- hereafter WP21 -- with some modest changes that appeared in Johnson et al. (2023).
-# 
+#
 # With 10 worked examples.
-# 
+#
 
 # Goals:
 # 1. Use numpy to perform linear algebra steps
@@ -64,7 +64,7 @@ def embed_data(data,L,K,ndim=1,norm=False):
     Build embedded time series, Y.
     Follows the embedding strategy of Weinberg \& Petersen (2021)
     Augmented vectors are the rows.
-    
+
     inputs
     ---------
     data     : (array) data streams, set up as data[0],data[1],data[2]...
@@ -72,7 +72,7 @@ def embed_data(data,L,K,ndim=1,norm=False):
     K        : (int) the length of augmented vectors
     ndim     : (int, default 1) number of data streams to consider
     norm     : (bool, default False) detrend the data?
-    
+
     returns
     ---------
     Y        : (array) the trajectory matrix
@@ -109,7 +109,7 @@ _ = plt.xlabel('columns are lagged vectors (length K)')
 # The second step is to construct the lag-covariance matrix. We have two choices here:
 # 1. Reconstruct the full dimensionality, $C = \frac{1}{K}T^T\cdot T$, where the matrix is $K\times K$.
 # 2. Reconstruct the reduced dimensionality, $C = \frac{1}{K}T\cdot T^T$, where the matrix is $L\times L$.
-# 
+#
 # We will here choose option 1, but will note the differences below. This is equation 11 in WP21, and is denoted in this code as `full=True`. Throughout this notebook, we can set `full=False` to get option 2.
 
 # In[5]:
@@ -118,16 +118,16 @@ _ = plt.xlabel('columns are lagged vectors (length K)')
 def make_covariance(T,K,full=True):
     """
     estimate the covariance matrix C_X, using the formula in eq 9
-    
+
     inputs
     ---------
     Y     : (array) the trajectory matrix
     K     : (array) the length of the augmented vectors
-    
+
     returns
     ---------
     C     : (array) the covariance matrix
-    
+
     """
     if full:
         C = np.dot(T.T,T)/K
@@ -152,10 +152,10 @@ _ = plt.xlabel('dim 2 (length K)')
 
 
 # Now we get to the magic: making the principal components, singular vectors, and empirical orthogonal functions. This is accomplished by a singular value decomposition step.
-# 
-# Following equation 12 of WP21, use SVD: $$C = U\cdot \Lambda \cdot V.$$ SVD takes as an input $C$ and returns $U$, $\Lambda$, and $V$. The columns of $U$ are the eigenvectors (or empirical orthogonal functions EOF, $L$ with length $K$), which we immediately use to construct the principal components $P$ (with length $K$) by projecting the time series onto the EOF: $$P = T\cdot U.$$ 
-# 
-# 
+#
+# Following equation 12 of WP21, use SVD: $$C = U\cdot \Lambda \cdot V.$$ SVD takes as an input $C$ and returns $U$, $\Lambda$, and $V$. The columns of $U$ are the eigenvectors (or empirical orthogonal functions EOF, $L$ with length $K$), which we immediately use to construct the principal components $P$ (with length $K$) by projecting the time series onto the EOF: $$P = T\cdot U.$$
+#
+#
 
 # Other notes:
 # 1. The principal components are in _lag_ space, which cannot be directly interpreted as series time. Instead, they encode the time of maximum correlated amplitude, but these only have meaning on the input timescale the after the reconstruction step.
@@ -169,13 +169,13 @@ _ = plt.xlabel('dim 2 (length K)')
 
 def make_pcs(C,T,ndim=1,full=True):
     """perform the SVD on the covariance matrix to construct the PCs.
-    
+
     inputs
     ---------
-    C     : (array) the covariance matrix   
+    C     : (array) the covariance matrix
     Y     : (array) the trajectory matrix
     ndim  : (int, default 1) the number of MSSA dimensions
-    
+
     returns
     ---------
     PCs   : (array) the principal components (in rows)
@@ -186,16 +186,13 @@ def make_pcs(C,T,ndim=1,full=True):
     # the columns of U are the left singular vectors
     # the columns of V are the right singular vectors
     # SV are the singular values
-    
     # to recover the PCs, dot the trajectory matrix and the left singular vectors
     # the projection of the time series Y onto the EOF (eigenvectors), U
     if full:
         PCs = np.dot(T,U)
     else:
         PCs = np.dot(V,T).T
-
     print('PC shape:',PCs.shape)
-    
     if full:
         print('Left singular vector shape:',U.shape)
         return PCs,U,SV
@@ -219,7 +216,7 @@ plt.figure(figsize=(4,3),facecolor='white')
 
 for i in range(K-1,-1,-1):
     plt.plot(EOF[:,i],color=cm.viridis(i/9.))
-    
+
 plt.title('empirical orthogonal functions')
 plt.ylabel('EOF value')
 _ = plt.xlabel('zero origin time (length K)')
@@ -233,7 +230,7 @@ plt.figure(figsize=(4,3),facecolor='white')
 
 for i in range(9,-1,-1):
     plt.plot(PC[:,i],color=cm.viridis(i/9.))
-    
+
 plt.title('principal components')
 plt.ylabel('PC value')
 _ = plt.xlabel('abscissa (length K)')
@@ -262,7 +259,7 @@ _ = plt.xlabel('PC number (length K)')
 
 def reconstruct(PC,EOF,pcnum,K,nd=0):
     """Average antidiagonal elements of a 2d array
-    
+
     inputs
     -----------
     PC    : (array) PCs
@@ -278,9 +275,7 @@ def reconstruct(PC,EOF,pcnum,K,nd=0):
     thanks to: https://codereview.stackexchange.com/questions/195635/numpy-2d-array-anti-diagonal-averaging
     """
     A = np.dot(np.array([PC[:,pcnum]]).T,np.array([EOF[K*nd:K*(nd+1),pcnum]]))
-    
     x1d = [np.mean(A[::-1, :].diagonal(i)) for i in range(-A.shape[0] + 1, A.shape[1])]
-
     return np.array(x1d)
 
 
@@ -322,16 +317,16 @@ plt.ylabel('amplitude')
 
 # The final step, reconstruction, is where much interpretation creeps in, and is the primary subject of automation research in the group.
 
-# Extensions: 
-# 
+# Extensions:
+#
 # 1. How do the results change with window length?
 # 2. Should we detrend (and are there other schemes)? Under what circumstances?
 # 3. How much can we stride the data (subsample) and still maintain robust results?
 
 # ### Example 1
-# 
+#
 # Let's go through another example to show one of the MSSA power points: removing noise.
-# 
+#
 # This time, we'll construct a noisy data stream by injecting white noise (important distinction!) onto the sinusoidal series.
 
 # In[15]:
@@ -429,8 +424,8 @@ plt.ylabel('amplitude')
 
 
 # We've shown that we can separate the signal from the noise very efficiently using MSSA.
-# 
-# Extensions: 
+#
+# Extensions:
 # 1. What happens when you test $L$ and $N$?
 # 2. What does a pure noise field look like on reconstruction?
 # 3. How large can the noise level be before we cannot recover the signal?
@@ -450,11 +445,11 @@ _ = plt.xlabel('PC number (length K)')
 
 
 # ### Example 2
-# 
+#
 # What about an example with a second component: slow growth over time? Can we reconstruct that?
-# 
+#
 # Bonus: how does separation of signal change with window length (try adjusting $L$!)?
-# 
+#
 # We'll keep noise for this example.
 
 # In[20]:
@@ -657,16 +652,16 @@ plt.ylabel('amplitude')
 def wCorr(R):
     """
     make the w-correlation matrix.
-    
+
     inputs
     --------
     R     : (array) the reconstructed elements, stacked.
-    
+
     returns
     -----------
     wcorr : (array) the w-correlation matrix
     """
-    
+
     numT   = R.shape[0]
     numW   = R.shape[1]
     Lstar  = np.nanmin([numT - numW, numW]);
@@ -679,7 +674,7 @@ def wCorr(R):
                 if   (i < Lstar): w = i;
                 elif (i < Kstar): w = Lstar;
                 else            : w = numT - i + 1
-                
+
                 wcorr[m, n] += w * R[i, m]*R[i, n]
 
     #// Normalize
@@ -690,7 +685,7 @@ def wCorr(R):
 
 
     #// Unit diagonal
-    for m in range(0,numW): 
+    for m in range(0,numW):
         wcorr[m, m] = 1.0
 
     #// Complete
@@ -711,7 +706,7 @@ pcmax = 10
 RC = np.zeros([N,pcmax])
 for i in range(0,pcmax):
     RC[:,i] = reconstruct(PC,EOF,i,K,nd=0)
-    
+
 # compute the w-correlation matrix
 R = wCorr(RC)
 
@@ -725,13 +720,13 @@ _ = plt.ylabel('PC number')
 
 
 # Note that the $w$-correlation matrix doesn't tell us about significance -- just which PCs are likely to be related.
-# 
+#
 # We can also look at $F$ and $G$ matrices, but those will be described elsewhere.
 
 # ### Example 3 (optional)
-# 
+#
 # What about two sinusoidal signals on top of each other?
-# 
+#
 # No noise in this example.
 
 # In[28]:
@@ -830,7 +825,7 @@ pcmax = 10
 RC = np.zeros([N,pcmax])
 for i in range(0,pcmax):
     RC[:,i] = reconstruct(PC,EOF,i,K,nd=0)
-    
+
 # compute the w-correlation matrix
 R = wCorr(RC)
 
@@ -843,12 +838,12 @@ plt.xlabel('PC number')
 _ = plt.ylabel('PC number')
 
 
-# Extensions: 
+# Extensions:
 # 1. What happens when the signals do not have different amplitudes?
 # 2. How can we get better separation of the signals?
 
 # ### Example 4 (optional)
-# 
+#
 # An example of _how_ SSA works: sawtooth reconstruction. This example demonstrates that when a linear recurrence relation doesn't exist for the signal being reconstructed, SSA will require many PCs to recover the signal.
 
 # In[33]:
@@ -898,9 +893,9 @@ plt.ylabel('amplitude')
 
 
 # ### Example 5
-# 
+#
 # We haven't even discussed the _M_ in MSSA yet: what can we do with multiple dimensions?
-# 
+#
 # Luckily, we've set up the definitions above to be MSSA-aware, so we can just throw a couple of switches and perform MSSA. Let's start with the simplest case: duplicating the sine wave twice as the input.
 
 # In[35]:
@@ -979,7 +974,7 @@ plt.ylabel('amplitude')
 # This exercise is totally trivial, but it can remind us that we have compressed the information from both streams into a single pair of eigenvectors! This would be true no matter how many times we fed in the series in duplicate.
 
 # ### Example 6
-# 
+#
 # What about extracting the series from a two noisy (with uncorrelated white noise) streams?
 
 # In[39]:
@@ -1028,15 +1023,15 @@ plt.ylabel('amplitude')
 
 
 # We are able to dig (the correct) signal out of a noise field with **2.5x** the amplitude of the signal!
-# 
+#
 # (Note that this is specific to this problem and should not be considered a general result!)
 
 # You are now ready to MSSA a bigger, wilder dataset, or to continue playing in this sandbox, using the code we developed above!
 
 # ### Example 7
-# 
+#
 # How about some real EXP simulation data?
-# 
+#
 # Let's try looking at some bar coefficients in the simulation we explored in WP21.
 
 # In[41]:
@@ -1050,7 +1045,7 @@ plt.ylabel('amplitude')
 # ...etc
 indir = ''
 prefix = 'processed/seriesm1m2.'
-Data = np.genfromtxt(indir+prefix+'data') 
+Data = np.genfromtxt(indir+prefix+'data')
 Data[:,0] *= 0.004 # put in simulation times
 
 ndim = 2   # as this is SSA, we only have one dimension of data
@@ -1097,7 +1092,7 @@ plt.ylabel('amplitude')
 
 
 # ### Example 8
-# 
+#
 # What about the correlation of $m=1$ and $m=2$?
 
 # In[44]:
@@ -1111,7 +1106,7 @@ plt.ylabel('amplitude')
 # ...etc
 indir = ''
 prefix = 'processed/seriesm1m2.'
-Data = np.genfromtxt(indir+prefix+'data') 
+Data = np.genfromtxt(indir+prefix+'data')
 Data[:,0] *= 0.004 # put in simulation times
 
 ndim = 4   # as this is SSA, we only have one dimension of data
@@ -1174,7 +1169,7 @@ RC = np.zeros([N,pcmax])
 #RC = np.zeros([inputlength,pcmax])
 for i in range(0,pcmax):
     RC[:,i] = reconstruct(PC,EOF,i,K,0)
-    
+
 # compute the w-correlation matrix
 R = wCorr(RC)
 
@@ -1185,15 +1180,15 @@ _ = plt.ylabel('PC number')
 
 
 # Okay, that last one was painful -- we need production mSSA!
-# 
+#
 # A more advanced interface is available in EXP.
 
 # ### Example 9: What about missing data?
-# 
+#
 # There are a few strategies for missing data. The simplest is to just ignore and let SSA try to find the connective values. That's what we'll do in this example: take a sinusoid, remove some fraction of the data
-# 
+#
 # (One can also place dummy data and use the reconstruction to refine.)
-# 
+#
 
 # In[48]:
 
@@ -1217,7 +1212,7 @@ for v in range(0,N):
         data[0][i] = testdata[v]
         dtime[i] = testrange[v]
         i+=1
-        
+
 plt.plot(dtime,data[0],color='grey',linestyle='dashed')
 #plt.plot(testrange,testdata,color='black')
 
@@ -1254,6 +1249,6 @@ plt.ylabel('amplitude')
 # In the end, we can see that the reconstruction is able to pick up the period quite well, even with a large number of missing data samples!
 
 # ### FAQ
-# 
+#
 # 1. Can we make some sort of uncertainty estimate on the shape of the PCs?
 # 2. mSSA is a procedure: can we instead recast mSSA as a forward model?
