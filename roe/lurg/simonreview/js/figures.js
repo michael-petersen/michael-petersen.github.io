@@ -43,7 +43,7 @@ var yValue1 = function(d) { return d.MV;},
 var colorscale1 = d3.scaleSequential(d3.interpolateBlues).domain([0,1]),
     colorscale2 = d3.scaleSequential(d3.interpolateReds).domain([0,1]),
     cValue1 = function(d) {
-      if ( d.Dwarf=="Pegasus IV" || d.Dwarf=="Delve 3" || d.Dwarf=="Delve 4" || d.Dwarf=="Virgo II" || d.Dwarf=="Delve 5" || d.Dwarf=="Bootes V" || d.Dwarf=="Leo Minor I")
+      if ( d.Dwarf=="Centaurus I" ||  d.Dwarf=="Eridanus IV" ||  d.Dwarf=="Pegasus IV" || d.Dwarf=="Delve 3" || d.Dwarf=="Delve 4" || d.Dwarf=="Virgo II" || d.Dwarf=="Delve 5" || d.Dwarf=="Bootes V" || d.Dwarf=="Leo Minor I")
         { return colorscale2(0.8);}
       else if (d.Dwarf=="Carina II" || d.Dwarf=="Carina III" || d.Dwarf=="Horologium I" || d.Dwarf=="Hydrus I" || d.Dwarf=="Phoenix II" || d.Dwarf=="Reticulum II")
         { return colorscale2(0.4);}
@@ -69,7 +69,7 @@ var colorscale1 = d3.scaleSequential(d3.interpolateBlues).domain([0,1]),
 fig1.append("circle").attr("cx",100).attr("cy",10).attr("r", 2.5).style("fill", "white").attr("class", "dot1a")
 fig1.append("text").attr("x", 120).attr("y", 10).text("Globular Clusters (Harris 2010)").style("font-size", "15px").attr("alignment-baseline","middle")
 fig1.append("circle").attr("cx",100).attr("cy",30).attr("r", 5.5).style("fill", colorscale2(0.8))
-fig1.append("text").attr("x", 120).attr("y", 30).text("Newly discovered ultrafaint clusters (Cerny 2022a,b)").style("font-size", "15px").attr("alignment-baseline","middle")
+fig1.append("text").attr("x", 120).attr("y", 30).text("Newly discovered Ultrafaints (Cerny 2022a,b, Heiger 2023)").style("font-size", "15px").attr("alignment-baseline","middle")
 fig1.append("circle").attr("cx",100).attr("cy",50).attr("r", 5.5).style("fill", colorscale2(0.4))
 fig1.append("text").attr("x", 120).attr("y", 50).text("LMC associations (Erkal & Belokurov 2020)").style("font-size", "15px").attr("alignment-baseline","middle")
 fig1.append("circle").attr("cx",100).attr("cy",70).attr("r", 5.5).style("fill", colorscale1(0.8))
