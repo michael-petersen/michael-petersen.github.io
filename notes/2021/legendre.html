@@ -37,6 +37,9 @@ https://blog.jessriedel.com/2017/06/28/legendre-transform/
           </div>
           <div class="title">
             <h2>Legendre Recursion</h2>
+            <p>last update: 24 November 2023</p>
+          </div>
+          <div class="title">
             <br>
             <p>Legendre polynomials are some of the first polynomials one comes across. They are also critical for basis function expansion work owing to their role underpinning spherical harmonics! Therefore, an accurate evaluation is critical.</p>
             <br>
@@ -53,7 +56,7 @@ https://blog.jessriedel.com/2017/06/28/legendre-transform/
             <br>
             <p>We had noticed a limit in our previous Legendre recursion code: when \(l>150\) or so, the result from Bonnet's recursion formula was NaN! Fairly quickly, we traced the problem to overflow if one performs a naive implementation the recursion formula. This motivated some looking around for recent mathematical implementations.</p>
             <br>
-            <p>This is a C++ code, but the ideas are generic. My general goal going forward is to write better recursions to minimise numerical errors -- this is a start!</p>
+            <p>This is a C++ code, but the ideas are generic. <i>And, there is now a straightforward pybind11 extension!</i> My general goal going forward is to write better recursions to minimise numerical errors -- this is a start!</p>
         	  <br>
             <pre><code>clang++ -I/opt/local/include/eigen3 -o legendre legendre_test.cpp</code></pre>
             <br>
