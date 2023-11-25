@@ -1,0 +1,631 @@
+/* Color Variables ------------------------------------ */
+:root {
+  --main-text-color: #333;
+  --background-color: #fff;
+  --link-color: #ca2b38;
+  --hover-color: #0b1d3f;
+  --border-color: #000000;
+  --accent-color: #ffffff;
+}
+
+
+/* Common Styles ------------------------------------------ */
+* {
+	box-sizing: border-box;
+  }
+
+span {
+    font-family: 'Roboto', sans-serif;
+    /* Other font properties */
+}
+
+.span3 i-block {
+    font-family: 'Roboto', sans-serif; /* Replace 'Roboto' with the desired font name */
+  }
+
+.span3 i-block h3,
+.span3 i-block p {
+  font-family: 'Roboto', sans-serif; /* Replace 'Roboto' with the desired font name */
+}
+
+/* Font Imports ---------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+/* Common Styles --------------------------------------- */
+
+/* Set the base font size and adjust text rendering for optimal legibility */
+html {
+	font-size: 100%;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+	text-rendering: optimizelegibility;
+  }
+  
+  /* Body styles for the entire document */
+  body {
+    letter-spacing: normal; /* You can adjust this value to control the spacing */
+	font-family: 'Roboto', sans-serif;  /* Set the default font family for the body */
+	font-size: 12px;                    /* Set the base font size */
+	line-height: 1.5;                   /* Set the line height for better readability */
+	color: var(--main-text-color);      /* Use a variable for the main text color */
+	background-color: var(--background-color);  /* Use a variable for the background color */
+	-webkit-font-smoothing: antialiased; /* Improve font rendering on WebKit browsers */
+  }
+  
+  /* Links ----------------------------------------------- */
+  
+  /* Style for links */
+  a {
+	text-decoration: underline; /* Underline links by default */
+	-webkit-transition: color 0.1s linear, border 0.1s linear, opacity 0.1s linear, background-color 0.1s linear;
+	-moz-transition: color 0.1s linear, border 0.1s linear, opacity 0.1s linear, background-color 0.1s linear;
+	-ms-transition: color 0.1s linear, border 0.1s linear, opacity 0.1s linear, background-color 0.1s linear;
+	-o-transition: color 0.1s linear, border 0.1s linear, opacity 0.1s linear, background-color 0.1s linear;
+	transition: color 0.1s linear, border 0.1s linear, opacity 0.1s linear, background-color 0.1s linear;
+  }
+  
+  /* Remove decoration and border on link hover or focus */
+  a:hover,
+  a:focus {
+	text-decoration: none;
+	border: none;
+	outline: 0;
+  }
+  
+  /* Headings -------------------------------------------- */
+  
+  /* Styles for heading elements */
+  h1, h2, h3, h4, h5, h6 {
+	font-family: 'Roboto', sans-serif;  /* Set the default font family for the body */
+	margin: 0;                    /* Remove default margin for headings */
+	font-weight: bold;            /* Set a default font weight for headings */
+	line-height: 1.3;             /* Set line height for better spacing */
+	color: inherit;               /* Inherit color from parent element */
+	font-family: 'Roboto', serif;  /* Set the default font family for headings */
+	/*text-transform: uppercase;*/ /* Uncomment this line if you want to capitalize headings */
+  }
+  
+  /*
+	Note: Regarding a potential screen width bug, ensure that the container or
+	parent elements have a proper width set or are not conflicting with other
+	styles that might affect the layout.
+  */
+  
+h1,
+h2 {
+	line-height: 1.4;
+	letter-spacing: 3px;
+	text-align: center;
+}
+
+h1 {
+	font-size: 32px;
+}
+
+h2 {
+    font-size: 24px;
+
+}
+
+h3 {
+	font-size: 18px;
+	letter-spacing: 1.5px;
+}
+
+h4 {
+	font-size: 18px;
+	letter-spacing: 1.5px;
+	text-align:justify;
+	color: var(--background-color);
+}
+
+h5 {
+	font-size: 14px;
+	letter-spacing: 1px;
+}
+
+h6 {
+	font-size: 12px;
+}
+
+p {
+	color: var(--main-text-color);
+	font-size: 12px;
+	line-height: 1.5;
+	font-family: 'Roboto', sans-serif;  /* Set the default font family for the body */
+}
+
+img {
+	/* Responsive images (ensure images don't scale beyond their parents) */
+	max-width: 100%;
+	/* Part 1: Set a maxium relative to the parent */
+	width: auto\9;
+	/* IE7-8 need help adjusting responsive images */
+	height: auto;
+	/* Part 2: Scale the height according to the width, otherwise you get stretching */
+	vertical-align: middle;
+	border: 0;
+	-ms-interpolation-mode: bicubic;
+}
+/* Colors ------------------------------------------ */
+
+/* Selection styles for color scheme 1 */
+body.color-1::-moz-selection {
+	background: var(--hover-color);   /* Set background color for text selection */
+	color: var(--background-color);   /* Set text color for selected text */
+  }
+  
+  body.color-1::selection {
+	background: var(--hover-color);   /* Set background color for text selection */
+	color: var(--background-color);   /* Set text color for selected text */
+  }
+  
+  /* Styles for links in color scheme 1 */
+  body.color-1 a {
+	color: #ca2b38;                   /* Set the default color for links */
+	text-decoration: none;            /* Remove default text decoration for links */
+	/*border-bottom: 1px solid #99251c;*/ /* Uncomment this line if you want to add a bottom border to links */
+  }
+  
+  /* Navigation link hover style for color scheme 1 */
+  body.color-1 div#top-nav #fixed-nav li a:hover {
+	color: var(--hover-color);        /* Set link color on hover */
+  }
+  
+  /* Current navigation link style for color scheme 1 */
+  body.color-1 div#top-nav #fixed-nav li.current a {
+	border-bottom: 3px solid #000000; /* Add a bottom border to indicate the current link */
+  }
+  
+  /* Background color for color scheme 1 */
+  body.color-1 .bg-color {
+	background: var(--hover-color);   /* Set background color for specific section */
+  }
+  
+  /* Horizontal rule style for color scheme 1 */
+  body.color-1 hr {
+	border-bottom: 1px solid var(--hover-color);  /* Set border color for horizontal rule */
+  }
+  
+  /* Highlighted text style for color scheme 1 */
+  body.color-1 span.highlight {
+	font-size: 12px;                  /* Set font size for highlighted text */
+	color: var(--hover-color);        /* Set color for highlighted text */
+  }
+  
+  /* Static highlighted text style for color scheme 1 */
+  body.color-1 span.highlightstatic {
+	font-size: 12px;                  /* Set font size for static highlighted text */
+	color: var(--accent-color);       /* Set color for static highlighted text */
+  }
+  
+  /* Footer style for color scheme 1 */
+  body.color-1 #footer {
+	font-weight: bold;                /* Set font weight for the footer text */
+	background: var(--hover-color);   /* Set background color for the footer */
+	color: var(--accent-color);       /* Set text color for the footer */
+	text-align: center;               /* Center-align the text in the footer */
+	font-size: 12px;                  /* Set font size for the footer text */
+	padding: 20px 0;                   /* Add padding to the top and bottom of the footer */
+  }
+ /* Navigation & Logo ------------------------------------------ */
+
+/* Header styles for static position */
+#headerstatic {
+	top: 0;
+	width: 100%;
+	background: var(--hover-color); /* Background color for static header */
+	height: 50px;
+  }
+  
+  /* Logo styles for static position */
+  #logostatic {
+	display: block;
+	border: none;
+	margin-top: 4px;
+	margin-bottom: 0;
+	margin-left: 0;
+	float: left;
+  }
+  
+  #logostatic a {
+	color: var(--accent-color); /* Color for logo text in static header */
+	text-decoration: none;
+	border: none;
+  }
+  
+  #logostatic span {
+	margin-left: 12px; /* Adjust the left margin for span within the logo */
+  }
+  
+  /* Header styles for fixed position */
+  #header {
+	top: 0;
+	width: 100%;
+	background: rgba(255, 255, 255, 1.0); /* Background color for fixed header */
+	-ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#4Cffffff, endColorstr=#4Cffffff);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#4Cffffff, endColorstr=#4Cffffff);
+	position: fixed;
+	height: 50px;
+  }
+  
+  #nav-button {
+	display: none; /* Hide navigation button by default */
+  }
+  
+  /* Logo styles for fixed position */
+  #logo {
+	display: block;
+	border: none;
+	margin-top: 4px;
+	margin-bottom: 0;
+	margin-left: 0;
+	float: left;
+  }
+  
+  #logo a {
+	color: var(--hover-color); /* Color for logo text in fixed header */
+	text-decoration: none;
+	border: none;
+  }
+  
+  #logo span {
+	margin-left: 12px; /* Adjust the left margin for span within the logo */
+  }
+  
+  /* Top Navigation styles */
+  div#top-nav {
+	margin-top: 13px;
+  }
+  
+  div#top-nav ul {
+	font-family: 'Roboto', sans-serif;
+	float: right;
+	margin-bottom: 0;
+  }
+  
+  /* Navigation list item styles */
+  div#top-nav #fluid-nav li,
+  div#top-nav #fixed-nav li {
+	display: inline-block;
+	margin-left: 20px;
+  }
+  
+  /* Remove left margin for the first navigation item */
+  div#top-nav #fluid-nav li:first-child,
+  div#top-nav #fixed-nav li:first-child {
+	margin-left: 0;
+  }
+  
+  /* Navigation link styles */
+  div#top-nav #fluid-nav li a,
+  div#top-nav #fixed-nav li a {
+	color: #000; /* Default color for navigation links */
+	font-weight: 700;
+	text-transform: uppercase;
+	font-size: 12px;
+	border: none;
+  }
+  
+  /* Hover effect for fluid navigation links */
+  div#top-nav #fluid-nav li a:hover {
+	color: var(--background-color);
+	text-decoration: none;
+  }
+  
+  /* Current link styles for fluid navigation */
+  div#top-nav #fluid-nav li.current a {
+	color: var(--hover-color);
+  }
+  
+  /* Hover effect for fixed navigation links */
+  div#top-nav #fixed-nav li a:hover {
+	text-decoration: none;
+  }
+  
+  /* Current link styles for fixed navigation */
+  div#top-nav #fixed-nav li.current a {
+	color: var(--main-text-color);
+	padding-bottom: 5px;
+  }
+  /* Slogan & Banners ------------------------------------------ */
+.slogan {
+	height: 100%;
+	text-align: center;
+	width: 100%;
+  }
+  
+  .slogan h1 {
+	color: var(--accent-color);
+  }
+  
+  h3 {
+	color: var(--hover-color);
+  }
+  
+/* Hero Block Styles ------------------------------------------ */
+.hero {
+    display: inline-block;
+    width: 100%;
+    color: var(--hover-color);
+    border-bottom: 1px solid var(--hover-color);
+    border-top: 100px solid var(--hover-color);
+    margin-top: 100px;
+    height: auto; /* Make the height adaptive based on content */
+}
+
+.hero h4 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px; 
+    font-weight: normal;
+    color: var(--accent-color);
+    margin-bottom: 10px;
+}
+
+.hero h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+}
+
+/* You can customize the font properties based on your design preferences */
+
+
+  /* Backgrounds ------------------------------------------ */
+  .bg-fixed {
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+  }
+  
+/* Icon Blocks ------------------------------------------ */
+
+/* Styles for icon blocks */
+.i-block {
+    text-align: center;
+    position: center; /* (Note: There is no "center" value for the position property) */
+}
+
+.i-block i {
+    display: inline-block;
+    margin-bottom: 24px;
+    font-size: 6em;
+    color: var(--hover-color);
+}
+
+.i-block h3 a {
+    color: var(--main-text-color);
+    font-weight: none;
+    font-size: 1em;
+    margin-top: 0;
+    margin-bottom: 14px;
+}
+
+/* Dividers ------------------------------------------ */
+
+/* Small horizontal rule style */
+.hr-small {
+    float: none;
+}
+
+/* Standard horizontal rule style */
+.hr {
+    clear: both;
+    display: block;
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+    position: relative;
+    margin: 10px 0;
+    float: left;
+}
+
+/* Centered small horizontal rule */
+.hr-center.hr-small .hr-inner {
+    left: 50%;
+}
+
+.hr-small .hr-inner {
+    width: 32%;
+    margin-left: -16%;
+}
+
+.hr-inner {
+    border-color: #e1e1e1;
+    width: 100%;
+    position: absolute;
+    height: 1px;
+    top: 50%;
+    width: 100%;
+    margin-top: -1px;
+    border-top-width: 0;
+    border-top-style: solid;
+}
+
+/* Invisible horizontal rule */
+.hr-invisible {
+    margin-bottom: 0;
+}
+
+hr {
+    border: 0;
+    margin: 10px 0;
+}
+
+/* Gray horizontal rule */
+#contact hr.grey {
+    margin: 17px 0 16px 0;
+}
+
+hr.grey {
+    border: 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin: 10px 0;
+}
+
+/* Contact me block ------------------------------------------ */
+#contact .social a {
+    margin-right: 10px;
+    font-size: 18px;
+    float: left;
+    border: none;
+}
+
+/* Section, Footer & Misc ------------------------------------------ */
+.content {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+/* Section styles */
+.section {
+    border-bottom: 1px solid #e1e1e1;
+}
+
+/* Alternate section style with background color */
+.section-alt {
+    background: #fcfcfc;
+}
+
+/* Title styles */
+.title {
+    font-family: 'Roboto', sans-serif;  /* Set the default font family for the body */
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.title h2 {
+    font-family: 'Roboto', sans-serif;  /* Set the default font family for the body */
+    font-weight: bold;
+    font-size: 24px;
+    margin: 0;
+    text-align: left;
+}
+
+.title h3 {
+    font-weight: bold;
+    font-size: 18px;
+    margin: 0;
+    text-align: left;
+}
+
+.title p {
+    letter-spacing: 0;
+    line-height: 1.3em;
+    font-size: 15px;
+    margin: 0;
+    text-align: left;
+    margin-left: 10px;
+}
+
+/* Center-aligned text */
+.text-center {
+    text-align: center;
+}
+
+/* Clear floats */
+.clear {
+    clear: both;
+}
+
+/* Footer styles */
+#footer {
+    font-weight: bold;
+    color: var(--background-color);
+    text-align: center;
+    font-size: 13px;
+    padding: 20px 0;
+}
+
+#footer a {
+    color: var(--background-color);
+    text-decoration: underline;
+}
+
+/* Style for code within a pre element */
+pre code {
+	background-color: #eee;  /* Set background color for code block */
+	border: 1px solid #999; /* Add a border around the code block */
+	display: block;         /* Ensure the code block is displayed as a block element */
+	padding: 0px;            /* Remove any padding inside the code block */
+	text-align: left;        /* Align text to the left within the code block */
+	width: 85%;              /* Set the width of the code block to 85% of its container */
+	margin-left: 5%;         /* Add left margin to the code block for better spacing */
+  
+	/*
+	  Uncomment the following line if you want to center the code block horizontally.
+	  Adjust the values as needed.
+	*/
+	/* margin: 10px auto; */
+  }
+/*
+  Media Queries:
+  Adjustments for responsive design, targeting specific devices or screen sizes.
+  Reference: https://www.w3schools.com/cssref/css3_pr_mediaquery.asp
+*/
+
+/* Small screens, smartphones */
+@media (max-width: 767px) {
+	/* Dropdown Navigation */
+	#drop-nav {
+	  display: inline;
+	}
+  
+	/* Responsive Logo */
+	#logo {
+	  width: 100%;
+	  font-size: 26px;
+	  margin-top: 8px;
+	  text-align: center;
+	}
+  
+	/* Top Navigation adjustments */
+	div#top-nav {
+	  margin-top: 0px;
+	  display: none;
+	  background: var(--background-color);
+	  position: absolute;
+	  top: 50px;
+	  z-index: 99999;
+	  border-right: 1px solid #D6D6D6;
+	  border-bottom: 1px solid #D6D6D6;
+	  left: 0;
+	}
+  
+	div#top-nav ul {
+	  float: none;
+	  display: block;
+	}
+  
+	div#top-nav #fluid-nav li,
+	div#top-nav #fixed-nav li {
+	  padding: 10px;
+	  display: block;
+	  margin-bottom: 0px;
+	  margin-left: 0px;
+	}
+  
+	/* Navigation button for small screens */
+	#nav-button {
+	  display: inline-block;
+	  position: absolute;
+	  left: 24px;
+	  font-size: 24px;
+	  top: 50%;
+	  margin-top: -12px;
+	}
+  }
+  
+  /* Extra small screens, mobile phones */
+  @media (max-width: 480px) {
+	/* Adjust font size for smaller screens */
+	#logo {
+	  font-size: 24px;
+	}
+  }
+  
