@@ -20,12 +20,16 @@ span {
 }
 
 .span3 i-block {
-    font-family: 'Roboto', sans-serif; /* Replace 'Roboto' with the desired font name */
+    font-family: 'Roboto', sans-serif; 
   }
 
 .span3 i-block h3,
 .span3 i-block p {
-  font-family: 'Roboto', sans-serif; /* Replace 'Roboto' with the desired font name */
+  font-family: 'Roboto', sans-serif;
+}
+
+.span3 h3 {
+  font-family: 'Roboto', sans-serif; 
 }
 
 /* Font Imports ---------------------------------------- */
@@ -84,11 +88,6 @@ html {
 	/*text-transform: uppercase;*/ /* Uncomment this line if you want to capitalize headings */
   }
   
-  /*
-	Note: Regarding a potential screen width bug, ensure that the container or
-	parent elements have a proper width set or are not conflicting with other
-	styles that might affect the layout.
-  */
   
 h1,
 h2 {
@@ -507,8 +506,10 @@ hr.grey {
     text-align: left;
 }
 
+
 .title h3 {
-    font-weight: bold;
+  font-family: 'Roboto', sans-serif;  /* Set the default font family for the body */
+  font-weight: bold;
     font-size: 18px;
     margin: 0;
     text-align: left;

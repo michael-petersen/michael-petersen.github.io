@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery Easing MWE</title>
+  <!-- Include jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <!-- Include jQuery Easing Plugin -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+  <style>
+    /* Styling for demonstration */
+    #animatedElement {
+      width: 100px;
+      height: 100px;
+      background-color: blue;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+
+<div id="animatedElement"></div>
+
+<script>
+  // jQuery animation with easing
+  $("#animatedElement").animate(
+    {
+      left: "200px",
+      top: "200px",
+    },
+    2000, // Duration of the animation in milliseconds
+    "easeInOutQuad" // Easing function
+  );
+</script>
+
+</body>
+</html>
