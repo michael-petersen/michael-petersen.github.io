@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SlabText Example</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../js/slabtext.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".slabtexted").slabText();
+        });
+    </script>
+</head>
+<body>
+    <div class="slabtexted">
+        <!--slabtext.min.js produces scaleable text with the window size!-->
+        <h1>Your Responsive Headline</h1>
+    </div>
+    <h3>What about a paragraph of smaller text? Will that also reset based on the viewport size? Is this how things are supposed to work for phone?!?</h3>
+
+</body>
+</html>

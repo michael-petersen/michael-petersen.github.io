@@ -1,12 +1,25 @@
+/* Color Variables ------------------------------------ */
+:root {
+	--main-text-color: #333;
+	--background-color: #fff;
+	--link-color: #ca2b38;
+	--hover-color: #0b1d3f;
+	--border-color: #000000;
+	--accent-color: #ffffff;
+  }
+
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
 @import url(https://fonts.googleapis.com/css?family=Roboto+Slab:400,700);
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
 @import url(https://fonts.googleapis.com/css?family=Monoton:400,700);
-
-
 @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
 
 /* Common Styles ------------------------------------------ */
+* {
+	box-sizing: border-box;
+  }
+
+
 html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; text-rendering: optimizelegibility; }
 body {
 	font-family: 'Roboto', sans-serif;
@@ -241,15 +254,17 @@ h3{
 	/* text-shadow: 2px 2px 2px #333333;*/
 	color: #0b1d3f;
 }
-.hero{
-    border-bottom: 1px solid #0b1d3f;
-    border-top:100px solid #0b1d3f;
+
+.hero {
 	display: inline-block;
 	width: 100%;
+	color: var(--hover-color);
+	border-bottom: 1px solid var(--hover-color);
+	border-top: 100px solid var(--hover-color);
 	margin-top: 100px;
-	height: 500px; /* height of the title box; adjust based on the image that goes in here */
-	color: #0b1d3f
-}
+	height: auto; /* Make the height adaptive based on content */
+  }
+  
 
 .hero_small{
   border-bottom: 1px solid #0b1d3f;
