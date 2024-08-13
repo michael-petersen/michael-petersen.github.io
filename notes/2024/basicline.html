@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple D3.js Line Contour Plot</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <svg width="400" height="400"></svg>
+
+  <script>
+    // Sample data points
+    const data = [
+      { x: 10, y: 20 },
+      { x: 20, y: 35 },
+      { x: 30, y: 10 },
+      { x: 40, y: 50 },
+      { x: 50, y: 25 },
+      { x: 60, y: 40 },
+      { x: 70, y: 15 }
+    ];
+
+    // Define the dimensions and margins for the plot
+    const margin = { top: 20, right: 20, bottom: 40, left: 40 };
+    const width = 400 - margin.left - margin.right;
+    const height = 400 - margin.top - margin.bottom;
+
+    // Create the SVG container
+    const svg = d3.select("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // Create the x scale
+    const x = d3.scaleLinear()
+      .domain([0, d3.max(data, d => d.x)])
+      .range([0, width]);
+
+    // Create the y scale
+    const y = d3.scaleLinear()
+      .domain([0, d3.max(data, d => d.y)])
+      .range([height, 0]);
+
+    // Create the line function
+    const line = d3.line()
+      .x(d => x(d.x))
+      .y(d => y(d.y));
+
+    // Append the path
+    svg.append("path")
+      .datum(data)
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-width", 2)
+      .attr("d", line);
+
+    // Append the x-axis
+    svg.append("g")
+      .attr("transform", `translate(0,${height})`)
+      .call(d3.axisBottom(x));
+
+    // Append the y-axis
+    svg.append("g")
+      .call(d3.axisLeft(y));
+  </script>
+</body>
+</html>

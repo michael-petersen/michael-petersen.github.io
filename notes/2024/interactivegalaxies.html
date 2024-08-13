@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple D3.js Contour Plot</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <svg width="400" height="400"></svg>
+
+  <script>
+
+    // Define dimensions and margins for the SVG
+const margin = { top: 20, right: 20, bottom: 40, left: 40 };
+const width = 400 - margin.left - margin.right;
+const height = 400 - margin.top - margin.bottom;
+
+// Create the SVG container
+const svg = d3.select("body")
+  .append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+  .attr("transform", `translate(${margin.left},${margin.top})`);
+
+// Define your 2D array representing the data grid
+const data = [
+  [0.1, 0.2, 0.3, 0.4],
+  [0.2, 0.3, 0.4, 0.5],
+  [0.3, 0.4, 0.5, 0.6],
+  [0.4, 0.5, 0.6, 0.7]
+];
+
+console.log(data);
+
+// Create a contour generator
+const contourGenerator = d3.contours();
+
+// Set thresholds and size
+contourGenerator
+  .thresholds([0.2, 0.4, 0.6, 0.8])
+  .size([data[0].length, data.length]);
+
+
+// Generate contours
+const contours = contourGenerator(data);
+
+// Render contour paths
+svg.selectAll(".contour")
+  .data(contours)
+  .enter().append("path")
+  .attr("class", "contour")
+  .attr("d", d3.geoPath());
+
+      console.log("Contours:", contours); // Log the generated contours
+
+
+  </script>
+</body>
+</html>
