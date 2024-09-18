@@ -3,12 +3,12 @@
 
 # # Demystifying multichannel Singular Spectral Analysis (mSSA)
 # ### Mike Petersen, 16 May 2022
-# ### updated for 3 May 2023
-#
-# A visual approach to the linear algebra steps of mSSA. This tutorial follows Weinberg & Petersen (2021) -- hereafter WP21 -- with some modest changes that appeared in Johnson et al. (2023).
-#
-# With 10 worked examples.
-#
+# ### updated for 19 September 2024
+# 
+# A visual approach to the linear algebra steps of mSSA. This tutorial follows Weinberg & Petersen (2021) -- hereafter WP21 -- with some modest changes that appeared in Johnson et al. (2023), and some things that I've learned since then.
+# 
+# With ~~9~~ ~~10~~ 12 worked examples.
+# 
 
 # Goals:
 # 1. Use numpy to perform linear algebra steps
@@ -61,21 +61,24 @@ plt.tight_layout()
 
 def embed_data(data,L,K,ndim=1,norm=False):
     """
-    Build embedded time series, Y.
-    Follows the embedding strategy of Weinberg \& Petersen (2021)
-    Augmented vectors are the rows.
+    Construct an embedded time series (trajectory matrix) based on the input data.
+    This function embeds the input time series following the strategy outlined by Weinberg & Petersen (2021). The trajectory matrix `Y` is formed by arranging augmented vectors as rows, with an option to normalize each data stream by removing the mean and scaling by the standard deviation.
 
-    inputs
-    ---------
-    data     : (array) data streams, set up as data[0],data[1],data[2]...
-    L        : (int) the window length
-    K        : (int) the length of augmented vectors
-    ndim     : (int, default 1) number of data streams to consider
-    norm     : (bool, default False) detrend the data?
+    Parameters
+    ----------
+    data : (array-like) The input time series data streams. Each data stream should be structured as data[n], where `n` is the index for each stream.
+    L    : (int) The window length, which determines the number of rows in the trajectory matrix.
+    K    : (int) The length of the augmented vectors (number of columns per data stream).
+    ndim : (int, optional) The number of data streams to include in the embedding process. Default is 1.
+    norm : (bool, optional) If True, each data stream is normalized by removing the mean and dividing by the standard deviation. If False, the raw data values are used. Default is False.
 
-    returns
-    ---------
-    Y        : (array) the trajectory matrix
+    Returns
+    -------
+    Y    : (ndarray) The trajectory matrix of shape (L, K * ndim), where each row represents an augmented vector from the input data streams.
+
+    Notes
+    -----
+    - If `norm=True`, the data are standardized (mean-subtracted and divided by the standard deviation) to remove trends and variations in scale.
     """
     Y = np.zeros([L,K*ndim])
     for n in range(0,ndim):
@@ -89,7 +92,7 @@ def embed_data(data,L,K,ndim=1,norm=False):
     return Y
 
 
-# In[4]:
+# In[5]:
 
 
 L = 60   # set the window length
@@ -109,25 +112,26 @@ _ = plt.xlabel('columns are lagged vectors (length K)')
 # The second step is to construct the lag-covariance matrix. We have two choices here:
 # 1. Reconstruct the full dimensionality, $C = \frac{1}{K}T^T\cdot T$, where the matrix is $K\times K$.
 # 2. Reconstruct the reduced dimensionality, $C = \frac{1}{K}T\cdot T^T$, where the matrix is $L\times L$.
-#
+# 
 # We will here choose option 1, but will note the differences below. This is equation 11 in WP21, and is denoted in this code as `full=True`. Throughout this notebook, we can set `full=False` to get option 2.
 
-# In[5]:
+# In[6]:
 
 
 def make_covariance(T,K,full=True):
     """
-    estimate the covariance matrix C_X, using the formula in eq 9
+    Estimate the covariance matrix for a given trajectory matrix.
+    This function computes the covariance matrix C_X based on the provided trajectory matrix using the formula in Equation 9. The output can be either the full covariance matrix or a reduced version, depending on the `full` parameter.
 
-    inputs
-    ---------
-    Y     : (array) the trajectory matrix
-    K     : (array) the length of the augmented vectors
+    Parameters
+    ----------
+    T    : (array-like) The trajectory matrix, representing time series data with delayed coordinates.
+    K    : (int) The length of the augmented vectors, which corresponds to the number of columns in the trajectory matrix.
+    full : (bool, optional) If True, computes the full covariance matrix as T^T * T / K. If False, computes a reduced covariance matrix as T * T^T / K. Default is True.
 
-    returns
-    ---------
-    C     : (array) the covariance matrix
-
+    Returns
+    -------
+    C    : (ndarray) The covariance matrix of shape (K, K) if `full=True`, or of shape (M, M), where M is the number of rows in T, if `full=False.
     """
     if full:
         C = np.dot(T.T,T)/K
@@ -137,7 +141,7 @@ def make_covariance(T,K,full=True):
     return C
 
 
-# In[6]:
+# In[7]:
 
 
 C = make_covariance(T,K)
@@ -152,10 +156,10 @@ _ = plt.xlabel('dim 2 (length K)')
 
 
 # Now we get to the magic: making the principal components, singular vectors, and empirical orthogonal functions. This is accomplished by a singular value decomposition step.
-#
-# Following equation 12 of WP21, use SVD: $$C = U\cdot \Lambda \cdot V.$$ SVD takes as an input $C$ and returns $U$, $\Lambda$, and $V$. The columns of $U$ are the eigenvectors (or empirical orthogonal functions EOF, $L$ with length $K$), which we immediately use to construct the principal components $P$ (with length $K$) by projecting the time series onto the EOF: $$P = T\cdot U.$$
-#
-#
+# 
+# Following equation 12 of WP21, use SVD: $$C = U\cdot \Lambda \cdot V.$$ SVD takes as an input $C$ and returns $U$, $\Lambda$, and $V$. The columns of $U$ are the eigenvectors (or empirical orthogonal functions [EOF], $L$ with length $K$), which we immediately use to construct the principal components $P$ (with length $K$) by projecting the time series onto the EOF: $$P = T\cdot U.$$ 
+# 
+# 
 
 # Other notes:
 # 1. The principal components are in _lag_ space, which cannot be directly interpreted as series time. Instead, they encode the time of maximum correlated amplitude, but these only have meaning on the input timescale the after the reconstruction step.
@@ -164,18 +168,18 @@ _ = plt.xlabel('dim 2 (length K)')
 # 4. $U = V^T$, to SVD approximation precision.
 # 5. One can think of this step as hunting for structure in the covariance matrix.
 
-# In[7]:
+# In[8]:
 
 
 def make_pcs(C,T,ndim=1,full=True):
     """perform the SVD on the covariance matrix to construct the PCs.
-
+    
     inputs
     ---------
-    C     : (array) the covariance matrix
+    C     : (array) the covariance matrix   
     Y     : (array) the trajectory matrix
     ndim  : (int, default 1) the number of MSSA dimensions
-
+    
     returns
     ---------
     PCs   : (array) the principal components (in rows)
@@ -186,13 +190,16 @@ def make_pcs(C,T,ndim=1,full=True):
     # the columns of U are the left singular vectors
     # the columns of V are the right singular vectors
     # SV are the singular values
+    
     # to recover the PCs, dot the trajectory matrix and the left singular vectors
     # the projection of the time series Y onto the EOF (eigenvectors), U
     if full:
         PCs = np.dot(T,U)
     else:
         PCs = np.dot(V,T).T
+
     print('PC shape:',PCs.shape)
+    
     if full:
         print('Left singular vector shape:',U.shape)
         return PCs,U,SV
@@ -201,14 +208,14 @@ def make_pcs(C,T,ndim=1,full=True):
         return PCs,V.T,SV
 
 
-# In[8]:
+# In[9]:
 
 
 # run it!
 PC,EOF,SV = make_pcs(C,T)
 
 
-# In[9]:
+# In[10]:
 
 
 # the columns of EOFs are the set of empirical orthogonal vectors: plot them!
@@ -216,13 +223,13 @@ plt.figure(figsize=(4,3),facecolor='white')
 
 for i in range(K-1,-1,-1):
     plt.plot(EOF[:,i],color=cm.viridis(i/9.))
-
+    
 plt.title('empirical orthogonal functions')
 plt.ylabel('EOF value')
 _ = plt.xlabel('zero origin time (length K)')
 
 
-# In[10]:
+# In[11]:
 
 
 # the columns of PCs are the set of principal components: plot them!
@@ -230,13 +237,13 @@ plt.figure(figsize=(4,3),facecolor='white')
 
 for i in range(9,-1,-1):
     plt.plot(PC[:,i],color=cm.viridis(i/9.))
-
+    
 plt.title('principal components')
 plt.ylabel('PC value')
 _ = plt.xlabel('abscissa (length K)')
 
 
-# In[11]:
+# In[12]:
 
 
 # plot the run of singular values
@@ -245,7 +252,7 @@ plt.figure(figsize=(4,3),facecolor='white')
 SVnonoise = np.copy(SV) # save these for later...
 plt.plot(np.log10(SV),color='black')
 plt.title('singular value curve')
-plt.ylabel('singular value value')
+plt.ylabel('log$_{10}$ singular value value')
 _ = plt.xlabel('PC number (length K)')
 
 
@@ -254,12 +261,12 @@ _ = plt.xlabel('PC number (length K)')
 # 2. Calculate $A = P^T\cdot E$.
 # 3. Compute the antiagonal average of $A$ by reversing the matrix and using numpy's built in .diagonal call to compute the average.
 
-# In[12]:
+# In[13]:
 
 
 def reconstruct(PC,EOF,pcnum,K,nd=0):
     """Average antidiagonal elements of a 2d array
-
+    
     inputs
     -----------
     PC    : (array) PCs
@@ -275,14 +282,16 @@ def reconstruct(PC,EOF,pcnum,K,nd=0):
     thanks to: https://codereview.stackexchange.com/questions/195635/numpy-2d-array-anti-diagonal-averaging
     """
     A = np.dot(np.array([PC[:,pcnum]]).T,np.array([EOF[K*nd:K*(nd+1),pcnum]]))
+    
     x1d = [np.mean(A[::-1, :].diagonal(i)) for i in range(-A.shape[0] + 1, A.shape[1])]
+
     return np.array(x1d)
 
 
-# In[13]:
+# In[14]:
 
 
-O = reconstruct(PC,EOF,0,K,0)
+O = reconstruct(PC,EOF,0,K)
 
 plt.figure(figsize=(4,3),facecolor='white')
 plt.plot(O,color='black')
@@ -291,14 +300,13 @@ plt.title('first PC reconstruction')
 plt.xlabel('sample number (length $N$)')
 plt.ylabel('amplitude')
 plt.tight_layout()
-plt.savefig('pedagogicalfigures/firstpcreconstruction.png',dpi=300)
 
 
-# In[14]:
+# In[15]:
 
 
-O = reconstruct(PC,EOF,0,K,0)
-O += reconstruct(PC,EOF,1,K,0)
+O = reconstruct(PC,EOF,0,K)
+O += reconstruct(PC,EOF,1,K) # this adds PC1
 
 plt.figure(figsize=(4,3),facecolor='white')
 
@@ -317,19 +325,19 @@ plt.ylabel('amplitude')
 
 # The final step, reconstruction, is where much interpretation creeps in, and is the primary subject of automation research in the group.
 
-# Extensions:
-#
+# Extensions: 
+# 
 # 1. How do the results change with window length?
 # 2. Should we detrend (and are there other schemes)? Under what circumstances?
 # 3. How much can we stride the data (subsample) and still maintain robust results?
 
 # ### Example 1
-#
+# 
 # Let's go through another example to show one of the MSSA power points: removing noise.
-#
+# 
 # This time, we'll construct a noisy data stream by injecting white noise (important distinction!) onto the sinusoidal series.
 
-# In[15]:
+# In[16]:
 
 
 ndim = 1
@@ -350,14 +358,11 @@ plt.figure(figsize=(4,3),facecolor='white')
 
 plt.plot(data[0],color='black')
 plt.plot(cleandata,color='gray',linestyle='dashed')
-plt.title('input data series')
-plt.ylabel('amplitude')
-_ = plt.xlabel('sample number (N)')
+plt.title('input data series');plt.ylabel('amplitude');plt.xlabel('sample number (N)')
 plt.tight_layout()
-plt.savefig('noisyinput.png',dpi=300,transparent=True)
 
 
-# In[16]:
+# In[17]:
 
 
 # perform the SSA steps
@@ -372,16 +377,12 @@ plt.figure(figsize=(4,3),facecolor='white')
 plt.plot(2*O,color='black')
 plt.plot(cleandata,color='gray',linestyle='dashed')
 #plt.plot(data[0],color='red',linestyle='dashed')
-plt.title('first PC $group$ reconstruction')
-plt.xlabel('sample number (length $N$)')
-plt.ylabel('amplitude')
-plt.tight_layout()
-plt.savefig('noisyfilter.png',dpi=300,transparent=True)
+plt.title('first PC $group$ reconstruction');plt.xlabel('sample number (length $N$)');plt.ylabel('amplitude');plt.tight_layout()
 
 
 # We can also compare to the Discrete Fourier Transformation to see some of the real interpretive power of SSA: SSA makes the signal stand out to high significance.
 
-# In[17]:
+# In[18]:
 
 
 def make_dft(data):
@@ -391,22 +392,16 @@ def make_dft(data):
     nfreqs = int(np.floor(len(data)/2.))
     return freqs[0:nfreqs],np.abs(DFT)[0:nfreqs]
 
+ff,ftD = make_dft(data[0])
+ff,ftR = make_dft(O)
 
 plt.figure(figsize=(4,3),facecolor='white')
+plt.plot(ff,ftD,color='gray',linestyle='dashed')
+plt.plot(ff,ftR,color='black')
+plt.title('DFT frequency recovery');plt.xlabel('frequency (inverse time)');  plt.ylabel('amplitude')
 
 
-ff,ft = make_dft(data[0])
-plt.plot(ff,ft,color='gray',linestyle='dashed')
-
-ff,ft = make_dft(O)
-plt.plot(ff,ft,color='black')
-
-plt.title('DFT frequency recovery')
-plt.xlabel('frequency (inverse time)')
-plt.ylabel('amplitude')
-
-
-# In[18]:
+# In[19]:
 
 
 O = reconstruct(PC,EOF,2,K,0)
@@ -417,21 +412,20 @@ plt.figure(figsize=(4,3),facecolor='white')
 
 plt.plot(O,color='black')
 plt.plot(cleandata,color='gray',linestyle='dashed')
-#plt.plot(data[0],color='red',linestyle='dashed')
 plt.title('second PC $group$ reconstruction')
 plt.xlabel('sample number (length $N$)')
 plt.ylabel('amplitude')
 
 
 # We've shown that we can separate the signal from the noise very efficiently using MSSA.
-#
-# Extensions:
+# 
+# Extensions: 
 # 1. What happens when you test $L$ and $N$?
 # 2. What does a pure noise field look like on reconstruction?
 # 3. How large can the noise level be before we cannot recover the signal?
 # 4. How does biased noise affect the results?
 
-# In[19]:
+# In[20]:
 
 
 # check in on the SV curve
@@ -445,85 +439,39 @@ _ = plt.xlabel('PC number (length K)')
 
 
 # ### Example 2
-#
+# 
 # What about an example with a second component: slow growth over time? Can we reconstruct that?
-#
+# 
 # Bonus: how does separation of signal change with window length (try adjusting $L$!)?
-#
+# 
 # We'll keep noise for this example.
-
-# In[20]:
-
-
-## ndim = 1
-N = 200
-L = 50
-K = N-L+1
-
-plt.figure(figsize=(4,3))#,facecolor='white')
-
-
-data = np.zeros([ndim,N])
-data[0] = np.cos(np.arange(0,N,1)*np.pi/12.) # start with a simple sinusoid
-
-plt.plot(data[0],color='grey',linestyle='dotted',label='periodic trend')
-
-
-# add a quadratic (slow) trend
-data[0] += 0.0001*(np.arange(0,N,1)**2.)
-
-plt.plot(0.0001*(np.arange(0,N,1)**2.),color='grey',linestyle='dashed',label='growing trend')
-
-
-cleandata = np.copy(data[0]) # record the clean data
-
-# add some gaussian noise, at the level of the signal!
-noiselevel = 1.0
-data[0] += np.random.normal(0.,noiselevel,size=data[0].size)
-
-
-plt.plot(data[0],color='black',label='measured signal')
-#plt.title('input data series')
-plt.ylabel('amplitude')
-_ = plt.xlabel('sample number (N)')
-
-plt.legend(frameon=False)
-plt.tight_layout()
-#plt.savefig('pedagogicalfigures/periodic+growingsignal.png',dpi=300,transparent=True)
-
 
 # In[21]:
 
 
-# perform the SSA steps
-T = embed_data(data,L,K,1)
-C = make_covariance(T,K)
-PC,EOF,SV = make_pcs(C,T)
-O = reconstruct(PC,EOF,0,K,0)
+ndim = 1
+N = 200
+L = 50
+K = N-L+1
+
+data = np.zeros([ndim,N])
+data[0] = np.cos(np.arange(0,N,1)*np.pi/12.) # start with a simple sinusoid
 
 plt.figure(figsize=(4,3))#,facecolor='white')
+plt.plot(data[0],color='grey',linestyle='dotted',label='periodic trend')
+
+# add a quadratic (slow) trend
+quadratictrend = 0.0001*(np.arange(0,N,1)**2.)
+data[0] += quadratictrend
+plt.plot(quadratictrend,color='grey',linestyle='dashed',label='growing trend')
+
+cleandata = np.copy(data[0]) # record the clean data
+# add some gaussian noise, at the level of the signal!
+noiselevel = 1.0
+data[0] += np.random.normal(0.,noiselevel,size=data[0].size)
+
 plt.plot(data[0],color='black',label='measured signal')
-
-
-
-plt.plot(O,color='red',linestyle='dashed',label='first group')
-
-O = reconstruct(PC,EOF,1,K,0)
-O += reconstruct(PC,EOF,2,K,0)
-plt.plot(O,color='red',linestyle='dotted',label='second group')
-
-O = reconstruct(PC,EOF,3,K,0)
-for k in range(4,50):
-    O += reconstruct(PC,EOF,k,K,0)
-#plt.plot(O,color='red',linestyle='solid',lw=0.5,label='nullity')
-
-
-
-plt.xlabel('sample number (length $N$)')
-plt.ylabel('amplitude')
-plt.legend(frameon=False)
-plt.tight_layout()
-#plt.savefig('pedagogicalfigures/periodic+growingsignal_decomp.png',dpi=300,transparent=True)
+plt.ylabel('amplitude');_ = plt.xlabel('sample number (N)');plt.legend(frameon=False);plt.tight_layout()
 
 
 # In[22]:
@@ -533,51 +481,14 @@ plt.tight_layout()
 T = embed_data(data,L,K,1)
 C = make_covariance(T,K)
 PC,EOF,SV = make_pcs(C,T)
-O = reconstruct(PC,EOF,0,K,0)
+
 
 plt.figure(figsize=(4,3))#,facecolor='white')
 plt.plot(data[0],color='black',label='measured signal')
 
-
-
-#plt.plot(O,color='red',linestyle='dashed',label='first group')
-#plt.plot(cleandata)
-
-O = reconstruct(PC,EOF,1,K,0)
-O += reconstruct(PC,EOF,2,K,0)
-#plt.plot(O,color='red',linestyle='dotted',label='second group')
-
-O = reconstruct(PC,EOF,3,K,0)
-for k in range(4,50):
-    O += reconstruct(PC,EOF,k,K,0)
-plt.plot(O,color='red',linestyle='solid',lw=0.5,label='nullity')
-
-
-
-plt.xlabel('sample number (length $N$)')
-plt.ylabel('amplitude')
-plt.legend(frameon=False)
-plt.tight_layout()
-#plt.savefig('pedagogicalfigures/periodic+growingsignal_noise.png',dpi=300,transparent=True)
-
-
-# In[23]:
-
-
-# perform the SSA steps
-T = embed_data(data,L,K,1)
-C = make_covariance(T,K)
-PC,EOF,SV = make_pcs(C,T)
 O = reconstruct(PC,EOF,0,K,0)
-
-plt.figure(figsize=(4,3))#,facecolor='white')
-#plt.plot(data[0],color='black',label='measured signal')
-
-
-
 plt.plot(O,color='red',linestyle='dashed',label='first group')
-#plt.plot(cleandata)
-
+ 
 O = reconstruct(PC,EOF,1,K,0)
 O += reconstruct(PC,EOF,2,K,0)
 plt.plot(O,color='red',linestyle='dotted',label='second group')
@@ -587,51 +498,56 @@ for k in range(4,50):
     O += reconstruct(PC,EOF,k,K,0)
 #plt.plot(O,color='red',linestyle='solid',lw=0.5,label='nullity')
 
-
-data = np.zeros([ndim,N])
-data[0] = np.cos(np.arange(0,N,1)*np.pi/12.) # start with a simple sinusoid
-
-plt.plot(data[0],color='grey',linestyle='dotted',label='periodic trend')
+plt.xlabel('sample number (length $N$)');plt.ylabel('amplitude');plt.legend(frameon=False);plt.tight_layout()
 
 
-# add a quadratic (slow) trend
-data[0] += 0.0001*(np.arange(0,N,1)**2.)
-
-plt.plot(0.0001*(np.arange(0,N,1)**2.),color='grey',linestyle='dashed',label='growing trend')
+# In[23]:
 
 
+plt.figure(figsize=(4,3))#,facecolor='white')
+plt.plot(data[0],color='black',label='measured signal')
 
-plt.xlabel('sample number (length $N$)')
-plt.ylabel('amplitude')
-plt.legend(frameon=False)
-plt.tight_layout()
-#plt.savefig('pedagogicalfigures/periodic+growingsignal_signalcomp.png',dpi=300,transparent=True)
+O = reconstruct(PC,EOF,3,K,0)
+for k in range(4,50):
+    O += reconstruct(PC,EOF,k,K,0)
+plt.plot(O,color='red',linestyle='solid',lw=0.5,label='nullity')
+
+plt.xlabel('sample number (length $N$)');plt.ylabel('amplitude');plt.legend(frameon=False);plt.tight_layout()
 
 
 # In[24]:
 
 
-#O = reconstruct(PC,EOF,0,K,0)
+# now compare to the original series
+plt.figure(figsize=(4,3))#,facecolor='white')
+
+O = reconstruct(PC,EOF,0,K,0)
+plt.plot(O,color='red',linestyle='dashed',label='first group')
+
 O = reconstruct(PC,EOF,1,K,0)
 O += reconstruct(PC,EOF,2,K,0)
+plt.plot(O,color='red',linestyle='dotted',label='second group')
 
+data = np.zeros([ndim,N])
+data[0] = np.cos(np.arange(0,N,1)*np.pi/12.) # start with a simple sinusoid
+plt.plot(data[0],color='grey',linestyle='dotted',label='periodic trend')
 
-plt.figure(figsize=(4,3),facecolor='white')
+# add the quadratic (slow) trend
+data[0] += quadratictrend
+plt.plot(0.0001*(np.arange(0,N,1)**2.),color='grey',linestyle='dashed',label='growing trend')
 
-plt.plot(O,color='black')
-plt.plot(cleandata,color='gray',linestyle='dashed')
-plt.plot(data[0],color='red',linestyle='dashed')
-plt.title('second PC $group$ reconstruction')
-plt.xlabel('sample number (length $N$)')
-plt.ylabel('amplitude')
+plt.xlabel('sample number (length $N$)');plt.ylabel('amplitude');plt.legend(frameon=False);plt.tight_layout()
 
 
 # In[25]:
 
 
+# reconstruct the second group
+O = reconstruct(PC,EOF,1,K,0)
+O += reconstruct(PC,EOF,2,K,0)
+
 # check on the DFT recovery
 plt.figure(figsize=(4,3),facecolor='white')
-
 
 ff,ft = make_dft(data[0])
 plt.plot(ff,ft,color='gray',linestyle='dashed')
@@ -639,9 +555,7 @@ plt.plot(ff,ft,color='gray',linestyle='dashed')
 ff,ft = make_dft(O)
 plt.plot(ff,ft,color='black')
 
-plt.title('DFT frequency recovery')
-plt.xlabel('frequency (inverse time)')
-plt.ylabel('amplitude')
+plt.title('DFT frequency recovery');plt.xlabel('frequency (inverse time)');plt.ylabel('amplitude')
 
 
 # This is a good time to introduce a tool for interpretation: the $w$-correlation matrix. We won't go in to the calculation details -- see WP21 eq 19 -- but the $w$-correlation matrix tries to find similarity between PCs, which often indicate that they are a group.
@@ -652,16 +566,16 @@ plt.ylabel('amplitude')
 def wCorr(R):
     """
     make the w-correlation matrix.
-
+    
     inputs
     --------
     R     : (array) the reconstructed elements, stacked.
-
+    
     returns
     -----------
     wcorr : (array) the w-correlation matrix
     """
-
+    
     numT   = R.shape[0]
     numW   = R.shape[1]
     Lstar  = np.nanmin([numT - numW, numW]);
@@ -674,7 +588,7 @@ def wCorr(R):
                 if   (i < Lstar): w = i;
                 elif (i < Kstar): w = Lstar;
                 else            : w = numT - i + 1
-
+                
                 wcorr[m, n] += w * R[i, m]*R[i, n]
 
     #// Normalize
@@ -685,7 +599,7 @@ def wCorr(R):
 
 
     #// Unit diagonal
-    for m in range(0,numW):
+    for m in range(0,numW): 
         wcorr[m, m] = 1.0
 
     #// Complete
@@ -706,7 +620,7 @@ pcmax = 10
 RC = np.zeros([N,pcmax])
 for i in range(0,pcmax):
     RC[:,i] = reconstruct(PC,EOF,i,K,nd=0)
-
+    
 # compute the w-correlation matrix
 R = wCorr(RC)
 
@@ -720,13 +634,13 @@ _ = plt.ylabel('PC number')
 
 
 # Note that the $w$-correlation matrix doesn't tell us about significance -- just which PCs are likely to be related.
-#
+# 
 # We can also look at $F$ and $G$ matrices, but those will be described elsewhere.
 
 # ### Example 3 (optional)
-#
+# 
 # What about two sinusoidal signals on top of each other?
-#
+# 
 # No noise in this example.
 
 # In[28]:
@@ -815,7 +729,7 @@ plt.xlabel('frequency (inverse time)')
 plt.ylabel('amplitude')
 
 
-# In[32]:
+# In[33]:
 
 
 # select a maximum PC to consider
@@ -825,7 +739,7 @@ pcmax = 10
 RC = np.zeros([N,pcmax])
 for i in range(0,pcmax):
     RC[:,i] = reconstruct(PC,EOF,i,K,nd=0)
-
+    
 # compute the w-correlation matrix
 R = wCorr(RC)
 
@@ -838,15 +752,16 @@ plt.xlabel('PC number')
 _ = plt.ylabel('PC number')
 
 
-# Extensions:
+
+# Extensions: 
 # 1. What happens when the signals do not have different amplitudes?
 # 2. How can we get better separation of the signals?
 
 # ### Example 4 (optional)
-#
+# 
 # An example of _how_ SSA works: sawtooth reconstruction. This example demonstrates that when a linear recurrence relation doesn't exist for the signal being reconstructed, SSA will require many PCs to recover the signal.
 
-# In[33]:
+# In[ ]:
 
 
 ndim = 1
@@ -868,7 +783,7 @@ plt.ylabel('amplitude')
 _ = plt.xlabel('sample number (N)')
 
 
-# In[34]:
+# In[ ]:
 
 
 # perform the SSA steps
@@ -893,12 +808,12 @@ plt.ylabel('amplitude')
 
 
 # ### Example 5
-#
+# 
 # We haven't even discussed the _M_ in MSSA yet: what can we do with multiple dimensions?
-#
+# 
 # Luckily, we've set up the definitions above to be MSSA-aware, so we can just throw a couple of switches and perform MSSA. Let's start with the simplest case: duplicating the sine wave twice as the input.
 
-# In[35]:
+# In[34]:
 
 
 ndim = 2   # as this is SSA, we only have one dimension of data
@@ -916,8 +831,7 @@ plt.ylabel('amplitude')
 _ = plt.xlabel('sample number (N)')
 
 
-# In[36]:
-
+# In[35]:
 
 
 L = 50   # set the window length
@@ -935,7 +849,7 @@ plt.ylabel('rows are windowed (length L)')
 _ = plt.xlabel('columns are lagged vectors (length K)')
 
 
-# In[37]:
+# In[36]:
 
 
 # take a look at the covariance matrix: lots of block structure here!
@@ -974,7 +888,7 @@ plt.ylabel('amplitude')
 # This exercise is totally trivial, but it can remind us that we have compressed the information from both streams into a single pair of eigenvectors! This would be true no matter how many times we fed in the series in duplicate.
 
 # ### Example 6
-#
+# 
 # What about extracting the series from a two noisy (with uncorrelated white noise) streams?
 
 # In[39]:
@@ -1000,7 +914,7 @@ plt.ylabel('amplitude')
 _ = plt.xlabel('sample number (N)')
 
 
-# In[40]:
+# In[42]:
 
 
 L = 100   # set the window length
@@ -1023,18 +937,18 @@ plt.ylabel('amplitude')
 
 
 # We are able to dig (the correct) signal out of a noise field with **2.5x** the amplitude of the signal!
-#
+# 
 # (Note that this is specific to this problem and should not be considered a general result!)
 
 # You are now ready to MSSA a bigger, wilder dataset, or to continue playing in this sandbox, using the code we developed above!
 
 # ### Example 7
-#
+# 
 # How about some real EXP simulation data?
-#
+# 
 # Let's try looking at some bar coefficients in the simulation we explored in WP21.
 
-# In[41]:
+# In[43]:
 
 
 # bring in some processed data. columns are
@@ -1045,7 +959,7 @@ plt.ylabel('amplitude')
 # ...etc
 indir = ''
 prefix = 'processed/seriesm1m2.'
-Data = np.genfromtxt(indir+prefix+'data')
+Data = np.genfromtxt(indir+prefix+'data') 
 Data[:,0] *= 0.004 # put in simulation times
 
 ndim = 2   # as this is SSA, we only have one dimension of data
@@ -1063,8 +977,7 @@ plt.ylabel('amplitude')
 _ = plt.xlabel('sample number (N)')
 
 
-# In[42]:
-
+# In[ ]:
 
 
 # only do the expensive steps once!!
@@ -1075,7 +988,7 @@ C = make_covariance(T,K)  # not aware of dimensions
 PC,EOF,SV = make_pcs(C,T) # not aware of dimensions
 
 
-# In[43]:
+# In[ ]:
 
 
 # pick the dimension to reconstruct
@@ -1092,10 +1005,10 @@ plt.ylabel('amplitude')
 
 
 # ### Example 8
-#
+# 
 # What about the correlation of $m=1$ and $m=2$?
 
-# In[44]:
+# In[ ]:
 
 
 # bring in some processed data. columns are
@@ -1106,7 +1019,7 @@ plt.ylabel('amplitude')
 # ...etc
 indir = ''
 prefix = 'processed/seriesm1m2.'
-Data = np.genfromtxt(indir+prefix+'data')
+Data = np.genfromtxt(indir+prefix+'data') 
 Data[:,0] *= 0.004 # put in simulation times
 
 ndim = 4   # as this is SSA, we only have one dimension of data
@@ -1129,8 +1042,7 @@ plt.ylabel('amplitude')
 _ = plt.xlabel('sample number (N)')
 
 
-# In[45]:
-
+# In[ ]:
 
 
 # only do the expensive steps once!!
@@ -1142,7 +1054,7 @@ C = make_covariance(T,K)  # not aware of dimensions
 PC,EOF,SV = make_pcs(C,T) # not aware of dimensions
 
 
-# In[46]:
+# In[ ]:
 
 
 # pick the dimension to reconstruct
@@ -1158,7 +1070,7 @@ plt.xlabel('sample number (length $N$)')
 plt.ylabel('amplitude')
 
 
-# In[47]:
+# In[ ]:
 
 
 # select a maximum PC to consider
@@ -1169,7 +1081,7 @@ RC = np.zeros([N,pcmax])
 #RC = np.zeros([inputlength,pcmax])
 for i in range(0,pcmax):
     RC[:,i] = reconstruct(PC,EOF,i,K,0)
-
+    
 # compute the w-correlation matrix
 R = wCorr(RC)
 
@@ -1179,18 +1091,19 @@ plt.xlabel('PC number')
 _ = plt.ylabel('PC number')
 
 
+
 # Okay, that last one was painful -- we need production mSSA!
-#
-# A more advanced interface is available in EXP.
+# 
+# A more advanced interface is available in pyEXP.
 
 # ### Example 9: What about missing data?
-#
+# 
 # There are a few strategies for missing data. The simplest is to just ignore and let SSA try to find the connective values. That's what we'll do in this example: take a sinusoid, remove some fraction of the data
-#
+# 
 # (One can also place dummy data and use the reconstruction to refine.)
-#
+# 
 
-# In[48]:
+# In[44]:
 
 
 N=200 # set the initial number of data points
@@ -1212,12 +1125,12 @@ for v in range(0,N):
         data[0][i] = testdata[v]
         dtime[i] = testrange[v]
         i+=1
-
+        
 plt.plot(dtime,data[0],color='grey',linestyle='dashed')
 #plt.plot(testrange,testdata,color='black')
 
 
-# In[49]:
+# In[45]:
 
 
 # now perform SSA steps
@@ -1231,7 +1144,7 @@ C = make_covariance(Y,K)  # not aware of dimensions
 PC,EOF,SV = make_pcs(C,Y) # not aware of dimensions
 
 
-# In[50]:
+# In[46]:
 
 
 # examine the reconstruction
@@ -1248,7 +1161,152 @@ plt.ylabel('amplitude')
 
 # In the end, we can see that the reconstruction is able to pick up the period quite well, even with a large number of missing data samples!
 
-# ### FAQ
-#
-# 1. Can we make some sort of uncertainty estimate on the shape of the PCs?
-# 2. mSSA is a procedure: can we instead recast mSSA as a forward model?
+# ### Example 10: Nothing from nothing
+# 
+# One possible issue with mSSA is the correlation of noise into (supposed) signal. This can -- and will -- happen because mSSA is looking to pick up any correlation, even if it is just noise. This is still an area of ongoing research, 
+
+# In[49]:
+
+
+ndim = 1
+N = 200
+L = 70
+K = N-L+1
+
+# set up some gaussian noise
+data = np.zeros([ndim,N])
+noiselevel = 1.5
+data[0] = np.random.normal(0.0,noiselevel,size=data[0].size)
+
+plt.figure(figsize=(4,3),facecolor='white')
+plt.plot(data[0],color='black')
+plt.title('input data series');plt.ylabel('amplitude');plt.xlabel('sample number (N)')
+plt.tight_layout()
+
+
+# In[50]:
+
+
+# perform the SSA steps
+T = embed_data(data,L,K,1)
+C = make_covariance(T,K)
+PC,EOF,SV = make_pcs(C,T)
+O = reconstruct(PC,EOF,0,K,0)
+O += reconstruct(PC,EOF,1,K,0)
+
+plt.figure(figsize=(4,3),facecolor='white')
+
+plt.plot(O,color='black')
+plt.plot(data[0],color='grey',linestyle='dashed')
+plt.title('first PC $group$ reconstruction')
+plt.xlabel('sample number (length $N$)')
+plt.ylabel('amplitude')
+
+
+# Two things are working in our favour to mitigate this concern: 
+# 
+# 1. The correlation tends to be at very high frequency (higher than any frequency in the system), which outs it as false. 
+# 2. When correlating multiple series, it is harder to make a false signal -- because it would have to be common noise in different time series.
+# 
+# But worth being careful!
+
+# ### Example 11: Linear Recurrence Relations
+# 
+# mSSA is fundamentally built on the idea that a time series can be represented by some (as yet undiscovered) linear recurrence relation that describes the time series. 
+
+# 
+# We'll follow the Recurrent SSA Forecasting (SSA-R) strategy from Kalantari et al. (2019). The idea is to represent the time series as a linear recurrence relation, i.e.
+# $$ y_{i+d} = \sum_{k=1}^d a_ky_{i+d-k}$$
+# where $1\le i\le N-d$, $a_d\ne0$, and $d<N$. The $R = a_1,...a_{L-1}$ values are the LRR coefficients, of which there will be $L-1$.
+# 
+# Using the empirical orthogonal functions (left singular vectors) as an orthonormal basis in the trajectory space, we can calculate the $R$ values as
+# $$R = \frac{1}{1-v^2}\sum \pi_i U_i$$
+# where $U_i$ is the first $L-1$ components of a group of EOF, and $\pi_i$ and $v$ are normalisations (see Kalantari for definition).
+# 
+
+# We'll go all the way back to the first sinusoid example to see this in action.
+
+# In[51]:
+
+
+ndim = 1   # as this is SSA, we only have one dimension of data
+N    = 200 # set the length of the data
+L = 40   # set the window length
+K = N-L+1 # calculate the length of the lagged series
+full=False # note that the strategy only works with (full=True,Lw=K) or (full=False,Lw=L). We'll choose the former because it is quicker.
+
+data = np.zeros([ndim,N])
+data[0] = np.cos(np.arange(0,N,1)*np.pi/12.)
+Y = embed_data(data,L,K,1)
+C = make_covariance(Y,K,full=full)
+PC,EOF,SV = make_pcs(C,Y,full=full)
+O = reconstruct(PC,EOF,0,K,0)
+O = reconstruct(PC,EOF,1,K,0)
+
+
+# In[52]:
+
+
+def recurrencecoefficients(P,I,L):
+    # try implementing the recursion strategy to get R
+    # the verticality coefficient of Lr (the linear space defined by the eigenanalysis)
+    nu2 = np.sum([P[-1,i]**2 for i in range(0,I)])
+    print(nu2)
+    R = np.sum([(1/(1-nu2))*P[-1,i]*P[0:(L),i] for i in range(0,I)],axis=0)
+    return R
+
+# two components should be sufficient to recover the dynamics
+I = 2
+Lw = L
+R = recurrencecoefficients(EOF,I,Lw)
+plt.plot(R,color='black',label='minimum LR')
+
+# what happens if we add another group?
+I = 3
+R = recurrencecoefficients(EOF,I,Lw)
+plt.plot(R,color='red',label='noisy LR')
+plt.legend(frameon=False);plt.xlabel('linear recurrence term (length $L$)');_=plt.ylabel('amplitude')
+
+
+# In[53]:
+
+
+I = 2 # use the minimum LR
+Lw = L
+
+O = reconstruct(PC,EOF,0,K)
+for i in range(1,I): O += reconstruct(PC,EOF,i,K)
+tvals = np.arange(0,len(O),1)
+
+# compute the recurrence coefficients
+R = recurrencecoefficients(EOF,I,Lw)
+
+# how many forecasting steps should we take?
+h = 100
+
+# take the first forecasting step
+lrecent = O[-(Lw):];ttime = tvals[-1];Z = np.concatenate([O,np.array([np.sum(R*lrecent)])]); totalT = np.concatenate([tvals,np.array([ttime])])
+
+for ih in range(1,h):
+    lrecent = Z[-(Lw):];ttime += 1;Z = np.concatenate([Z,np.array([np.sum(R*lrecent)])]);totalT = np.concatenate([totalT,np.array([ttime])])
+
+plt.plot(totalT,Z,color='red',label='Extended Series');plt.plot(tvals,O,color='black',label='Original Series');plt.legend(frameon=False)
+plt.legend(frameon=False);plt.xlabel('sample number');_=plt.ylabel('amplitude')
+
+
+# Not bad! But maybe using the full covariance matrix would be better?
+
+# ### A final question I'm thinking about.
+# 
+# Can we make some sort of uncertainty estimate on the shape of the PCs?
+# 
+
+# ## Thanks for trying out mSSA!
+# 
+# Feel free to get in touch with any recommendations, questions, or just general thoughts.
+
+# In[ ]:
+
+
+
+
