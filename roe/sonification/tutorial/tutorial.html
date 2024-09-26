@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonification Zoo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Sonification Zoo</h1>
+        <p>Welcome to sonfied galaxies! This installation introduces <i>sonification</i>, where galaxies are represented in sounds, instead of as images. To create the sonification, we use mathematical representations of the galaxies. Like the Galaxy Zoo project, where you can go online and classify galaxies, we'll listen to some sounds and assign them to images of galaxies.</p>
+        <br>
+        <p>The demonstration takes about 5 minutes, but you can feel free to watch one, or skip to the end and try our quiz!</p>
+    </header>
+
+    <section id="section1" class="section">
+        <h2>EGS22197: A distant spheroidal galaxy</h2>
+        <div class="video-container"></div>
+            <video controls>
+                <source src="media/egs22197.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p>In this clip, you will see a colour image of a typical distant galaxy. Then, the galaxy will shift to a single colour image, before the galaxy is built up out of sounds corresponding to mathematical functions. Finally, you'll see the galaxy again.</p>
+            <br>
+            <p>Try thinking about when the patterns start to repeat from lower notes. Does this stand out to you when listening? When the notes start over the the lowest notes, we are hearing new symmetries in the galaxy.</p>
+        </div>
+    </section>
+
+    <section id="section2" class="section">
+        <h2>EGS23205: A distant disc galaxy</h2>
+        <div class="video-container"></div>
+            <video controls>
+                <source src="media/egs23205.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p>Similar to the first sonification, this galaxy has more structure, including hosting what is called a galactic bar.</p>
+            <br>
+            <p>Try thinking about what higher notes correspond to. Do you notice anything about what happens to the images when the highest notes are played? Finer structure is added as the notes get higher.</p>
+        </div>
+    </section>
+
+    <section id="section3" class="section">
+        <h2>EGS22922: A complicated galaxy</h2>
+        <div class="video-container"></div>
+            <video controls>
+                <source src="media/egs22922.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p>In the final demonstration, we have a complicated galaxy .</p>
+            <br>
+            <p>As you listen and see the galaxy built up, do you notice anything in the final image that you didn't see before? I notice more symmetry than I originally thought.</p>
+        </div>
+    </section>
+
+    <!-- New Music Quiz Section -->
+    <section id="section4" class="section">
+        <h2>Quiz time!</h2>
+        <audio controls>
+            <source src="media/egs22311.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+        <p>Which galaxy looks more like this sonification?</p>
+
+        <!-- Image Choices -->
+        <div class="image-quiz">
+            <div class="image-choice" data-correct="true">
+                <img src="media/processedegs22311.png" alt="Choice 1" class="quiz-image">
+            </div>
+            <div class="image-choice" data-correct="false">
+                <img src="media/processedegs21378.png" alt="Choice 2" class="quiz-image">
+            </div>
+        </div>
+
+        <audio controls>
+            <source src="media/egs21378marimbaR.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+        <p>(This is the other galaxy)</p>
+
+        <p id="quiz-result" class="hidden"></p>
+    </section>
+
+    <footer>
+        <p>Thank you for participating!</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
