@@ -16,6 +16,13 @@ header {
     color: white;
 }
 
+header p {
+    text-align: left; /* Right-align the introductory text */
+    max-width: 1000px; /* Make the text wider */
+    margin: 0 auto;
+    padding: 0 20px; /* Add some padding for better readability */
+}
+
 /* Section styling */
 .section {
     padding: 50px;
@@ -41,12 +48,33 @@ p {
     font-size: 18px;
 }
 
-/* Footer styling */
+/* Footer styling with the button */
 footer {
     text-align: center;
     padding: 20px;
     background-color: #333;
     color: white;
+    position: relative;
+}
+
+/* Button styling */
+#back-to-top {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#back-to-top:hover {
+    background-color: #357ABD;
+}
+
+#back-to-top:active {
+    background-color: #285D8B;
 }
 
 /* Smooth transition for section scrolling */
@@ -54,25 +82,26 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Video container */
 .video-container {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Aligns the paragraph with the video */
-    max-width: 800px; /* Ensure container doesn't grow too large */
-    margin: 0 auto; /* Centers the container */
+    align-items: left; /* Right-align the paragraph below the video */
+    max-width: 1000px; /* Increase the width */
+    margin: 0 auto;
 }
 
 .video-container video {
-    width: 100%;
+    width: 100%; /* Keep the video full-width */
     height: auto;
 }
 
 .video-container p {
     margin-top: 10px;
-    text-align: left;
+    text-align: left; /* Right-align the paragraph */
+    width: 100%; /* Make the paragraph as wide as the container */
+    padding-right: 20px; /* Add a bit of padding on the right for spacing */
 }
-
-
 
 /* Image quiz section */
 .image-quiz {
@@ -113,5 +142,5 @@ html {
 }
 
 #quiz-result.incorrect {
-    color: red;
+    color: green;
 }
