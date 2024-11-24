@@ -80,8 +80,8 @@ bibcodes = [
 ]
 
 varnames = []
-nfirstauthor = len(bibcodes)
-letters = [chr(i) for i in range(65, 65+nfirstauthor)]
+nstudentauthor = len(bibcodes)
+letters = [chr(i) for i in range(65, 65+nstudentauthor)]
 
 # Query ADS for citation counts
 for bibcode in bibcodes:
@@ -116,8 +116,8 @@ bibcodes = [
 ]
 
 varnames = []
-nfirstauthor = len(bibcodes)
-letters = [chr(i) for i in range(65, 65+nfirstauthor)]
+ncoauthor = len(bibcodes)
+letters = [chr(i) for i in range(65, 65+ncoauthor)]
 
 # Query ADS for citation counts
 for bibcode in bibcodes:
@@ -153,8 +153,8 @@ bibcodes = [
 ]
 
 varnames = []
-nfirstauthor = len(bibcodes)
-letters = [chr(i) for i in range(65, 65+nfirstauthor)]
+ncollaborator = len(bibcodes)
+letters = [chr(i) for i in range(65, 65+ncollaborator)]
 
 # Query ADS for citation counts
 for bibcode in bibcodes:
@@ -171,3 +171,42 @@ for bibcode in bibcodes:
         print_citation_entry(f,{bibcode},varnames[-1],0,'CollaboratorCitations')
 
 f.close()
+
+
+f = open('papers/publications.tex','a')
+
+# count the total citations
+print('\n',file=f)
+print('\\newcount\TotalCitations',file=f)
+print('\TotalCitations=0\n',file=f)
+print('\\advance\TotalCitations by \FirstAuthorCitations',file=f)
+print('\\advance\TotalCitations by \StudentAuthorCitations',file=f)
+print('\\advance\TotalCitations by \CoauthorCitations',file=f)
+print('\\advance\TotalCitations by \CollaboratorCitations',file=f)
+
+# count the total papers
+print('\n',file=f)
+print('\\newcount\FirstAuthorPublications',file=f)
+print('\FirstAuthorPublications={0}\n'.format(nfirstauthor),file=f)
+
+print('\\newcount\StudentPublications',file=f)
+print('\StudentPublications={0}\n'.format(nstudentauthor),file=f)
+
+print('\\newcount\CoauthorPublications',file=f)
+print('\CoauthorPublications={0}\n'.format(ncoauthor),file=f)
+
+print('\\newcount\CollaborativePublications',file=f)
+print('\CollaborativePublications={0}\n'.format(ncollaborator),file=f)
+
+print('\\newcount\AllPublications',file=f)
+print('\AllPublications=\FirstAuthorPublications',file=f)
+print('\\advance\AllPublications by \StudentPublications',file=f)
+print('\\advance\AllPublications by \CoauthorPublications',file=f)
+print('\\advance\AllPublications by \CollaborativePublications\n',file=f)
+
+print('\\newcount\AllCollaborativePublications',file=f)
+print('\AllCollaborativePublications=\CoauthorPublications',file=f)
+print('\\advance\AllCollaborativePublications by \CollaborativePublications',file=f)
+
+f.close()
+

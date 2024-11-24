@@ -4,9 +4,10 @@ on:
   push:
     paths-ignore:
       - 'papers/publications.tex'
-      
+
 jobs:
   fetch_citations:
+    if: "!contains(github.event.head_commit.message, '[skip publications]')"
     runs-on: ubuntu-latest
 
     steps:
