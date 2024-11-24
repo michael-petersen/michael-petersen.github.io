@@ -1,5 +1,11 @@
 import ads
 import os
+from datetime import datetime
+
+# todo
+# 1. Add h-index calculator
+# 2. Add printout of total citations
+
 
 # Retrieve ADS API token from environment variable
 ads_token = os.getenv("ADS_API_TOKEN")
@@ -19,6 +25,14 @@ def print_citation_entry(f,titlestring,varname,citation_count,countername='First
 
 
 f = open('papers/publications.tex','w')
+
+# Get the current date and time
+current_time = datetime.now()
+
+# Format the date and time as a string
+formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
+print('Updated: {formatted_time}\n',file=f)
+
 print('\\newcount\FirstAuthorCitations',file=f)
 print('\FirstAuthorCitations=0\n',file=f)
 
