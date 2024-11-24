@@ -1,0 +1,38 @@
+name: Fetch ADS Citation Counts
+
+on:
+  push:
+    paths-ignore:
+      - 'papers/publications.tex'
+      
+jobs:
+  fetch_citations:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: pip install ads
+
+    - name: Fetch citation counts
+      env:
+        ADS_API_TOKEN: ${{ secrets.ADS_API_TOKEN }}
+      run: |
+        python papers/queryads.py
+
+    - name: Commit and push changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add papers/publications.tex
+        git commit -m "Update publications.tex [auto-generated]"
+        git push origin HEAD
