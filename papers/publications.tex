@@ -166,3 +166,35 @@
 \CollaboratorF=8
 \advance\CollaboratorCitations by \CollaboratorF
 
+
+
+\newcount\TotalCitations
+\TotalCitations=0
+
+\advance\TotalCitations by \FirstAuthorCitations
+\advance\TotalCitations by \StudentAuthorCitations
+\advance\TotalCitations by \CoauthorCitations
+\advance\TotalCitations by \CollaboratorCitations
+
+
+\newcount\FirstAuthorPublications
+\FirstAuthorPublications=12
+
+\newcount\StudentPublications
+\StudentPublications=7
+
+\newcount\CoauthorPublications
+\CoauthorPublications=5
+
+\newcount\CollaborativePublications
+\CollaborativePublications=6
+
+\newcount\AllPublications
+\AllPublications=\FirstAuthorPublications
+\advance\AllPublications by \StudentPublications
+\advance\AllPublications by \CoauthorPublications
+\advance\AllPublications by \CollaborativePublications
+
+\newcount\AllCollaborativePublications
+\AllCollaborativePublications=\CoauthorPublications
+\advance\AllCollaborativePublications by \CollaborativePublications
