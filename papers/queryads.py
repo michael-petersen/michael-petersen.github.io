@@ -1,9 +1,6 @@
 import ads
 import os
 
-# ADS API token (use a GitHub secret!)
-ads.config.token = 'nn83fQwsJBVIqknjUkyckgY1vaZxDmVnkx7kbd7U'
-
 # Retrieve ADS API token from environment variable
 ads_token = os.getenv("ADS_API_TOKEN")
 
