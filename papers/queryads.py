@@ -31,7 +31,7 @@ current_time = datetime.now()
 
 # Format the date and time as a string
 formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
-print('Updated: {0}\n'.format(formatted_time),file=f)
+print('%Updated: {0}\n'.format(formatted_time),file=f)
 
 print('\\newcount\FirstAuthorCitations',file=f)
 print('\FirstAuthorCitations=0\n',file=f)
