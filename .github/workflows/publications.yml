@@ -1,9 +1,8 @@
 name: Fetch ADS Citation Counts
 
 on:
-  push:
-    paths-ignore:
-      - 'papers/publications.tex'
+  schedule:
+    - cron: '0 2 1 * *'
 
 jobs:
   fetch_citations:
