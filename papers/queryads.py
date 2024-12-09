@@ -32,7 +32,11 @@ current_time = datetime.now()
 # Format the date and time as a string
 formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
 print('%Updated: {0}\n'.format(formatted_time),file=f)
+formatted_time = current_time.strftime("%Y-%m-%d")
+print('\\newcommand{\publicationdatecheck}{%s}\n' % formatted_time,file=f)
 
+
+total_citations = 0
 print('\\newcount\FirstAuthorCitations',file=f)
 print('\FirstAuthorCitations=0\n',file=f)
 
@@ -66,6 +70,7 @@ for bibcode in bibcodes:
         print(f"Citations: {paper.citation_count}")
         print(varnames[-1], '=', paper.citation_count)
         print_citation_entry(f,{paper.title[0]},varnames[-1],paper.citation_count)
+        total_citations += paper.citation_count
     else:
         print(f"No data found for bibcode {bibcode}")
         print_citation_entry(f,{bibcode},varnames[-1],0)
@@ -104,6 +109,8 @@ for bibcode in bibcodes:
         print(f"Citations: {paper.citation_count}")
         print(varnames[-1], '=', paper.citation_count)
         print_citation_entry(f,{paper.title[0]},varnames[-1],paper.citation_count,'StudentAuthorCitations')
+        total_citations += paper.citation_count
+
     else:
         print(f"No data found for bibcode {bibcode}")
         print_citation_entry(f,{bibcode},varnames[-1],0,'StudentAuthorCitations')
@@ -140,6 +147,8 @@ for bibcode in bibcodes:
         print(f"Citations: {paper.citation_count}")
         print(varnames[-1], '=', paper.citation_count)
         print_citation_entry(f,{paper.title[0]},varnames[-1],paper.citation_count,'CoauthorCitations')
+        total_citations += paper.citation_count
+
     else:
         print(f"No data found for bibcode {bibcode}")
         print_citation_entry(f,{bibcode},varnames[-1],0,'CoauthorCitations')
@@ -177,6 +186,8 @@ for bibcode in bibcodes:
         print(f"Citations: {paper.citation_count}")
         print(varnames[-1], '=', paper.citation_count)
         print_citation_entry(f,{paper.title[0]},varnames[-1],paper.citation_count,'CollaboratorCitations')
+        total_citations += paper.citation_count
+
     else:
         print(f"No data found for bibcode {bibcode}")
         print_citation_entry(f,{bibcode},varnames[-1],0,'CollaboratorCitations')
@@ -218,6 +229,9 @@ print('\\advance\AllPublications by \CollaborativePublications\n',file=f)
 print('\\newcount\AllCollaborativePublications',file=f)
 print('\AllCollaborativePublications=\CoauthorPublications',file=f)
 print('\\advance\AllCollaborativePublications by \CollaborativePublications',file=f)
+
+
+print('% {0} Total Citations'.format(total_citations),file=f)
 
 f.close()
 
