@@ -32,7 +32,7 @@ def get_coauthor_bibcodes():
         "2014ApJ...792...64B",
         "2021MNRAS.501.5408W",
         "2021MNRAS.508L..26P",
-        "2024arXiv240207986H",
+        "2025MNRAS.538..998H",
         "2024JOSS....9.6906N"
         ]
 
@@ -46,5 +46,6 @@ def get_collaborative_bibcodes():
         "2023MNRAS.520.4779L",
         "2024MNRAS.532.2657B",
         "2024arXiv241215033T",
-        "The Gaia Phase Space spiral in angular momentum"
+        "2025arXiv250104095Y",
+        "2025arXiv250307753B"
         ]
