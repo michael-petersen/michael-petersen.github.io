@@ -1,4 +1,7 @@
 
+# try this search as a jumping off place for collecting bibcodes
+# https://ui.adsabs.harvard.edu/search/p_=0&q=author%3A%22Petersen%2C%20Michael%20S.%22&sort=date%20desc%2C%20bibcode%20desc
+
 def get_first_author_bibcodes():
     # First author bibcodes
     return [
