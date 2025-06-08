@@ -37,9 +37,16 @@
               <br>
               <p>I like time-lapse photography, as a fairly low time investment, but for fairly high reward outputs. I have a Canon Rebel XSi that I've owned for at least ten years, and I've used it fairly regularly for time lapses. But, since I let time...elapse... between different shoots, I keep having to reinvent the wheel on the cadence, the camera settings, and the processing. To rectify that, I'm putting together some notes.</p>
               <br>
-              <p>May 2025 test: garden time lapse. Photos on the smallest JPG setting, set to take a photo every 3.5 minutes. This works out to 411 photos per day -- which feels like a lot. If I want to get through four days of photos on 30 seconds (with 30 seconds generally being a good benchmark for hw long I want to watch a clip for) this is a frame rate of 53.33 frames/second, which is very high cadence. I think for a future shoot, I'll go for 7 seconds/day, with 30 frames per second; this works out to 210 photos per day, or one photo every 7 seconds (these are all rounded numbers, but I figure I'm probably not that sensitive to an extra significant digit).</p>
+              <p>May 2025 test: garden time lapse. Photos on the smallest JPG setting, set to take a photo every 3.5 minutes. This works out to 411 photos per day -- which feels like a lot. If I want to get through four days of photos on 30 seconds (with 30 seconds generally being a good benchmark for how long I want to watch a clip for) this is a frame rate of 53.33 frames/second, which is very high cadence. I think for a future shoot, I'll go for 7 seconds/day, with 30 frames per second; this works out to 210 photos per day, or one photo every 7 seconds (these are all rounded numbers, but I figure I'm probably not that sensitive to an extra significant digit). I also recorded these portrait, for which I need a transposition (the setting below performs 1 clockwise rotation).</p>
               <br>
               <pre><code>ffmpeg -framerate 53.333 -pattern_type glob -i "IMG_*.JPG" -vf "transpose=1" -c:v libx264 -pix_fmt yuv420p -r 30 timelapse.mp4
+              </code></pre>
+              <br>
+              <p>Later in May, I managed to take another time lapse. To get the photos onto my computer, I used a connection to my M1 Mac (a change from when I previously had an SD reader) and the software Image Capture. It does take quite a bit of time for the full complement of pictures to get downloaded.</p>
+              <br>
+              <p>For this run, I took a picture every 10 minutes. That means 144 photos per day, for a total of 1866 photos this run. If I again try to keep to 30 seconds, that means a framerate of 62.2. However, it turns out this feels a bit whiplash-inducing, so I've opted to try half the speed.</p>
+              <br>
+              <pre><code>ffmpeg -framerate 31 -pattern_type glob -i "IMG_*.JPG" -c:v libx264 -pix_fmt yuv420p -r 30 Atimelapse.mp4
               </code></pre>
 
         	</div>
