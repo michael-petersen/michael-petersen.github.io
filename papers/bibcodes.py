@@ -16,7 +16,7 @@ def get_first_author_bibcodes():
         "2022MNRAS.514.1266P",
         "2024MNRAS.530.4378P",
         "2024MNRAS.531..751P",
-        "2025arXiv250506403P",
+        "2025JOSS...10.7302P",
         "2019arXiv190308203P" # this is the paper that was never published
         ]
 
@@ -27,8 +27,8 @@ def get_student_led_bibcodes():
         "2023MNRAS.518..774L",
         "2023MNRAS.521.1757J",
         "2024MNRAS.531.3524Y",
-        "{\tt commensurability}: a Python package for classifying astronomical orbits based on their toroid volume",
-        "2025MNRAS.539..661G"
+        "2025JOSS...10.7009S", # commensurability
+        "2025MNRAS.539..661G" # flex
         ]
 
 def get_coauthor_bibcodes():
@@ -37,9 +37,10 @@ def get_coauthor_bibcodes():
         "2021MNRAS.501.5408W",
         "2021MNRAS.508L..26P",
         "2025MNRAS.538..998H",
-        "2024JOSS....9.6906N",
-        "Retrograde stars in the Milky Way"
-        ] # next up, Kerwann's CHC paper
+        "2024JOSS....9.6906N", # lintsampler
+        "2025arXiv250609927F", # retrograde stars
+        "2025arXiv250613636T" # krios paper
+        ]
 
 def get_collaborative_bibcodes():
     # collaborative bibcodes
@@ -52,6 +53,6 @@ def get_collaborative_bibcodes():
         "2024MNRAS.532.2657B",
         "2024arXiv241215033T",
         "2025arXiv250104095Y",
-        "2025arXiv250307753B",
+        "2025A&A...697A.214B", # dark matter spirals
         "2025arXiv250420133A"
         ]
