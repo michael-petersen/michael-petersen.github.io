@@ -39,7 +39,6 @@ def get_coauthor_bibcodes():
         "2025MNRAS.538..998H",
         "2024JOSS....9.6906N", # lintsampler
         "2025arXiv250609927F", # retrograde stars
-        "2025arXiv250613636T" # krios paper
         ]
 
 def get_collaborative_bibcodes():
@@ -54,5 +53,6 @@ def get_collaborative_bibcodes():
         "2024arXiv241215033T",
         "2025arXiv250104095Y",
         "2025A&A...697A.214B", # dark matter spirals
-        "2025arXiv250420133A"
+        "2025arXiv250420133A", # mssa on fire
+        "2025arXiv250613636T" # krios paper
         ]
