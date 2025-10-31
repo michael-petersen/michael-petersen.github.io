@@ -42,6 +42,7 @@ def get_coauthor_bibcodes():
         "2025MNRAS.538..998H",
         "2024JOSS....9.6906N", # lintsampler
         "2025ApJ...989...70F", # retrograde stars
+        "2025arXiv251009751H" # Jason's MW wake paper
         ]
 
 def get_collaborative_bibcodes():
