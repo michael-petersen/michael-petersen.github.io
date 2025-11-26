@@ -31,7 +31,8 @@ def get_student_led_bibcodes():
         "2024MNRAS.531.3524Y",
         "2025JOSS...10.7009S", # commensurability
         "2025MNRAS.539..661G", # flex
-        "2025arXiv250804781Y" # MW-LMC reflex 2
+        "2025MNRAS.544.1820Y", # MW-LMC reflex 2
+        "2025arXiv251119207M" # SGA inclinations
         ]
 
 def get_coauthor_bibcodes():
@@ -55,9 +56,9 @@ def get_collaborative_bibcodes():
         "2023MNRAS.520.4779L",
         "2024MNRAS.532.2657B",
         "2025ApJ...986..203T", # KK linear response
-        "2025arXiv250104095Y", # angular momentum spiral
+        "2025MNRAS.tmp.1720Y", # angular momentum spiral
         "2025A&A...697A.214B", # dark matter spirals
         "2025ApJ...988..190A", # mssa on fire
-        "2025arXiv250613636T", # krios paper
+        "2025ApJ...993..180T", # krios paper
         "2025arXiv250903424J" # S3 stream paper
         ]
