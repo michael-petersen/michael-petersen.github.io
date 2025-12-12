@@ -43,7 +43,7 @@ def get_coauthor_bibcodes():
         "2025MNRAS.538..998H",
         "2024JOSS....9.6906N", # lintsampler
         "2025ApJ...989...70F", # retrograde stars
-        "2025arXiv251009751H" # Jason's MW wake paper
+        "2025MNRAS.tmp.1993H" # Jason's MW wake paper
         ]
 
 def get_collaborative_bibcodes():
@@ -56,9 +56,10 @@ def get_collaborative_bibcodes():
         "2023MNRAS.520.4779L",
         "2024MNRAS.532.2657B",
         "2025ApJ...986..203T", # KK linear response
-        "2025MNRAS.tmp.1720Y", # angular momentum spiral
+        "2025MNRAS.544.3744Y", # angular momentum spiral
         "2025A&A...697A.214B", # dark matter spirals
         "2025ApJ...988..190A", # mssa on fire
         "2025ApJ...993..180T", # krios paper
         "2025arXiv250903424J" # S3 stream paper
+        # next up Hayden's paper
         ]
