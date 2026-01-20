@@ -33,7 +33,9 @@ def get_student_led_bibcodes():
         "2025MNRAS.539..661G", # flex
         "2025MNRAS.544.1820Y", # MW-LMC reflex 2
         "2025arXiv251119207M" # SGA inclinations
+        # next up is Alex's paper
         ]
+        
 
 def get_coauthor_bibcodes():
     return [
@@ -43,7 +45,7 @@ def get_coauthor_bibcodes():
         "2025MNRAS.538..998H",
         "2024JOSS....9.6906N", # lintsampler
         "2025ApJ...989...70F", # retrograde stars
-        "2025MNRAS.tmp.1993H" # Jason's MW wake paper
+        "2026MNRAS.545f2118H" # Jason's MW wake paper
         ]
 
 def get_collaborative_bibcodes():
@@ -60,6 +62,7 @@ def get_collaborative_bibcodes():
         "2025A&A...697A.214B", # dark matter spirals
         "2025ApJ...988..190A", # mssa on fire
         "2025ApJ...993..180T", # krios paper
-        "2025arXiv250903424J" # S3 stream paper
-        # next up Hayden's paper
+        "2025arXiv250903424J", # S3 stream paper
+        "2025arXiv251102031D", # Elise's paper
+        "2026arXiv260100946F" # hayden's paper
         ]
