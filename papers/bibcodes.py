@@ -62,7 +62,8 @@ def get_collaborative_bibcodes():
         "2025A&A...697A.214B", # dark matter spirals
         "2025ApJ...988..190A", # mssa on fire
         "2025ApJ...993..180T", # krios paper
-        "2025arXiv250903424J", # S3 stream paper
+        "2026A&A...706A.253J", # S3 stream paper
         "2025arXiv251102031D", # Elise's paper
         "2026arXiv260100946F" # hayden's paper
+        # next up is Kiyan's paper
         ]
