@@ -1,301 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8" />
-  <title>Michael Petersen</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Research page of Michael (Mike) Petersen, Dynamicist, Astronomer, Astrophysicist">
+<meta name="keywords" content="astronomy, astrophysics, galaxy dynamics, Milky Way, dark matter, N-body simulations, basis function expansion">
+<meta name="author" content="Michael Petersen">
+<title>Michael Petersen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/simple.css">
 
-  <meta name="description" content="Research page of Michael (Mike) Petersen, Dynamicist, Astronomer, Astrophysicist">
-  <meta name="keywords" content="astronomy, astrophysics, galaxy dynamics, Milky Way, dark matter, N-body simulations, basis function expansion">
-  <meta name="author" content="Michael Petersen">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-  <link rel="stylesheet" href="css/main.css">
-
-  <script src="https://kit.fontawesome.com/2a931c7007.js" crossorigin="anonymous"></script>
-
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-  <script src="js/jquery.scrollto.min.js"></script>
-  <script src="js/slabtext.min.js"></script>
-  <script src="js/jquery.nav.js"></script>
-  <script src="js/smoothfade.js"></script>
-  <script src="js/main.js"></script>
-
-  <link rel="shortcut icon" href="papers/shadowbar/iconimg.png" type="image/png">
-
-  <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$']]}})
-  </script>
 </head>
+<body>
 
-<body class="home color-1">
+<!--<canvas id="bg"></canvas>-->
+<img id="bg" src="css/backgroundimg.png" alt="Stars in a galaxy">
 
-  <div id="header">
-    <div class="container">
-      <div class="row">
-        <i id="nav-button" class="icon-circle-arrow-down"></i>
-        <h2 id="logo">
-          <a href="index.html">
-            <span>Michael Petersen</span>
-            <span class="highlight">University of Edinburgh</span>
-          </a>
-        </h2>
-
-        <div id="top-nav">
-          <ul id="fixed-nav">
-            <li><a href="#home">Top</a></li>
-            <li><a href="cv/MichaelPetersenCV.pdf">CV</a></li>
-            <li><a href="#results">Research</a></li>
-            <li><a href="#activities">Activities</a></li>
-            <li><a href="#connect">Connect</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+<div class="page">
+  <div class="top">
+    <h1>Michael Petersen</h1>
+    <p class="tagline">
+      <span class="cycle-wrap">
+        <span class="cycle-text" id="adj" data-index="0">Numerical methods</span>
+      </span>
+      &nbsp;in&nbsp;
+      <span class="cycle-wrap">
+        <span class="cycle-text" id="field" data-index="0">astronomy</span>
+      </span>
+    </p>
   </div>
 
-  <!-- HERO -->
-  <div class="hero bg-fixed bg-color" id="home">
-    <div class="slogan">
-      <div class="vcenter container">
-        <div class="row">
-          <div class="span12">
-
-            <div class="row">
-              <div class="img" align="center">
-                <a href="papers/shadowbar/backgroundimg.png" data-lightbox="image-1">
-                  <img src="papers/shadowbar/backgroundimg.png" width="450">
-                </a>
-              </div>
-            </div>
-
-            <h4>
-              I am an astronomer at the Royal Observatory Edinburgh, University of Edinburgh.
-            </h4>
-
-            <h4>
-              My research focuses on galactic dynamics, using stellar motions and structure to probe the nature of dark matter—particularly in the Milky Way. I combine theory, simulations, and observations, with an emphasis on developing high-precision numerical techniques.
-            </h4>
-
-            <h4>
-              Previously, I was at the Institut d’Astrophysique de Paris and studied at the University of Massachusetts Amherst.
-            </h4>
-
-            <h4>
-              Contact: <a href="mailto:michael.petersen@roe.ac.uk">michael.petersen@roe.ac.uk</a>
-            </h4>
-
-          </div>
-        </div>
-      </div>
+  <div class="bottom">
+    <nav>
+      <a href="aboutme/aboutme.html">About Me</a>
+      <a href="papers/mssa/mssa.html">Research</a>
+      <a href="roe/roe.html">Teaching</a>
+    </nav>
+    <div class="logos">
+      <a href="https://github.com/michael-petersen" class="logo-link" target="_blank">
+        <svg class="logo-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+        GitHub
+      </a>
+      <!--
+      <a href="https://ui.adsabs.harvard.edu" class="logo-link" target="_blank">
+        <svg class="logo-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+          <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="currentColor" stroke-width="1.5" transform="rotate(-30 12 12)"/>
+        </svg>
+        ADS
+      </a>
+      -->
     </div>
   </div>
+</div>
 
-  <!-- RESEARCH OVERVIEW -->
-  <div class="section" id="research">
-    <div class="container">
-      <div class="content">
-        <div class="row">
-          <div class="title">
-            <h2>Research Focus</h2>
-            <div class="hr hr-small hr-center"><span class="hr-inner"></span></div>
+<script>
+// ── Galaxy renderer ──────────────────────────────────────────────
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
 
-            <p>
-              I am scientifically interested in how gravitational interactions shape galaxies, with a particular focus on the Milky Way. My work treats the Galaxy both as an isolated dynamical system and as one undergoing ongoing interactions, notably with its most massive satellite.
-            </p>
+// Galaxy presets matched to content cycles
+const galaxies = [
+  { tilt: 0.35, spread: 1.0, arms: 3, color: [200, 220, 255] },   // data science
+  { tilt: 0.15, spread: 1.3, arms: 2, color: [180, 210, 255] },   // astrophysics
+  { tilt: 0.5,  spread: 0.8, arms: 4, color: [210, 230, 200] },   // cosmology
+];
 
-            <p>
-              I am also interested in developing and applying numerical methods, with a focus on basis function expansions for compressed data representation and time-series analysis techniques for classification and predictive modeling.
-            </p>
+let currentGalaxy = 0;
+let targetGalaxy = 0;
+let morphProgress = 1;
+const STARS = 6000;
+let stars = [];
+let W, H;
 
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+function resize() {
+  W = canvas.width  = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+  buildStars();
+  draw();
+}
 
-  <!-- LMC -->
-  <div class="section section-alt" id="results">
-    <div class="container">
-      <div class="content">
-        <div class="row">
-          <div class="title">
-            <h2>The Large Magellanic Cloud as a Dynamical Probe</h2>
-            <div class="hr hr-small hr-center"><span class="hr-inner"></span></div>
+function randGaussian() {
+  let u = 0, v = 0;
+  while (!u) u = Math.random();
+  while (!v) v = Math.random();
+  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+}
 
-            <p>
-              The Large Magellanic Cloud provides a uniquely powerful laboratory for dynamical modelling, spanning analytic theory, numerical simulations, and observational interpretation.
-            </p>
+function buildStars() {
+  stars = Array.from({ length: STARS }, (_, i) => {
+    const t = Math.random() * Math.PI * 2;
+    const r = Math.abs(randGaussian()) * 0.28 + Math.random() * 0.05;
+    return { t, r, size: Math.random() * 1.4 + 0.2, brightness: Math.random() };
+  });
+}
 
-            <p style="text-align:left">
-              With Jorge Peñarrubia, I predicted a dipole signature in the Milky Way’s stellar halo arising from the reflex motion of the disc induced by the LMC. We subsequently detected this signal in distant halo tracers, providing direct evidence of the LMC’s ongoing dynamical influence.
-              Further details and press coverage are available <a href="papers/reflexmotion/reflexmotion.html">here</a>.
-            </p>
+function getPos(star, galaxy) {
+  const g = galaxies[galaxy];
+  const armAngle = (Math.floor(star.t / (Math.PI * 2) * g.arms) / g.arms) * Math.PI * 2;
+  const angle = armAngle + star.r * 3.5 + star.t * 0.4;
+  const cx = Math.cos(angle) * star.r * g.spread;
+  const cy = Math.sin(angle) * star.r * g.spread * g.tilt;
+  return { x: cx, y: cy };
+}
 
-            <p style="text-align:left">
-              I am also interested in the origin of the LMC and what it reveals about galaxy assembly. In a <a href="https://ui.adsabs.harvard.edu/abs/2022MNRAS.514.1266P/citations">recent paper</a>, I used simulations to guide a search for stellar tracers in the LMC’s leading arm, identifying candidate stars at large Galactocentric distances.
-            </p>
+function draw() {
+  ctx.clearRect(0, 0, W, H);
 
-            <!--<div class="row">
-              <div class="img" align="center">
-                <video width="800" controls>
-                  <source src="papers/reflexmotion/wake_reflex.mp4" type="video/mp4">
-                </video>
-              </div>
-              <a href="papers/reflexmotion/wake_reflex.mp4" target="_blank">
-                Model of the LMC moving through the Milky Way halo, shown in density and tangential velocity for concentrated and extended tracers.
-              </a>
-            </div>-->
+  const cx = W * 0.62, cy = H * 0.46;
+  const scale = Math.min(W, H) * 0.75;
 
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  const gA = galaxies[currentGalaxy];
+  const gB = galaxies[targetGalaxy];
+  const p  = morphProgress;
 
-  <!-- METHODS -->
-  <div class="section section-alt" id="bfe">
-    <div class="container">
-      <div class="content">
-        <div class="row">
-          <div class="title">
-            <h2>Methods: Basis Functions and Time-Series Analysis</h2>
-            <div class="hr hr-small hr-center"><span class="hr-inner"></span></div>
+  stars.forEach(star => {
+    const posA = getPos(star, currentGalaxy);
+    const posB = getPos(star, targetGalaxy);
 
-            <p style="text-align:left">
-              Much of my work relies on basis function expansions (BFE) to model collisionless systems. This has motivated methodological advances, described in <a href="https://ui.adsabs.harvard.edu/abs/2021arXiv210414577P/abstract">this paper</a>. A summary of related projects can be found <a href="papers/exp/exp.html">here</a>.
-            </p>
+    const x = cx + (posA.x + (posB.x - posA.x) * p) * scale;
+    const y = cy + (posA.y + (posB.y - posA.y) * p) * scale;
 
-            <p style="text-align:left">
-              I have also developed applications of Multichannel Singular Spectrum Analysis (MSSA) to isolate coherent dynamical signals in simulations and data. More details are available on <a href="papers/mssa/mssa.html">this page</a>.
-            </p>
+    const cA = gA.color, cB = gB.color;
+    const r = Math.round(cA[0] + (cB[0] - cA[0]) * p);
+    const g = Math.round(cA[1] + (cB[1] - cA[1]) * p);
+    const b = Math.round(cA[2] + (cB[2] - cA[2]) * p);
 
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    const distFromCenter = Math.hypot(posA.x + (posB.x - posA.x) * p,
+                                       posA.y + (posB.y - posA.y) * p);
+    const alpha = (0.15 + star.brightness * 0.7) * (1 - distFromCenter * 0.6);
 
-  <!-- BARS -->
-  <div class="section" id="bars">
-    <div class="container">
-      <div class="content">
-        <div class="row">
-          <div class="title">
-            <h2>Barred Galaxies and Dark Matter Response</h2>
-            <div class="hr hr-small hr-center"><span class="hr-inner"></span></div>
+    ctx.beginPath();
+    ctx.arc(x, y, star.size * 0.6, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${r},${g},${b},${Math.max(0, alpha)})`;
+    ctx.fill();
+  });
+}
 
-            <p style="text-align:left">
-              Bars are the most common non-axisymmetric structures in disc galaxies. My thesis combined simulations and analytic calculations to examine the physical mechanisms governing bar formation and evolution.
-            </p>
+let morphStart = null;
+const MORPH_DURATION = 1200;
 
-            <p style="text-align:left">
-              This work led to the identification of a resonantly trapped component of the dark matter halo that mirrors the stellar bar—the “shadow bar.”
-              A detailed overview is available <a href="papers/shadowbar/shadowbar.html">here</a>, or see the <a href="https://ui.adsabs.harvard.edu/abs/2016MNRAS.463.1952P/abstract">MNRAS paper</a>.
-            </p>
+function morphTo(idx) {
+  if (idx === targetGalaxy && morphProgress >= 1) return;
+  currentGalaxy = targetGalaxy;
+  targetGalaxy = idx;
+  morphProgress = 0;
+  morphStart = performance.now();
+}
 
-          </div>
+function animate(ts) {
+  requestAnimationFrame(animate);
+  if (morphProgress < 1) {
+    morphProgress = Math.min(1, (ts - morphStart) / MORPH_DURATION);
+    // ease in-out
+    const t = morphProgress;
+    morphProgress = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+    draw();
+  }
+}
 
-          <div class="row">
-            <div class="img" align="center">
-              <a href="papers/shadowbar/shadowbar.html">
-                <img src="papers/shadowbar/061915_1.png" width="650">
-              </a>
-              <br>
-              <a href="papers/shadowbar/shadowbar.html">
-                Stellar bar (top) and shadow bar (bottom).
-              </a>
-            </div>
-          </div>
+window.addEventListener('resize', resize);
+resize();
+requestAnimationFrame(animate);
 
-          <div class="title">
-            <p style="text-align:left">
-              The coupled stellar and shadow bars induce non-axisymmetric structure in the dark matter halo at the solar radius, with implications for terrestrial direct-detection experiments.
-              See <a href="https://ui.adsabs.harvard.edu/abs/2016PhRvD..94l3013P/abstract">Phys. Rev. D</a> for details.
-            </p>
-          </div>
+// ── Cycling text ─────────────────────────────────────────────────
+const adjectives = [
+  'High performance computing',
+  'Numerical methods',
+  'Statistical inference',
+  'Machine learning',
+];
 
-          <div class="row">
-            <div class="img" align="center">
-              <a href="papers/directdetection/directdetection.html">
-                <img src="papers/directdetection/091115_3.png" width="750">
-              </a>
-              <br>
-              <a href="papers/directdetection/Fig1.png" target="_blank">
-                Mollweide projection of the dark matter density at the solar radius.
-              </a>
-            </div>
-          </div>
+const fields = [
+  'data science',
+  'astrophysics',
+  'time series analysis',
+  'basis function expansions'
+];
 
-        </div>
-      </div>
-    </div>
-  </div>
+function cycleEl(el, list) {
+  const idx = (parseInt(el.dataset.index) + 1) % list.length;
+  el.classList.add('fade-out');
+  setTimeout(() => {
+    el.textContent = list[idx];
+    el.dataset.index = idx;
+    el.classList.remove('fade-out');
+    el.classList.add('fade-in');
+    setTimeout(() => el.classList.remove('fade-in'), 320);
+  }, 300);
+  return idx;
+}
 
-  <!-- ACTIVITIES -->
-  <div class="section section-alt" id="activities">
-    <div class="container">
-      <div class="content">
-        <div class="row">
-          <div class="title">
-            <h2>Activities</h2>
-            <div class="hr hr-small hr-center"><span class="hr-inner"></span></div>
+const adjEl   = document.getElementById('adj');
+const fieldEl = document.getElementById('field');
 
-            <p>
-              I contribute to organising scientific and outreach activities at the Royal Observatory Edinburgh.
-              An overview is available <a href="roe/roe.html">here</a>.
-            </p>
+adjEl.addEventListener('click', () => {
+  cycleEl(adjEl, adjectives);
+});
 
-            <div class="img" align="center">
-              <a href="css/kittpeak16.png">
-                <img src="css/kittpeak16.png" width="850">
-              </a>
-            </div>
+fieldEl.addEventListener('click', () => {
+  const newIdx = cycleEl(fieldEl, fields);
+  morphTo(newIdx);
+});
 
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+// Auto-cycle every 4 seconds, offset by 2s
+let adjAutoIdx = 0;
+setInterval(() => {
+  adjAutoIdx = (adjAutoIdx + 1) % adjectives.length;
+  adjEl.classList.add('fade-out');
+  setTimeout(() => {
+    adjEl.textContent = adjectives[adjAutoIdx];
+    adjEl.dataset.index = adjAutoIdx;
+    adjEl.classList.remove('fade-out');
+    adjEl.classList.add('fade-in');
+    setTimeout(() => adjEl.classList.remove('fade-in'), 320);
+  }, 300);
+}, 4000);
 
-  <!-- CONNECT -->
-  <div class="section" id="connect">
-    <div class="container">
-      <div class="content">
-        <div class="row">
-
-          <div class="span3 i-block">
-            <a href="https://ui.adsabs.harvard.edu/" target="_blank">
-              <i class="fas fa-file"></i>
-            </a>
-            <h3><a href="https://ui.adsabs.harvard.edu/" target="_blank">ADS</a></h3>
-            <p>Publications</p>
-          </div>
-
-          <div class="span3 i-block">
-            <a href="https://github.com/michael-petersen" target="_blank">
-              <i class="fab fa-github"></i>
-            </a>
-            <h3><a href="https://github.com/michael-petersen" target="_blank">GitHub</a></h3>
-            <p>Code and software</p>
-          </div>
-
-          <div class="span3 i-block">
-            <a href="https://orcid.org/0000-0003-1517-3935" target="_blank">
-              <i class="fab fa-orcid"></i>
-            </a>
-            <h3><a href="https://orcid.org/0000-0003-1517-3935" target="_blank">ORCID</a></h3>
-            <p>0000-0003-1517-3935</p>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="footer">michael.petersen@roe.ac.uk</div>
-
+let fieldAutoIdx = 0;
+setInterval(() => {
+  fieldAutoIdx = (fieldAutoIdx + 1) % fields.length;
+  fieldEl.classList.add('fade-out');
+  setTimeout(() => {
+    fieldEl.textContent = fields[fieldAutoIdx];
+    fieldEl.dataset.index = fieldAutoIdx;
+    fieldEl.classList.remove('fade-out');
+    fieldEl.classList.add('fade-in');
+    setTimeout(() => fieldEl.classList.remove('fade-in'), 320);
+    morphTo(fieldAutoIdx);
+  }, 300);
+}, 5500);
+</script>
 </body>
 </html>
