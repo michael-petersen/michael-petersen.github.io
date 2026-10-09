@@ -1,0 +1,59 @@
+
+body {
+  margin: 0;
+  padding: 2rem;
+  background: #fff;
+  color: #111;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 1.4rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+}
+
+#scatter-plot {
+  position: relative;
+  width: 100%;
+}
+
+#scatter-plot svg {
+  display: block;
+  overflow: visible;
+}
+
+.point {
+  fill: #777;
+  stroke: #fff;
+  stroke-width: 0.75px;
+  cursor: pointer;
+  transition: r 0.1s ease;
+}
+
+.axis-label {
+  fill: #222;
+  font-size: 13px;
+}
+
+.tick text {
+  fill: #555;
+  font-size: 11px;
+}
+
+.tooltip {
+  position: absolute;
+  pointer-events: none;
+  padding: 6px 9px;
+  background: #111;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 2px;
+  white-space: nowrap;
+  z-index: 10;
+}
