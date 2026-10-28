@@ -10,7 +10,8 @@ const pointRadius = 4;
 d3.csv(csvFile, d => ({
   name: d.name,
   x: +d.sugar,
-  y: +d.acid
+  y: +d.acid,
+  size: +d.yield
 })).then(data => {
   data = data.filter(d =>
     Number.isFinite(d.x) && Number.isFinite(d.y)
@@ -45,6 +46,10 @@ d3.csv(csvFile, d => ({
     .domain(d3.extent(data, d => d.y))
     .nice()
     .range([innerHeight, 0]);
+
+const r = d3.scaleSqrt()
+  .domain(d3.extent(data, d => d.size))
+  .range([2, 12]);
 
   // Axes
   plot.append("g")
@@ -86,17 +91,24 @@ d3.csv(csvFile, d => ({
     .join("circle")
     .attr("cx", d => x(d.x))
     .attr("cy", d => y(d.y))
-    .attr("r", pointRadius)
+    .attr("r", d => r(d.size))
     .attr("class", "point")
-    .on("mouseover", function(event, d) {
-      d3.select(this)
-        .attr("r", pointRadius * 1.7)
-        .attr("fill", "#000");
+  .on("mouseover", function(event, d) {
+    d3.select(this)
+      .attr("r", r(d.size) * 1.5)
+      .attr("fill", "#000");
 
-      tooltip
-        .style("opacity", 1)
-        .text(d.name);
-    })
+    tooltip
+      .style("opacity", 1)
+      .text(d.name);
+  })
+  .on("mouseout", function(event, d) {
+    d3.select(this)
+      .attr("r", r(d.size))
+      .attr("fill", "#777");
+
+    tooltip.style("opacity", 0);
+  })
     .on("mousemove", function(event) {
       const [mx, my] = d3.pointer(event, element);
 

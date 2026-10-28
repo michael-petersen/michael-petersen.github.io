@@ -1,22 +1,22 @@
-name,sugar,acid
-ROE main,1.056,0.50
-ROE small,1.048,0.60
-AA tall early,1.050, 2.20
-AA central early,1.043,1.30
-Blackford Susan,1.054,0.35
-Palmerston mix,1.040,0.65
-AA central,1.046,1.70
-Jupiter,1.058,1.53
-Laxton's Superb,1.060,0.98
-Blenheim Orange,1.080,0.72
-Bramley,1.048,1.74
-Red Windsor,1.060,1.02
-White House,1.044,2.62
-Elms,1.050,1.25
-St. Margarets,1.050,1.04
-Gala,1.050,0.50
-AA hedge,1.048,1.65
-Sunset,1.068,0.90
-Hertfordshire Russet,1.065,1.23
-Lord Derby,1.052,1.40
-Egremont Russet,1.060,0.81
+name,sugar,acid,yield
+ROE main,1.056,0.50,0.450
+ROE small,1.048,0.60,0.445
+AA tall early,1.050, 2.20,0.355
+AA central early,1.043,1.30,0.430
+Blackford Susan,1.054,0.35,0.290
+Palmerston mix,1.040,0.65,0.367
+AA central,1.046,1.70,0.348
+Jupiter,1.058,1.53,0.330
+Laxton's Superb,1.060,0.98,0.250
+Blenheim Orange,1.080,0.72,0.290
+Bramley,1.048,1.74,0.345
+Red Windsor,1.060,1.02,0.375
+White House,1.044,2.62,0.396
+Elms,1.050,1.25,0.410
+St. Margarets,1.050,1.04,0.410
+Gala,1.050,0.50,0.354
+AA hedge,1.048,1.65,0.400
+Sunset,1.068,0.90,0.302
+Hertfordshire Russet,1.065,1.23,0.274
+Lord Derby,1.052,1.40,0.381
+Egremont Russet,1.060,0.81,0.430
