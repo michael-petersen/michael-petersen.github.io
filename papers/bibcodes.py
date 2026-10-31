@@ -32,8 +32,8 @@ def get_student_led_bibcodes():
         "2025JOSS...10.7009S", # commensurability
         "2025MNRAS.539..661G", # flex
         "2025MNRAS.544.1820Y", # MW-LMC reflex 2
-        "2025arXiv251119207M" # SGA inclinations
-        # next up is Alex's paper
+        "2025arXiv251119207M", # SGA inclinations
+        "2026MNRAS.552g1818F"  # EXP streams
         ]
         
 
@@ -64,6 +64,6 @@ def get_collaborative_bibcodes():
         "2025ApJ...993..180T", # krios paper
         "2026A&A...706A.253J", # S3 stream paper
         "2025arXiv251102031D", # Elise's paper
-        "2026arXiv260100946F" # hayden's paper
-        # next up is Kiyan's paper
+        "2026ApJ..1001...37F", # hayden's paper
+        "2026ApJ..1005..120T" # Kiyan's paper
         ]

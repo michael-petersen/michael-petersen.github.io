@@ -116,13 +116,6 @@ const r = d3.scaleSqrt()
         .style("left", `${mx + 12}px`)
         .style("top", `${my + 12}px`);
     })
-    .on("mouseout", function() {
-      d3.select(this)
-        .attr("r", pointRadius)
-        .attr("fill", "#777");
-
-      tooltip.style("opacity", 0);
-    });
 
 }).catch(error => {
   console.error("Could not load CSV:", error);
