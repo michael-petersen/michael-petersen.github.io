@@ -1,0 +1,65 @@
+              <pre><code>ffmpeg -framerate 31 -pattern_type glob -i "IMG_*.JPG" -c:v libx264 -pix_fmt yuv420p -r 30 Atimelapse.mp4
+              </code></pre>
+
+
+ffmpeg -i IMG_6969.MOV output_%04d.jpg
+
+237-512
+
+
+import numpy as np
+from PIL import Image
+import glob
+import re
+
+# Adjust this pattern to match your actual filenames
+pattern = "output_{:04d}.png"
+pattern = "output_{:04d}.jpg"
+
+start, end = 237, 512
+start, end = 3143, 5120
+
+def load_image(path):
+    return np.array(Image.open(path).convert("RGB"), dtype=np.uint8)
+
+# Load first image to establish the stack
+first_path = pattern.format(start)
+result = load_image(first_path)
+
+for i in range(start + 1, end + 1):
+    path = pattern.format(i)
+    img = load_image(path)
+    if img.shape != result.shape:
+        raise ValueError(f"{path} has shape {img.shape}, expected {result.shape}")
+    result = np.maximum(result, img)
+
+out = Image.fromarray(result)
+out.save("brightest_combined.png")
+print(f"Combined {end - start + 1} images -> brightest_combined.png")
+
+
+
+
+
+import numpy as np
+from PIL import Image
+
+pattern = "output_{:04d}.jpg"
+start, end = 237, 512
+
+def load_image(path):
+    return np.array(Image.open(path).convert("RGB"), dtype=np.uint8)
+
+first_path = pattern.format(start)
+result = load_image(first_path)
+
+for i in range(start + 1, end + 1):
+    path = pattern.format(i)
+    img = load_image(path)
+    if img.shape != result.shape:
+        raise ValueError(f"{path} has shape {img.shape}, expected {result.shape}")
+    result = np.minimum(result, img)
+
+out = Image.fromarray(result)
+out.save("darkest_combined.png")
+print(f"Combined {end - start + 1} images -> darkest_combined.png")

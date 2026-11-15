@@ -74,6 +74,13 @@ const fields = [
   'basis function expansions'
 ];
 
+const images = [
+  'css/backgroundimg.png',
+  'css/backgroundimg.png',
+  'css/backgroundimg.png',
+  'css/backgroundimg.png',
+];
+
 function cycleEl(el, list) {
   const idx = (parseInt(el.dataset.index) + 1) % list.length;
   el.classList.add('fade-out');
@@ -89,13 +96,17 @@ function cycleEl(el, list) {
 
 const adjEl   = document.getElementById('adj');
 const fieldEl = document.getElementById('field');
+const bgImg   = document.getElementById('bg');
+
 
 adjEl.addEventListener('click', () => {
   cycleEl(adjEl, adjectives);
+  
 });
 
 fieldEl.addEventListener('click', () => {
   const newIdx = cycleEl(fieldEl, fields);
+  bgImg.src = images[newIdx];
 });
 
 // Auto-cycle every 4 seconds, offset by 2s
@@ -122,6 +133,7 @@ setInterval(() => {
     fieldEl.classList.remove('fade-out');
     fieldEl.classList.add('fade-in');
     setTimeout(() => fieldEl.classList.remove('fade-in'), 320);
+    bgImg.src = images[fieldAutoIdx]; // Update background image when field changes
   }, 300);
 }, 5500);
 </script>
