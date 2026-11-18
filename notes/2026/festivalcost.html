@@ -132,6 +132,10 @@
         margin-top: 8px;
     }
 
+    .negative {
+        color: #c00;
+    }
+
     .detail {
         font-size: 13px;
         color: #777;
@@ -274,7 +278,7 @@
 <div class="result">
 
     <div class="result-label">
-        TOTAL UoE REVENUE
+        TOTAL UoE REVENUE (COST)
     </div>
 
     <div id="total">£100.00</div>
@@ -289,7 +293,7 @@
     </div>
 
     <div class="secondary">
-        <span>ESF fee (assuming 25 events, including VAT)</span>
+        <span>ESF fee (assuming 25 events, including 20% VAT)</span>
         <strong id="ESFfee">£0.00</strong>
     </div>
 
@@ -440,28 +444,32 @@ function calculate() {
     const hostRevenue = grossRevenue * split - ESFfee * VATcost;
     const venueRevenue = grossRevenue * (1 - split);
 
-    const currency = value =>
-        value.toLocaleString("en-GB", {
+    const currency = value => {
+        const formatted = Math.abs(value).toLocaleString("en-GB", {
             style: "currency",
             currency: "GBP"
         });
+        return value < 0 ? `(${formatted})` : formatted;
+    };
+
+    const setCurrency = (elementId, value) => {
+        const element = document.getElementById(elementId);
+        element.textContent = currency(value);
+        element.classList.toggle("negative", value < 0);
+    };
 
     // UPDATE RESULTS
 
     document.getElementById("soldValue").textContent =
         (fractionSold * 100) + "%";
 
-    document.getElementById("total").textContent =
-        currency(hostRevenue);
+    setCurrency("total", hostRevenue);
 
-    document.getElementById("ESFfee").textContent =
-        currency(-1*ESFfee*VATcost);   
+    setCurrency("ESFfee", -ESFfee * VATcost);
 
-    document.getElementById("venueTotal").textContent =
-        currency(venueRevenue);
+    setCurrency("venueTotal", venueRevenue);
 
-    document.getElementById("grossTotal").textContent =
-        currency(grossRevenue);
+    setCurrency("grossTotal", grossRevenue);
 
     document.getElementById("ticketsSold").textContent =
         totalSold.toLocaleString("en-GB", {
